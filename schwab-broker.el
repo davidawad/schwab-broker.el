@@ -1,6 +1,9 @@
 ;;; schwab-broker.el --- Charles Schwab Trader & Market Data API client -*- lexical-binding: t; -*-
 
-;; Author: David Awad
+;; SPDX-License-Identifier: MIT
+
+;; Author: David Awad <me@davidaw.ad>
+;; Maintainer: David Awad <me@davidaw.ad>
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "27.1"))
 ;; Homepage: https://github.com/davidawad/schwab-broker.el

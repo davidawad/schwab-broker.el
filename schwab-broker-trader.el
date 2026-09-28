@@ -1,7 +1,12 @@
 ;;; schwab-broker-trader.el --- Schwab Trader API (accounts, positions) -*- lexical-binding: t; -*-
 
-;; Author: David Awad
+;; SPDX-License-Identifier: MIT
+
+;; Author: David Awad <me@davidaw.ad>
+;; Maintainer: David Awad <me@davidaw.ad>
 ;; Keywords: comm, tools, finance
+
+;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
 
