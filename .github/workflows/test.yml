@@ -21,6 +21,9 @@ jobs:
         with:
           version: ${{ matrix.emacs_version }}
 
+      # Only test/schwab-broker-test.el (mocked, offline) -- never
+      # test/live/, which hits the real Schwab API against a
+      # real-money account and must never run here.
       - name: Run tests
         run: emacs -Q --batch -L . -L test -l test/schwab-broker-test.el -f ert-run-tests-batch-and-exit
 
