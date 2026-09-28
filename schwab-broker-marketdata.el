@@ -24,22 +24,6 @@
 (defconst schwab-broker--marketdata-base
   "https://api.schwabapi.com/marketdata/v1")
 
-(defun schwab-broker--number-param (value)
-  "Return VALUE as a query-parameter string, or nil when VALUE is nil."
-  (when value
-    (format "%s" value)))
-
-(defun schwab-broker--bool-param (value)
-  "Map VALUE to a Schwab boolean query-parameter string, or nil.
-VALUE of t maps to \"true\", the keyword :false maps to \"false\", and
-anything else (including plain nil) maps to nil so the parameter is
-omitted and Schwab's own default applies."
-  (cond
-   ((eq value t)
-    "true")
-   ((eq value :false)
-    "false")))
-
 ;;;###autoload
 (defun schwab-broker-quote (symbol callback)
   "Fetch SYMBOL's quote asynchronously and call CALLBACK.
@@ -233,6 +217,79 @@ FREQUENCY map onto Schwab's own `/movers' query parameters."
 KEYS is the same keyword-argument list `schwab-broker-movers' accepts."
   (schwab-broker--sync-call
    (lambda (callback) (apply #'schwab-broker-movers index callback keys))))
+
+;;;###autoload
+(defun schwab-broker-expiration-chain (symbol callback)
+  "Fetch SYMBOL's option expiration chain asynchronously and call CALLBACK.
+CALLBACK is called with two arguments, EXPIRATIONS-ALIST and ERR."
+  (schwab-broker--request
+   schwab-broker--marketdata-base
+   "/expirationchain"
+   `(("symbol" . ,(upcase symbol)))
+   callback))
+
+;;;###autoload
+(defun schwab-broker-expiration-chain-sync (symbol)
+  "Synchronous form of `schwab-broker-expiration-chain' for SYMBOL."
+  (schwab-broker--sync-call
+   (lambda (callback) (schwab-broker-expiration-chain symbol callback))))
+
+;;;###autoload
+(cl-defun
+ schwab-broker-market (market-id callback &key date)
+ "Fetch market hours for the single market MARKET-ID and call CALLBACK.
+MARKET-ID is one of Schwab's own market codes (\"equity\", \"option\",
+\"bond\", \"future\", \"forex\").  CALLBACK is called with two
+arguments, HOURS-ALIST and ERR.  DATE, when given, is an ISO
+YYYY-MM-DD string."
+ (schwab-broker--request
+  schwab-broker--marketdata-base
+  (format "/markets/%s" (url-hexify-string market-id))
+  `(("date" . ,date))
+  callback))
+
+;;;###autoload
+(defun schwab-broker-market-sync (market-id &rest keys)
+  "Synchronous form of `schwab-broker-market' for MARKET-ID.
+KEYS is the same keyword-argument list `schwab-broker-market' accepts."
+  (schwab-broker--sync-call
+   (lambda (callback) (apply #'schwab-broker-market market-id callback keys))))
+
+;;;###autoload
+(defun schwab-broker-instruments (symbol projection callback)
+  "Search Schwab instruments matching SYMBOL under PROJECTION and call CALLBACK.
+PROJECTION is one of Schwab's own enum values (\"symbol-search\",
+\"symbol-regex\", \"desc-search\", \"desc-regex\", \"search\",
+\"fundamental\").  CALLBACK is called with two arguments,
+INSTRUMENTS-ALIST and ERR."
+  (schwab-broker--request
+   schwab-broker--marketdata-base
+   "/instruments"
+   `(("symbol" . ,symbol) ("projection" . ,projection))
+   callback))
+
+;;;###autoload
+(defun schwab-broker-instruments-sync (symbol projection)
+  "Synchronous form of `schwab-broker-instruments' for SYMBOL/PROJECTION."
+  (schwab-broker--sync-call
+   (lambda (callback)
+     (schwab-broker-instruments symbol projection callback))))
+
+;;;###autoload
+(defun schwab-broker-instrument (cusip callback)
+  "Fetch the Schwab instrument fundamentals for CUSIP and call CALLBACK.
+Asynchronous; CALLBACK is called with two arguments, INSTRUMENT-ALIST
+and ERR."
+  (schwab-broker--request
+   schwab-broker--marketdata-base
+   (format "/instruments/%s" (url-hexify-string cusip))
+   nil callback))
+
+;;;###autoload
+(defun schwab-broker-instrument-sync (cusip)
+  "Synchronous form of `schwab-broker-instrument' for CUSIP."
+  (schwab-broker--sync-call
+   (lambda (callback) (schwab-broker-instrument cusip callback))))
 
 ;;;###autoload
 (defun schwab-broker-show-quote (symbol)
