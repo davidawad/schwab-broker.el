@@ -15,8 +15,14 @@ Copy `schwab-broker.el`, `schwab-broker-oauth.el`, `schwab-broker-marketdata.el`
 (require 'schwab-broker)
 ```
 
-(Or, with `use-package` and a local/straight recipe pointing at this
-repo, `(use-package schwab-broker)`.)
+Or, with `straight.el` and `use-package`:
+
+```elisp
+(use-package schwab-broker
+  :straight (schwab-broker :type git :host github
+                            :repo "davidawad/schwab-broker.el"
+                            :files ("schwab-broker*.el")))
+```
 
 ## Register an app
 
@@ -62,26 +68,15 @@ If you registered a callback URL other than the default
 
 ## Getting a token
 
-Schwab's `code=` authorization code expires in about **30 seconds**.
-That is the whole reason two flows exist below: the straightforward
-paste flow is usually fast enough, but it lost that race once, live
-(2026-09-15) -- typing/pasting the redirect URL back into Emacs took
-just long enough for the code to expire, and the exchange failed. A
-`schwab-broker-authorize-listen` command exists to close that race by
-serving the callback instead of round-tripping through your clipboard
-and the minibuffer -- see below for its current, honest limitation.
+Schwab's `code=` authorization code expires in about **30 seconds**, so
+move quickly through the paste step below.
 
-Both flows write to the same place, `schwab-broker-token-file`
-(default `~/.config/schwab/token.json`, created with file mode `600`):
-whichever one you use, the result is the same on-disk token. That file
-is also this package's interop point with any other consumer of the
-same OAuth app -- notably its Python-side sibling implementation
-(`tradeboards auth schwab`), which reads and refreshes the identical
-JSON shape. Point both at the same path and either one's refresh is
-immediately visible to the other (see "Token-file interop note"
-below).
+Tokens are written to `schwab-broker-token-file` (default
+`~/.config/schwab/token.json`, created with file mode `600`). That file
+is also this package's interop point with any other client using the
+same JSON shape -- see "Token-file interop note" below.
 
-### Paste flow (the default, always works)
+### Paste flow
 
 Schwab's OAuth flow expects a real HTTP redirect target, which a
 script/desktop client like this one doesn't run. The workaround --
@@ -101,7 +96,8 @@ M-x schwab-broker-authorize
    fails to load anything there -- that's fine.
 4. Copy that entire URL from the browser's address bar.
 5. Back in Emacs, paste it at the `Paste the full redirect URL here:`
-   prompt and hit `RET`.
+   prompt and hit `RET`. Do this quickly -- the `code=` value expires
+   in about 30 seconds.
 
 `schwab-broker-authorize` extracts the `code=` parameter, exchanges it for an
 access/refresh token pair, and writes them to `schwab-broker-token-file`.
@@ -109,48 +105,6 @@ Every subsequent call in this package refreshes that token on disk
 automatically as it nears expiry -- you only need to re-run
 `schwab-broker-authorize` again if the *refresh* token itself expires
 (Schwab's refresh tokens last about 7 days).
-
-If you're regularly losing the 30-second race against the clipboard
-and minibuffer, that's exactly the failure `schwab-broker-authorize-listen`
-exists to fix -- see the next section for its current status.
-
-### Listener flow (`schwab-broker-authorize-listen`) -- not usable yet
-
-```
-M-x schwab-broker-authorize-listen
-```
-
-**As currently shipped, this command always signals an error.** It
-opens the same consent page `schwab-broker-authorize` does (so that
-half works), but Emacs's built-in GnuTLS integration only supports
-*client*-mode TLS -- it cannot terminate the inbound HTTPS connection
-Schwab's callback URL requires, so it cannot actually catch and
-exchange the redirect. This was investigated and confirmed live, not
-assumed: standing up a `make-network-process` server with
-`:tls-parameters` and connecting to it with a real TLS client shows the
-accepted connection receiving the still-encrypted `ClientHello` bytes
-verbatim -- no server-side handshake is ever attempted. See
-`schwab-broker--listener-ensure-tls-available`'s docstring in
-`schwab-broker-oauth.el` for the full evidence.
-
-Until Emacs (or this package, via some future pluggable TLS backend)
-gains real server-role TLS support, use one of:
-
-- `schwab-broker-authorize` -- the paste flow above, unaffected by any
-  of this.
-- `tradeboards auth schwab --listen` -- this package's Python-side
-  sibling CLI *does* have a working callback listener (Python's `ssl'
-  module supports server-role TLS), writing to the same
-  `~/.config/schwab/token.json` this package reads.
-
-The request-parsing/exchange/one-shot/timeout machinery
-`schwab-broker-authorize-listen` would use, once real TLS support
-exists, is implemented and tested regardless (`schwab-broker--listener-run'
-and its siblings in `schwab-broker-oauth.el`) -- only the TLS
-termination step itself is the gap. Customization variables
-`schwab-broker-tls-cert-file`/`schwab-broker-tls-key-file` (an ephemeral
-self-signed cert auto-generated via `openssl` if neither is set) and
-`schwab-broker-listener-timeout` are ready for whenever that gap closes.
 
 ### Check auth state
 
@@ -183,7 +137,6 @@ and either returns `DATA` directly or signals `schwab-broker-error` with
 | Function | Description |
 | --- | --- |
 | `schwab-broker-authorize` | Interactive manual-authorize (paste) flow (see above). |
-| `schwab-broker-authorize-listen` | Interactive callback-listener flow -- currently always errors; see "Getting a token" above. |
 | `schwab-broker-auth-status` | Interactive: report authentication state via `message`. |
 
 ### Market data (`schwab-broker-marketdata.el`, `https://api.schwabapi.com/marketdata/v1`)
@@ -212,19 +165,18 @@ is read-only market data and account access.
 
 ## Token-file interop note
 
-`schwab-broker-token-file` (default `~/.config/schwab/token.json`) uses the
-same JSON shape as a reference Python-side sibling implementation of
-this same OAuth flow: `access_token`, `refresh_token`,
+`schwab-broker-token-file` (default `~/.config/schwab/token.json`) uses a
+simple JSON shape: `access_token`, `refresh_token`,
 `access_token_expires_at`, `refresh_token_expires_at`, `obtained_at`
-(the two `_expires_at` fields are ISO-8601 UTC strings). A Python
-client written against that shape and this Emacs client can point at
-the same file and share one authorization -- whichever one refreshes
-first (serialized on the Emacs side by a `mkdir`-based lockfile,
-`TOKEN-FILE.lock`, alongside the token file) writes the new tokens back
-for the other to pick up. This is a best-effort lock: it only
-serializes concurrent refreshes issued from within one Emacs process,
-not true cross-process mutual exclusion with a separately-running
-script refreshing at the exact same instant.
+(the two `_expires_at` fields are ISO-8601 UTC strings). Any other
+client using the same JSON shape can point at the same file and share
+one authorization -- whichever one refreshes first (serialized on the
+Emacs side by a `mkdir`-based lockfile, `TOKEN-FILE.lock`, alongside
+the token file) writes the new tokens back for the other to pick up.
+This is a best-effort lock: it only serializes concurrent refreshes
+issued from within one Emacs process, not true cross-process mutual
+exclusion with a separately-running script refreshing at the exact
+same instant.
 
 ## Roadmap
 
@@ -235,9 +187,10 @@ script refreshing at the exact same instant.
   not implemented.
 - Transaction history and account-level order/transaction endpoints
   are not yet covered.
-- `schwab-broker-authorize-listen` cannot actually serve HTTPS today --
-  Emacs's built-in GnuTLS only supports client-mode TLS. See "Getting a
-  token" above for the investigation and the working alternatives.
+- A callback listener (to avoid the manual paste step) isn't possible
+  yet -- Emacs's built-in GnuTLS only supports client-mode TLS, so it
+  cannot terminate the inbound HTTPS connection Schwab's callback URL
+  requires.
 
 ## Development
 
