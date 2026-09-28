@@ -192,6 +192,22 @@ Returns nil for an empty or blank body."
          :array-type 'list
          :null-object nil)))))
 
+(defun schwab-broker--number-param (value)
+  "Return VALUE as a query-parameter string, or nil when VALUE is nil."
+  (when value
+    (format "%s" value)))
+
+(defun schwab-broker--bool-param (value)
+  "Map VALUE to a Schwab boolean query-parameter string, or nil.
+VALUE of t maps to \"true\", the keyword :false maps to \"false\", and
+anything else (including plain nil) maps to nil so the parameter is
+omitted and Schwab's own default applies."
+  (cond
+   ((eq value t)
+    "true")
+   ((eq value :false)
+    "false")))
+
 (defun schwab-broker--excerpt (body)
   "Truncate BODY to at most 300 characters, for error messages."
   (let ((text (or body "")))
@@ -721,6 +737,17 @@ forwards an error -- see `schwab-broker--request-with-token'."
        (funcall callback
                 nil
                 (list :parse-error (error-message-string err))))))))
+
+(defun schwab-broker--json-request (base-url path params callback method body)
+  "Issue an authenticated METHOD request against BASE-URL + PATH.
+Like `schwab-broker--request' but adds the JSON `Content-Type' header
+and serializes BODY (an alist/vector) as the request body.  PARAMS is
+an alist of query parameters, nil values dropped.  CALLBACK is called
+with two arguments, the parsed JSON response and ERR."
+  (schwab-broker--request
+   base-url path params callback method
+   (json-serialize body)
+   '(("Content-Type" . "application/json"))))
 
 (provide 'schwab-broker-oauth)
 ;;; schwab-broker-oauth.el ends here
