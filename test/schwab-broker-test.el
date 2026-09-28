@@ -446,5 +446,424 @@ temp path (and its lock directory) that is removed afterward."
           (schwab-broker-show-quote "AAPL"))
         (should (string-match-p "191.52" shown))))))
 
+;; -- order-spec builders (pure functions, no network) --
+
+(ert-deftest schwab-broker-test-order-spec-generic-shape ()
+  (let ((spec
+         (schwab-broker-order-spec
+          :order-type "MARKET"
+          :legs
+          (list
+           (schwab-broker--order-leg
+            "BUY" 1 (schwab-broker--equity-instrument "aapl"))))))
+    (should (equal (alist-get 'orderType spec) "MARKET"))
+    (should (equal (alist-get 'session spec) "NORMAL"))
+    (should (equal (alist-get 'duration spec) "DAY"))
+    (should (equal (alist-get 'orderStrategyType spec) "SINGLE"))
+    (should-not (alist-get 'price spec))
+    (should-not (alist-get 'stopPrice spec))
+    (let ((leg (aref (alist-get 'orderLegCollection spec) 0)))
+      (should (equal (alist-get 'instruction leg) "BUY"))
+      (should (= (alist-get 'quantity leg) 1))
+      (should
+       (equal (alist-get 'symbol (alist-get 'instrument leg)) "AAPL"))
+      (should
+       (equal (alist-get 'assetType (alist-get 'instrument leg)) "EQUITY")))))
+
+(ert-deftest schwab-broker-test-order-equity-market-shape ()
+  (let ((spec (schwab-broker-order-equity-market "aapl" "BUY" 10)))
+    (should (equal (alist-get 'orderType spec) "MARKET"))
+    (should-not (alist-get 'price spec))
+    (should
+     (equal
+      (alist-get
+       'symbol
+       (alist-get
+        'instrument (aref (alist-get 'orderLegCollection spec) 0)))
+      "AAPL"))))
+
+(ert-deftest schwab-broker-test-order-equity-limit-shape ()
+  (let ((spec (schwab-broker-order-equity-limit "aapl" "BUY" 10 150.25)))
+    (should (equal (alist-get 'orderType spec) "LIMIT"))
+    (should (= (alist-get 'price spec) 150.25))))
+
+(ert-deftest schwab-broker-test-order-equity-stop-shape ()
+  (let ((spec (schwab-broker-order-equity-stop "aapl" "SELL" 10 140.0)))
+    (should (equal (alist-get 'orderType spec) "STOP"))
+    (should (= (alist-get 'stopPrice spec) 140.0))
+    (should-not (alist-get 'price spec))))
+
+(ert-deftest schwab-broker-test-order-equity-stop-limit-shape ()
+  (let ((spec
+         (schwab-broker-order-equity-stop-limit "aapl" "SELL" 10 140.0 139.5)))
+    (should (equal (alist-get 'orderType spec) "STOP_LIMIT"))
+    (should (= (alist-get 'stopPrice spec) 140.0))
+    (should (= (alist-get 'price spec) 139.5))))
+
+(ert-deftest schwab-broker-test-order-option-market-shape ()
+  (let ((spec
+         (schwab-broker-order-option-market
+          "aapl  251017c00150000" "BUY_TO_OPEN" 1)))
+    (should (equal (alist-get 'orderType spec) "MARKET"))
+    (should
+     (equal
+      (alist-get
+       'assetType
+       (alist-get
+        'instrument (aref (alist-get 'orderLegCollection spec) 0)))
+      "OPTION"))))
+
+(ert-deftest schwab-broker-test-order-option-limit-shape ()
+  (let ((spec
+         (schwab-broker-order-option-limit
+          "AAPL  251017C00150000" "SELL_TO_CLOSE" 1 2.5)))
+    (should (equal (alist-get 'orderType spec) "LIMIT"))
+    (should (= (alist-get 'price spec) 2.5))))
+
+;; -- single account --
+
+(ert-deftest schwab-broker-test-account-fetches-by-hash ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let (captured-url)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer
+                      200
+                      (json-serialize
+                       '((securitiesAccount
+                          . ((type . "MARGIN") (accountNumber . "12345678"))))))
+                     (funcall callback nil)))))
+        (let ((result (schwab-broker-account-sync "HASH123" :positions t)))
+          (should
+           (string-prefix-p
+            "https://api.schwabapi.com/trader/v1/accounts/HASH123?"
+            captured-url))
+          (should (string-match-p "fields=positions" captured-url))
+          (should
+           (equal
+            (alist-get
+             'accountNumber (alist-get 'securitiesAccount result))
+            "12345678")))))))
+
+;; -- orders: list per-account, get one, and across all accounts --
+
+(ert-deftest schwab-broker-test-orders-for-account-maps-params ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let (captured-url)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer 200 "[]")
+                     (funcall callback nil)))))
+        (schwab-broker-orders-for-account-sync
+         "HASH123" :max-results 5 :from-entered-time "2026-09-01T00:00:00.000Z"
+         :to-entered-time "2026-09-28T00:00:00.000Z" :status "WORKING"))
+      (should
+       (string-prefix-p
+        "https://api.schwabapi.com/trader/v1/accounts/HASH123/orders?"
+        captured-url))
+      (dolist (expected
+               '("maxResults=5" "fromEnteredTime=" "toEnteredTime="
+                 "status=WORKING"))
+        (should (string-match-p (regexp-quote expected) captured-url))))))
+
+(ert-deftest schwab-broker-test-order-fetches-single-order-by-id ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let (captured-url)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer
+                      200 (json-serialize '((orderId . 987) (status . "FILLED"))))
+                     (funcall callback nil)))))
+        (let ((result (schwab-broker-order-sync "HASH123" 987)))
+          (should
+           (equal
+            captured-url
+            "https://api.schwabapi.com/trader/v1/accounts/HASH123/orders/987"))
+          (should (equal (alist-get 'status result) "FILLED")))))))
+
+(ert-deftest schwab-broker-test-orders-across-all-accounts-maps-params ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let (captured-url)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer 200 "[]")
+                     (funcall callback nil)))))
+        (schwab-broker-orders-sync
+         :from-entered-time "2026-09-01T00:00:00.000Z"
+         :to-entered-time "2026-09-28T00:00:00.000Z"))
+      (should
+       (string-prefix-p
+        "https://api.schwabapi.com/trader/v1/orders?" captured-url)))))
+
+;; -- order safety gate: place/replace/cancel --
+
+(ert-deftest schwab-broker-test-place-order-refuses-without-allow-orders ()
+  (schwab-broker-test--with-temp-token-file
+    (let ((schwab-broker-allow-orders nil))
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (&rest _) (error "must not be called"))))
+        (should-error
+         (schwab-broker-place-order-sync
+          "HASH123" (schwab-broker-order-equity-market "AAPL" "BUY" 1))
+         :type 'user-error)))))
+
+(ert-deftest schwab-broker-test-replace-order-refuses-without-allow-orders ()
+  (schwab-broker-test--with-temp-token-file
+    (let ((schwab-broker-allow-orders nil))
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (&rest _) (error "must not be called"))))
+        (should-error
+         (schwab-broker-replace-order-sync
+          "HASH123" 987 (schwab-broker-order-equity-market "AAPL" "BUY" 1))
+         :type 'user-error)))))
+
+(ert-deftest schwab-broker-test-cancel-order-refuses-without-allow-orders ()
+  (schwab-broker-test--with-temp-token-file
+    (let ((schwab-broker-allow-orders nil))
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (&rest _) (error "must not be called"))))
+        (should-error
+         (schwab-broker-cancel-order-sync "HASH123" 987) :type 'user-error)))))
+
+(ert-deftest schwab-broker-test-place-order-posts-json-body-when-allowed ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let ((schwab-broker-allow-orders t)
+          captured-url captured-method captured-headers captured-data)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url
+                         captured-method url-request-method
+                         captured-headers url-request-extra-headers
+                         captured-data url-request-data)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer 201 "")
+                     (funcall callback nil)))))
+        (schwab-broker-place-order-sync
+         "HASH123" (schwab-broker-order-equity-market "AAPL" "BUY" 1)))
+      (should
+       (equal
+        captured-url
+        "https://api.schwabapi.com/trader/v1/accounts/HASH123/orders"))
+      (should (equal captured-method "POST"))
+      (should
+       (equal
+        (alist-get "Content-Type" captured-headers nil nil #'equal)
+        "application/json"))
+      (should (string-match-p "\"orderType\":\"MARKET\"" captured-data))
+      (should (string-match-p "\"symbol\":\"AAPL\"" captured-data)))))
+
+(ert-deftest schwab-broker-test-replace-order-puts-json-body-when-allowed ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let ((schwab-broker-allow-orders t)
+          captured-url captured-method)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url captured-method url-request-method)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer 200 "")
+                     (funcall callback nil)))))
+        (schwab-broker-replace-order-sync
+         "HASH123" 987 (schwab-broker-order-equity-limit "AAPL" "BUY" 1 150.0)))
+      (should
+       (equal
+        captured-url
+        "https://api.schwabapi.com/trader/v1/accounts/HASH123/orders/987"))
+      (should (equal captured-method "PUT")))))
+
+(ert-deftest schwab-broker-test-cancel-order-deletes-when-allowed ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let ((schwab-broker-allow-orders t)
+          captured-url captured-method)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url captured-method url-request-method)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer 200 "")
+                     (funcall callback nil)))))
+        (schwab-broker-cancel-order-sync "HASH123" 987))
+      (should
+       (equal
+        captured-url
+        "https://api.schwabapi.com/trader/v1/accounts/HASH123/orders/987"))
+      (should (equal captured-method "DELETE")))))
+
+;; -- preview order: never gated --
+
+(ert-deftest schwab-broker-test-preview-order-never-gated ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let ((schwab-broker-allow-orders nil)
+          captured-url captured-method)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url captured-method url-request-method)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer
+                      200 (json-serialize '((orderValue . 150.0))))
+                     (funcall callback nil)))))
+        (let ((result
+               (schwab-broker-preview-order-sync
+                "HASH123" (schwab-broker-order-equity-market "AAPL" "BUY" 1))))
+          (should
+           (equal
+            captured-url
+            "https://api.schwabapi.com/trader/v1/accounts/HASH123/previewOrder"))
+          (should (equal captured-method "POST"))
+          (should (= (alist-get 'orderValue result) 150.0)))))))
+
+;; -- transactions --
+
+(ert-deftest schwab-broker-test-transactions-maps-params ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let (captured-url)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer 200 "[]")
+                     (funcall callback nil)))))
+        (schwab-broker-transactions-sync
+         "HASH123" :start-date "2026-09-01T00:00:00.000Z"
+         :end-date "2026-09-28T00:00:00.000Z" :symbol "AAPL" :types "TRADE"))
+      (should
+       (string-prefix-p
+        "https://api.schwabapi.com/trader/v1/accounts/HASH123/transactions?"
+        captured-url))
+      (dolist (expected '("startDate=" "endDate=" "symbol=AAPL" "types=TRADE"))
+        (should (string-match-p (regexp-quote expected) captured-url))))))
+
+(ert-deftest schwab-broker-test-transaction-fetches-single-by-id ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let (captured-url)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer
+                      200 (json-serialize '((activityId . 555))))
+                     (funcall callback nil)))))
+        (let ((result (schwab-broker-transaction-sync "HASH123" 555)))
+          (should
+           (equal
+            captured-url
+            "https://api.schwabapi.com/trader/v1/accounts/HASH123/transactions/555"))
+          (should (= (alist-get 'activityId result) 555)))))))
+
+;; -- user preference --
+
+(ert-deftest schwab-broker-test-user-preference-fetches ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let (captured-url)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer
+                      200
+                      (json-serialize
+                       '((accounts . [((accountNumber . "12345678"))]))))
+                     (funcall callback nil)))))
+        (let ((result (schwab-broker-user-preference-sync)))
+          (should
+           (equal
+            captured-url "https://api.schwabapi.com/trader/v1/userPreference"))
+          (should
+           (equal
+            (alist-get
+             'accountNumber (car (alist-get 'accounts result)))
+            "12345678")))))))
+
+;; -- market data: expiration chain, single market, instruments --
+
+(ert-deftest schwab-broker-test-expiration-chain-fetches-by-symbol ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let (captured-url)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer
+                      200 (json-serialize '((status . "SUCCESS"))))
+                     (funcall callback nil)))))
+        (schwab-broker-expiration-chain-sync "aapl"))
+      (should
+       (string-prefix-p
+        "https://api.schwabapi.com/marketdata/v1/expirationchain?"
+        captured-url))
+      (should (string-match-p "symbol=AAPL" captured-url)))))
+
+(ert-deftest schwab-broker-test-market-fetches-single-market-id ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let (captured-url)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer
+                      200 (json-serialize '((equity . ((isOpen . t))))))
+                     (funcall callback nil)))))
+        (schwab-broker-market-sync "equity" :date "2026-09-28"))
+      (should
+       (string-prefix-p
+        "https://api.schwabapi.com/marketdata/v1/markets/equity?"
+        captured-url))
+      (should (string-match-p "date=2026-09-28" captured-url)))))
+
+(ert-deftest schwab-broker-test-instruments-searches-by-symbol-and-projection ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let (captured-url)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer
+                      200 (json-serialize '((instruments . []))))
+                     (funcall callback nil)))))
+        (schwab-broker-instruments-sync "AAPL" "symbol-search"))
+      (should
+       (string-prefix-p
+        "https://api.schwabapi.com/marketdata/v1/instruments?" captured-url))
+      (should (string-match-p "symbol=AAPL" captured-url))
+      (should (string-match-p "projection=symbol-search" captured-url)))))
+
+(ert-deftest schwab-broker-test-instrument-fetches-by-cusip ()
+  (schwab-broker-test--with-temp-token-file
+    (schwab-broker--write-token (schwab-broker-test--fresh-token))
+    (let (captured-url)
+      (cl-letf (((symbol-function 'url-retrieve)
+                 (lambda (url callback &rest _args)
+                   (setq captured-url url)
+                   (with-temp-buffer
+                     (schwab-broker-test--response-buffer
+                      200 (json-serialize '((cusip . "037833100"))))
+                     (funcall callback nil)))))
+        (let ((result (schwab-broker-instrument-sync "037833100")))
+          (should
+           (equal
+            captured-url
+            "https://api.schwabapi.com/marketdata/v1/instruments/037833100"))
+          (should (equal (alist-get 'cusip result) "037833100")))))))
+
 (provide 'schwab-broker-test)
 ;;; schwab-broker-test.el ends here
