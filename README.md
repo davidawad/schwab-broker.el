@@ -8,8 +8,9 @@ third-party HTTP or JSON library. Requires Emacs 27.1+.
 
 ## Install
 
-Copy `schwab-broker.el`, `schwab-broker-oauth.el`, `schwab-broker-marketdata.el`, and
-`schwab-broker-trader.el` somewhere on your `load-path`, then:
+Copy `schwab-broker.el`, `schwab-broker-oauth.el`, `schwab-broker-marketdata.el`,
+`schwab-broker-orders.el`, and `schwab-broker-trader.el` somewhere on
+your `load-path`, then:
 
 ```elisp
 (require 'schwab-broker)
@@ -147,21 +148,78 @@ and either returns `DATA` directly or signals `schwab-broker-error` with
 | `schwab-broker-quotes SYMBOLS CALLBACK` | Batch quotes; `SYMBOLS` is a list or comma-separated string. |
 | `schwab-broker-price-history SYMBOL CALLBACK &key period-type period frequency-type frequency start end need-extended-hours-data need-previous-close` | OHLCV candles. |
 | `schwab-broker-option-chain SYMBOL CALLBACK &key contract-type strike-count include-underlying-quote strategy interval strike range from-date to-date volatility underlying-price interest-rate days-to-expiration exp-month option-type` | Full option-chain parameter surface. |
-| `schwab-broker-market-hours MARKETS CALLBACK &key date` | Market-hours for one or more markets. |
+| `schwab-broker-expiration-chain SYMBOL CALLBACK` | Option expiration dates for a symbol. |
+| `schwab-broker-market-hours MARKETS CALLBACK &key date` | Market hours for one or more markets. |
+| `schwab-broker-market MARKET-ID CALLBACK &key date` | Market hours for a single market (`"equity"`, `"option"`, ...). |
 | `schwab-broker-movers INDEX CALLBACK &key sort frequency` | Top movers for an index/exchange. |
+| `schwab-broker-instruments SYMBOL PROJECTION CALLBACK` | Instrument search (`symbol-search`, `desc-search`, `fundamental`, ...). |
+| `schwab-broker-instrument CUSIP CALLBACK` | Instrument fundamentals by CUSIP. |
 | `schwab-broker-show-quote SYMBOL` | Interactive demo: fetch + `message` a quote's last/mark price. |
 
 ### Trader (`schwab-broker-trader.el`, `https://api.schwabapi.com/trader/v1`)
+
+Every account-scoped function below takes an `ACCOUNT-HASH` -- the
+opaque `hashValue` returned by `schwab-broker-account-numbers`, never
+the plain account number.
 
 | Function | Description |
 | --- | --- |
 | `schwab-broker-account-numbers CALLBACK` | Account-number/hash-value mappings. |
 | `schwab-broker-accounts CALLBACK &key positions` | All accounts, optionally with positions. |
+| `schwab-broker-account ACCOUNT-HASH CALLBACK &key positions` | One account. |
 | `schwab-broker-positions CALLBACK` | Flattened positions across all accounts, each tagged with its `accountNumber`. |
+| `schwab-broker-orders-for-account ACCOUNT-HASH CALLBACK &key max-results from-entered-time to-entered-time status` | List one account's orders. |
+| `schwab-broker-place-order ACCOUNT-HASH ORDER-SPEC CALLBACK` | Place an order. **Gated** -- see "Order safety" below. |
+| `schwab-broker-order ACCOUNT-HASH ORDER-ID CALLBACK` | Fetch one order. |
+| `schwab-broker-replace-order ACCOUNT-HASH ORDER-ID ORDER-SPEC CALLBACK` | Replace an order. **Gated.** |
+| `schwab-broker-cancel-order ACCOUNT-HASH ORDER-ID CALLBACK` | Cancel an order. **Gated.** |
+| `schwab-broker-orders CALLBACK &key max-results from-entered-time to-entered-time status` | List orders across all linked accounts. |
+| `schwab-broker-preview-order ACCOUNT-HASH ORDER-SPEC CALLBACK` | Simulate an order. Never gated -- places nothing. |
+| `schwab-broker-transactions ACCOUNT-HASH CALLBACK &key start-date end-date symbol types` | List one account's transactions. |
+| `schwab-broker-transaction ACCOUNT-HASH TRANSACTION-ID CALLBACK` | Fetch one transaction. |
+| `schwab-broker-user-preference CALLBACK` | The caller's user preferences (streamer info, account nicknames/colors). |
 
-**No order placement.** There is no `schwab-broker-place-order`/`schwab-broker-stage-order`
-function anywhere in this package, by construction -- everything above
-is read-only market data and account access.
+### Order-spec builders (`schwab-broker-orders.el`)
+
+Pure functions -- no network I/O -- that build the JSON alist
+`schwab-broker-place-order`/`schwab-broker-preview-order`/
+`schwab-broker-replace-order` send, mirroring schwab-py's order
+templates. `INSTRUCTION` is one of Schwab's own enums: `"BUY"`/`"SELL"`
+for equities, `"BUY_TO_OPEN"`/`"BUY_TO_CLOSE"`/`"SELL_TO_OPEN"`/
+`"SELL_TO_CLOSE"` for options.
+
+| Function | Description |
+| --- | --- |
+| `schwab-broker-order-spec &key order-type session duration order-strategy-type price stop-price legs` | Generic builder every wrapper below is implemented on top of. |
+| `schwab-broker-order-equity-market SYMBOL INSTRUCTION QUANTITY` | Market order for shares. |
+| `schwab-broker-order-equity-limit SYMBOL INSTRUCTION QUANTITY PRICE` | Limit order for shares. |
+| `schwab-broker-order-equity-stop SYMBOL INSTRUCTION QUANTITY STOP-PRICE` | Stop order for shares. |
+| `schwab-broker-order-equity-stop-limit SYMBOL INSTRUCTION QUANTITY STOP-PRICE PRICE` | Stop-limit order for shares. |
+| `schwab-broker-order-option-market OPTION-SYMBOL INSTRUCTION QUANTITY` | Market order for an option contract. |
+| `schwab-broker-order-option-limit OPTION-SYMBOL INSTRUCTION QUANTITY PRICE` | Limit order for an option contract. |
+
+```elisp
+;; Preview (never places) a limit buy of 1 share of AAPL at $150:
+(let* ((hash (alist-get 'hashValue (car (schwab-broker-account-numbers-sync))))
+       (spec (schwab-broker-order-equity-limit "AAPL" "BUY" 1 150.00)))
+  (schwab-broker-preview-order-sync hash spec))
+```
+
+## Order safety
+
+This is a **REAL-MONEY brokerage account API with no sandbox.**
+`schwab-broker-place-order`, `schwab-broker-replace-order`, and
+`schwab-broker-cancel-order` (and their `-sync` forms) all signal a
+`user-error` unless the defcustom `schwab-broker-allow-orders` is
+non-nil; it defaults to nil:
+
+```elisp
+(setq schwab-broker-allow-orders t) ; opt in, deliberately
+```
+
+`schwab-broker-preview-order` is never gated by this variable, since
+Schwab's own `/previewOrder` endpoint only simulates an order and
+places nothing.
 
 ## Token-file interop note
 
@@ -180,13 +238,12 @@ same instant.
 
 ## Roadmap
 
-- Order placement (staging/firing trades) is explicitly out of scope
-  for this initial version and not implemented anywhere in this
-  package.
-- Streamer (Schwab's WebSocket-based real-time streaming quotes) is
-  not implemented.
-- Transaction history and account-level order/transaction endpoints
-  are not yet covered.
+See `ROADMAP.md` for the full per-endpoint coverage matrix (method +
+path, elisp function, mocked/live test status). In short:
+
+- Full Trader API and Market Data API coverage as of v0.2.0.
+- The Streamer (Schwab's WebSocket-based real-time streaming quotes)
+  is explicitly out of scope for this package -- see `ROADMAP.md`.
 - A callback listener (to avoid the manual paste step) isn't possible
   yet -- Emacs's built-in GnuTLS only supports client-mode TLS, so it
   cannot terminate the inbound HTTPS connection Schwab's callback URL
@@ -194,6 +251,10 @@ same instant.
 
 ## Development
 
-Tests live in `test/schwab-broker-test.el` (ERT), mocking the built-in
-`url-retrieve` boundary -- no real network access, no real credentials.
-Byte-compiles clean and is `checkdoc`-clean.
+- Mocked tests live in `test/schwab-broker-test.el` (ERT), mocking the
+  built-in `url-retrieve` boundary -- no real network access, no real
+  credentials, runs in CI. Byte-compiles clean (warnings as errors),
+  and is `checkdoc`-clean and `package-lint`-clean.
+- LIVE tests live in `test/live/schwab-broker-live-test.el` -- hit the
+  real Schwab API against a real account, self-skip without a live
+  token, and never run in CI. Run via `test/live/run-live-tests.sh`.
