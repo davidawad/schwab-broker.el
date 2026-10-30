@@ -229,12 +229,11 @@ simple JSON shape: `access_token`, `refresh_token`,
 (the two `_expires_at` fields are ISO-8601 UTC strings). Any other
 client using the same JSON shape can point at the same file and share
 one authorization -- whichever one refreshes first (serialized on the
-Emacs side by a `mkdir`-based lockfile, `TOKEN-FILE.lock`, alongside
-the token file) writes the new tokens back for the other to pick up.
-This is a best-effort lock: it only serializes concurrent refreshes
-issued from within one Emacs process, not true cross-process mutual
-exclusion with a separately-running script refreshing at the exact
-same instant.
+Emacs side by an exclusive `flock(2)` on `TOKEN-FILE.lock`, the same
+file and primitive the Rust clients use) writes the new tokens back for
+the other to pick up. Emacs has no `flock`, so it takes the lock via a
+helper process: `lockf(1)` (macOS/BSD) or `flock(1)`; one of them must be
+installed. The lock file is never deleted.
 
 ## Roadmap
 

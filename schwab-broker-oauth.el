@@ -31,12 +31,9 @@
 ;; plus both expiries as ISO-8601 strings, written with file mode 600.
 ;; Every API call refreshes it first if the access token is stale
 ;; (skewed 60s early), serialized against concurrent refreshes within
-;; this Emacs process by a `mkdir'-based lockfile sitting alongside the
-;; token file (TOKEN-FILE.lock).  This is a best-effort, single-process
-;; lock: it does not interoperate with a *different* process (e.g. a
-;; separate script) refreshing the same token file at the same instant
-;; -- only with concurrent refreshes issued from within this same
-;; Emacs.
+;; this Emacs and against other processes (the Rust clients) by an
+;; exclusive flock(2) on TOKEN-FILE.lock, the same file and primitive
+;; they use.  Emacs takes it through a lockf(1)/flock(1) helper process.
 ;;
 ;; The single network primitive every request funnels through is
 ;; `schwab-broker--http', a thin wrapper around the built-in, asynchronous
@@ -315,7 +312,7 @@ bounded by `schwab-broker-http-timeout'."
   (expand-file-name schwab-broker-token-file))
 
 (defun schwab-broker--lock-path ()
-  "Return the sidecar lock directory path for `schwab-broker-token-file-path'."
+  "Return the sidecar lock file path for `schwab-broker-token-file-path'."
   (concat (schwab-broker-token-file-path) ".lock"))
 
 (defun schwab-broker--read-token ()
@@ -345,19 +342,72 @@ Returns nil if the file is absent or unparseable."
     (set-file-modes tmp #o600)
     (rename-file tmp path t)))
 
+;; The lock is a flock(2) exclusive lock on TOKEN-FILE.lock, the same file
+;; and primitive the Rust clients (invest-fetch, tradeboards) use.  Emacs
+;; has no flock, so a tiny helper process (lockf(1) on macOS/BSD, flock(1)
+;; elsewhere) takes the lock and holds it until Emacs closes its stdin.
+
+(defvar schwab-broker--lock-process nil
+  "Helper process currently holding the token-file flock, or nil.")
+
+(defconst schwab-broker--lock-hold-script "echo LOCKED; cat >/dev/null"
+  "Shell snippet run under the lock: announce, then hold until stdin EOF.")
+
+(defun schwab-broker--lock-command (file)
+  "Return the argv that try-locks FILE and holds it, or nil if no tool exists.
+Never removes FILE (`lockf' needs -k) and never waits (-t 0 / -n)."
+  (let ((hold (list "sh" "-c" schwab-broker--lock-hold-script)))
+    (cond
+     ((executable-find "lockf")
+      (append (list (executable-find "lockf") "-k" "-s" "-t" "0" file) hold))
+     ((executable-find "flock")
+      (append (list (executable-find "flock") "-n" file) hold)))))
+
+(defun schwab-broker--try-lock (file argv)
+  "Run ARGV (a lock helper for FILE); return its process if it got the lock.
+Return nil when another holder has FILE locked."
+  (let* ((out "")
+         (proc (make-process
+                :name "schwab-token-lock"
+                :command argv
+                :buffer nil
+                :connection-type 'pipe
+                :noquery t
+                :filter (lambda (_p chunk) (setq out (concat out chunk)))
+                :sentinel #'ignore)))
+    (while (and (process-live-p proc)
+                (not (string-search "LOCKED" out)))
+      (accept-process-output proc 0.05))
+    (cond
+     ((string-search "LOCKED" out)
+      proc)
+     (t
+      (ignore-errors (delete-process proc))
+      (unless (member (process-exit-status proc) '(1 75))
+        (signal
+         'schwab-broker-error
+         (list
+          :lock-failed
+          (format "token lock helper failed (exit %s) on %s: %s"
+                  (process-exit-status proc) file (string-trim out)))))
+      nil))))
+
 (defun schwab-broker--acquire-lock ()
-  "Create and return the token-file lock directory, blocking briefly.
+  "Take the flock on the token lock file and return its path, blocking briefly.
 Retries for up to `schwab-broker-lock-timeout' seconds; signals
-`schwab-broker-error' with `:lock-timeout' on timeout."
-  (let ((lock (schwab-broker--lock-path))
-        (deadline (+ (float-time) schwab-broker-lock-timeout)))
+`schwab-broker-error' with `:lock-timeout' on timeout, or `:lock-failed'
+when no lock helper (lockf/flock) is installed."
+  (let* ((lock (schwab-broker--lock-path))
+         (argv (schwab-broker--lock-command lock))
+         (deadline (+ (float-time) schwab-broker-lock-timeout)))
+    (unless argv
+      (signal
+       'schwab-broker-error
+       (list :lock-failed "no lockf(1) or flock(1) found to lock the Schwab token file")))
+    (make-directory (file-name-directory lock) t)
     (while (not
-            (condition-case nil
-                (progn
-                  (make-directory lock)
-                  t)
-              (error
-               nil)))
+            (setq schwab-broker--lock-process
+                  (schwab-broker--try-lock lock argv)))
       (when (> (float-time) deadline)
         (signal
          'schwab-broker-error
@@ -370,9 +420,15 @@ Retries for up to `schwab-broker-lock-timeout' seconds; signals
     lock))
 
 (defun schwab-broker--release-lock ()
-  "Remove the token-file lock directory, ignoring errors."
-  (ignore-errors
-    (delete-directory (schwab-broker--lock-path))))
+  "Release the token-file flock, ignoring errors."
+  (let ((proc schwab-broker--lock-process))
+    (setq schwab-broker--lock-process nil)
+    (when (processp proc)
+      (ignore-errors (process-send-eof proc))
+      (let ((deadline (+ (float-time) 2)))
+        (while (and (process-live-p proc) (< (float-time) deadline))
+          (accept-process-output proc 0.05)))
+      (ignore-errors (delete-process proc)))))
 
 ;; -- ISO-8601 timestamps + freshness --
 

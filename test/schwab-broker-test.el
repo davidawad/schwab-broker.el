@@ -63,13 +63,13 @@ still live (far-future expiries)."
 
 (defmacro schwab-broker-test--with-temp-token-file (&rest body)
   "Run BODY with `schwab-broker-token-file' pointed at a fresh, nonexistent
-temp path (and its lock directory) that is removed afterward."
+temp path (and its lock file) that is removed afterward."
   (declare (indent 0))
   `(let ((schwab-broker-token-file (make-temp-file "schwab-broker-test-token" nil ".json")))
      (delete-file schwab-broker-token-file)
      (unwind-protect (progn ,@body)
        (ignore-errors (delete-file schwab-broker-token-file))
-       (ignore-errors (delete-directory (concat schwab-broker-token-file ".lock") t)))))
+       (ignore-errors (delete-file (concat schwab-broker-token-file ".lock"))))))
 
 (defmacro schwab-broker-test--with-creds (&rest body)
   "Run BODY with fake app-key/app-secret configured."
@@ -191,21 +191,74 @@ temp path (and its lock directory) that is removed afterward."
 
 ;; -- lockfile --
 
+;; The Rust clients take flock(2) LOCK_EX on a regular 0-byte file.  `perl'
+;; is used as an independent foreign flock holder/prober.
+
+(defun schwab-broker-test--perl-flock (file mode)
+  "Run perl against FILE: MODE `hold' keeps LOCK_EX until stdin EOF.
+MODE `probe' returns exit 0 if LOCK_EX|LOCK_NB succeeds, else 1."
+  (let ((prog (pcase mode
+                ('hold "open(F,'>>',$ARGV[0])||die;flock(F,2)||die;$|=1;print qq(HELD\n);<STDIN>;")
+                ('probe "open(F,'>>',$ARGV[0])||die;exit(flock(F,6)?0:1)"))))
+    (if (eq mode 'probe)
+        (call-process "perl" nil nil nil "-e" prog file)
+      (let* ((out "")
+             (proc (make-process :name "perl-flock" :command (list "perl" "-e" prog file)
+                                 :buffer nil :connection-type 'pipe :noquery t
+                                 :filter (lambda (_p c) (setq out (concat out c))))))
+        (while (and (process-live-p proc) (not (string-search "HELD" out)))
+          (accept-process-output proc 0.05))
+        proc))))
+
+(defmacro schwab-broker-test--needs-flock-tools ()
+  "Skip the test unless perl and a lock helper exist."
+  '(progn
+     (skip-unless (executable-find "perl"))
+     (skip-unless (schwab-broker--lock-command "/dev/null"))))
+
 (ert-deftest schwab-broker-test-lock-acquire-then-release-round-trips ()
+  (schwab-broker-test--needs-flock-tools)
   (schwab-broker-test--with-temp-token-file
     (let ((lock (schwab-broker--acquire-lock)))
-      (should (file-directory-p lock))
+      (should (file-regular-p lock))
+      (should (= 1 (schwab-broker-test--perl-flock lock 'probe)))
       (schwab-broker--release-lock)
-      (should-not (file-exists-p lock)))))
+      (should (file-regular-p lock))
+      (should (= 0 (schwab-broker-test--perl-flock lock 'probe))))))
+
+(ert-deftest schwab-broker-test-lock-works-on-existing-zero-byte-file ()
+  (schwab-broker-test--needs-flock-tools)
+  (schwab-broker-test--with-temp-token-file
+    (let ((lock (schwab-broker--lock-path)))
+      (write-region "" nil lock)
+      (should (equal lock (schwab-broker--acquire-lock)))
+      (schwab-broker--release-lock)
+      (should (= 0 (file-attribute-size (file-attributes lock)))))))
 
 (ert-deftest schwab-broker-test-lock-contention-times-out ()
+  (schwab-broker-test--needs-flock-tools)
   (schwab-broker-test--with-temp-token-file
-    (let ((schwab-broker-lock-timeout 0.2))
-      (make-directory (schwab-broker--lock-path))
+    (let ((schwab-broker-lock-timeout 0.3)
+          (holder (schwab-broker-test--perl-flock (schwab-broker--lock-path) 'hold)))
       (unwind-protect
           (let ((err (should-error (schwab-broker--acquire-lock) :type 'schwab-broker-error)))
             (should (eq (car (cdr err)) :lock-timeout)))
-        (ignore-errors (delete-directory (schwab-broker--lock-path)))))))
+        (delete-process holder)))))
+
+(ert-deftest schwab-broker-test-lock-acquired-once-foreign-holder-exits ()
+  (schwab-broker-test--needs-flock-tools)
+  (schwab-broker-test--with-temp-token-file
+    (let ((schwab-broker-lock-timeout 5)
+          (holder (schwab-broker-test--perl-flock (schwab-broker--lock-path) 'hold)))
+      (run-at-time 0.3 nil (lambda () (process-send-eof holder)))
+      (should (schwab-broker--acquire-lock))
+      (schwab-broker--release-lock))))
+
+(ert-deftest schwab-broker-test-lock-without-helper-signals-lock-failed ()
+  (schwab-broker-test--with-temp-token-file
+    (cl-letf (((symbol-function 'schwab-broker--lock-command) (lambda (_f) nil)))
+      (let ((err (should-error (schwab-broker--acquire-lock) :type 'schwab-broker-error)))
+        (should (eq (car (cdr err)) :lock-failed))))))
 
 ;; -- generic request plumbing: query-string / param mapping helpers --
 
