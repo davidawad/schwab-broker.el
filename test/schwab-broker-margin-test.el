@@ -318,3 +318,49 @@ against the account function a hair either side."
     ;; equity = 100 U - 4000; maintenance = 25 U; excess = 75 U - 4000 -> U = 53.33
     (should (schwab-broker-margin-test--near (plist-get down :price) 53.33 0.02))
     (should (plist-get called :already-called))))
+
+(ert-deftest schwab-broker-margin-ira-cash-secured ()
+  "CSP + long stock + long option fit in settled cash; unsettled never counts."
+  (let ((r (schwab-broker-margin-ira
+            :settled-cash 30000.0 :unsettled-cash 5000.0
+            :positions (list (schwab-broker-margin-cash-secured-put
+                              :strike 100 :premium 2.0)
+                             (schwab-broker-margin-stock-long :price 50 :qty 100)
+                             (schwab-broker-margin-long-option :price 3.0)))))
+    (should (plist-get r :allowed))
+    ;; 9,800 reserve + 5,000 stock + 300 option
+    (should (schwab-broker-margin-test--near (plist-get r :cash-required) 15100.0))
+    (should (schwab-broker-margin-test--near (plist-get r :buying-power) 14900.0))
+    (should (= (plist-get r :sma) 0.0))
+    (should-not (plist-get r :margin-call))))
+
+(ert-deftest schwab-broker-margin-ira-rejects-naked ()
+  "Naked short call, short strangle, short stock and 1x2 ratio are violations;
+a credit spread is allowed and needs its full width in cash."
+  (let ((r (schwab-broker-margin-ira
+            :settled-cash 1000.0
+            :positions (list (schwab-broker-margin-short-call
+                              :strike 130 :premium 1.0 :underlying 127.0)
+                             (schwab-broker-margin-strangle
+                              :put-strike 120 :call-strike 135 :put-price 1.0
+                              :call-price 1.0 :underlying 127.0)
+                             (schwab-broker-margin-stock-short :price 20 :qty 10)
+                             (schwab-broker-margin-ratio-spread
+                              :kind 'call :long-strike 125 :short-strike 135
+                              :long-price 9.0 :short-price 4.0 :long-qty 1
+                              :short-qty 2 :underlying 127.0)
+                             (schwab-broker-margin-vertical
+                              :kind 'put :long-strike 120 :short-strike 125
+                              :long-price 4.0 :short-price 6.0)))))
+    (should-not (plist-get r :allowed))
+    (should (= (length (plist-get r :violations)) 4))
+    (should (schwab-broker-margin-test--near (plist-get r :cash-required) 500.0))
+    (should (schwab-broker-margin-test--near (plist-get r :buying-power) 500.0))))
+
+(ert-deftest schwab-broker-margin-ira-shortfall ()
+  "Cash needed beyond settled cash is a shortfall, not negative buying power."
+  (let ((r (schwab-broker-margin-ira
+            :settled-cash 100.0 :unsettled-cash 99999.0
+            :positions (list (schwab-broker-margin-stock-long :price 50 :qty 100)))))
+    (should (= (plist-get r :buying-power) 0.0))
+    (should (schwab-broker-margin-test--near (plist-get r :shortfall) 4900.0))))

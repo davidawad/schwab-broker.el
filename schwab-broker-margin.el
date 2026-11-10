@@ -445,5 +445,56 @@ the first crossing is reported."
         (list :price trigger :already-called nil
               :excess-at-start e0 :excess-at-bound e-bound)))))
 
+(defun schwab-broker-margin--ira-naked-p (pos)
+  "Non-nil when position plist POS is not allowed in an IRA (uncovered risk)."
+  (let ((type (plist-get pos :type)))
+    (or (memq type '(short-put short-call stock-short calendar-short))
+        (and (memq type '(straddle strangle)) (eq (plist-get pos :side) 'short))
+        (and (eq type 'ratio-spread) (> (or (plist-get pos :naked-shorts) 0) 0)))))
+
+(defun schwab-broker-margin--ira-cash (pos)
+  "Cash an IRA must hold for allowed position plist POS (no margin loan)."
+  (pcase (plist-get pos :type)
+    ('cash-secured-put (plist-get pos :cash-reserve))
+    ('covered-call 0.0)
+    ('vertical-credit (plist-get pos :width))
+    ('long-option (plist-get pos :market-value))
+    ('stock-long (plist-get pos :market-value))
+    (_ (or (plist-get pos :initial) 0.0))))
+
+;;;###autoload
+(cl-defun schwab-broker-margin-ira
+    (&key (settled-cash 0.0) (unsettled-cash 0.0) positions)
+  "IRA / limited-margin variant: cash-secured only.
+No naked options, no short stock, no SMA, no margin loan: every position
+must be paid for or cash-secured with SETTLED-CASH.  UNSETTLED-CASH is
+reported but never counts as buying power (good-faith rule).  POSITIONS
+are plists from the helpers.  Allowed: long options and stock (paid in
+full), covered calls (stock leg not checked), cash-secured puts (strike
+x 100 - credit), vertical credit spreads (width in cash), debit spreads,
+calendars and condors (initial in cash).  Returns:
+  :allowed       nil when any position needs margin
+  :violations    list of (TYPE reason) for each disallowed position
+  :cash-required settled cash tied up by allowed positions
+  :buying-power  SETTLED-CASH - :cash-required (same for stock and
+                 options; nothing is doubled), floored at 0
+  :shortfall     how far :cash-required exceeds SETTLED-CASH, else 0
+  :sma           always 0.0
+  :margin-call   always nil (no loan to call)"
+  (let* ((bad (cl-remove-if-not #'schwab-broker-margin--ira-naked-p positions))
+         (ok (cl-remove-if #'schwab-broker-margin--ira-naked-p positions))
+         (req (apply #'+ 0.0 (mapcar #'schwab-broker-margin--ira-cash ok))))
+    (list :allowed (null bad)
+          :violations (mapcar (lambda (p) (list (plist-get p :type)
+                                                "needs margin: uncovered risk not allowed in an IRA"))
+                              bad)
+          :settled-cash settled-cash :unsettled-cash unsettled-cash
+          :cash-required req
+          :buying-power (max 0.0 (- settled-cash req))
+          :shortfall (max 0.0 (- req settled-cash))
+          :stock-bp (max 0.0 (- settled-cash req))
+          :option-bp (max 0.0 (- settled-cash req))
+          :sma 0.0 :margin-call nil)))
+
 (provide 'schwab-broker-margin)
 ;;; schwab-broker-margin.el ends here
