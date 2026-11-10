@@ -104,6 +104,84 @@ reproduce every observed number (test
 not published. The test `...-published-rules` pins the residuals so a rule
 change shows up.
 
+## Spreads, combinations and calendars (phase 2)
+
+All vectors below come from the CBOE Margin Requirement Examples PDF (AAPL
+close 127.83 on 2021-01-19, 100 contracts, the strategy-based column, NET of
+credit) and are tests in `test/schwab-broker-margin-test.el`.
+
+- Vertical spread (`schwab-broker-margin-vertical`). Debit spread: the debit
+  is paid in full, requirement = max loss. CBOE: long 100 Mar 125C @9.05 /
+  short 100 Mar 135C @4.75 = $43,000. Credit spread: requirement = strike
+  width x 100 x qty; `:net` = width - credit is the true max loss. The credit
+  spread rule is the standard differential rule (CBOE Margin Manual, spread
+  differential; FINRA 4210(f)(8)(B)); the CBOE examples PDF has no credit
+  vertical, so those tests are arithmetic, not CBOE vectors.
+- Straddle / strangle (`-straddle`, `-strangle`). Short: greater of the two
+  naked-option requirements (each with its own premium) plus the other side's
+  premium; `:net` subtracts both credits. CBOE: short 100 Mar 130 straddle
+  @8.94/6.65 = $255,660 (gross 411,560); short 100 Mar 125P/135C strangle
+  @6.33/4.75 = $227,360. Long: both premiums paid in full: $155,900 and
+  $110,800.
+- Short iron condor (`-iron-condor`). One side can finish in the money, so
+  the requirement is the wider spread's width x 100 x qty; `:net` subtracts
+  both credits. CBOE: 120/125/130/135 @4.30/6.33/6.65/4.75 = $10,700;
+  115/125/130/140 = $32,300. This is the CBOE number (width less total
+  credit), not "greater side plus the other side's premium", which would
+  give 29,700 for the first example; the straddle/strangle rule above is the
+  one with that wording.
+- Ratio spread (`-ratio-spread`). Matched pairs use the vertical rule, each
+  extra short is margined as a naked option, each extra long is paid in
+  full. Composition of the rules above; the CBOE examples PDF has no ratio
+  spread, so the vectors are arithmetic.
+- Calendar / diagonal (`-calendar`). Long leg expiring later: net debit paid
+  in full. CBOE long calendar Jun/Mar 130C @11.15/6.65 = $45,000. Short
+  calendar (short leg expires later): short leg naked, long paid in full;
+  CBOE Jun short 130C @11.15 / Mar long @6.65 = $300,460 (= short gross
+  345,460 - 45,000 net credit). Diagonal strike differential (long call
+  strike above the short, or long put below) is added to the debit: this
+  follows the usual covered-by-longer-dated-option rule but is NOT
+  confirmed by a primary-source example.
+
+## Margin-call trigger price
+
+`schwab-broker-margin-call-price` takes a function from underlying price to
+the whole position list (the rest of the book rides along), walks from the
+current price toward a bound, and bisects the first cell where maintenance
+excess goes negative. It uses the same maintenance math as
+`schwab-broker-margin-account`, so it inherits every house-rule caveat.
+
+## IRA / limited margin
+
+`schwab-broker-margin-ira`: no naked options, no short stock, no SMA, no
+margin loan; everything is paid for or cash-secured with settled cash;
+unsettled cash is reported but never counted (good-faith rule, FINRA 4210
+and Reg T 12 CFR 220.8 settlement). Credit spreads are treated as needing
+their full width in cash. Schwab's page on which strategies an IRA may trade
+and its exact collateral per strategy was not read from a primary source
+here; the allowed set is a conservative reading.
+
+## Explaining a snapshot
+
+`schwab-broker-margin-explain` takes a trader-API `securitiesAccount`
+(positions + currentBalances), rebuilds helper plists (OCC symbols parsed;
+equal-quantity same-expiry long/short pairs become verticals, share-covered
+short calls become covered calls), runs `schwab-broker-margin-account`, and
+returns residuals against every numeric balance Schwab reports. The balance
+field names (`equity`, `cashBalance`, `maintenanceRequirement`, `sma`,
+`optionBuyingPower`, `stockBuyingPower`, `dayTradingBuyingPower`) follow the
+Schwab Trader API schema as best known; they were not verified against a
+live response in this change and absent fields are skipped. Residuals are
+reported, never absorbed.
+
+## Primary sources for phase 2
+
+- CBOE Margin Manual: https://cdn.cboe.com/resources/membership/Margin_Manual.pdf
+- CBOE Margin Requirement Examples (the vectors above), fetched 2026-11-10:
+  https://cdn.cboe.com/resources/membership/Margin_Requirement_Examples.pdf
+- FINRA Rule 4210: https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210
+- 12 CFR 220.12 and 220.8 (eCFR, links above)
+
 ## Source files
 
 Local snapshots (fetched 2026-11-09) live in the deal research folder
@@ -117,6 +195,3 @@ Local snapshots (fetched 2026-11-09) live in the deal research folder
 - https://cdn.cboe.com/resources/membership/Margin_Manual.pdf
 - https://cdn.cboe.com/resources/membership/Margin_Requirement_Examples.pdf
 - https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210
-
-Phase 2 (investing-er3.15): spreads, condors, strangles, margin-call
-trigger price, IRA variant, explain-a-snapshot.
