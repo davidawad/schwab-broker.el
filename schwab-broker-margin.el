@@ -168,5 +168,41 @@ $4.99; $2.50 per share below $2.50."
           :initial (* 0.5 mv) :maintenance maint :cash-reserve 0.0
           :formula (list "initial 50% of proceeds; Schwab short maintenance tier"))))
 
+;;;###autoload
+(cl-defun schwab-broker-margin-account
+    (&key (cash 0.0) positions (intraday-multiple 4)
+          (house-extra-initial 0.0) (house-extra-maintenance 0.0))
+  "Account-level margin numbers from CASH and POSITIONS.
+POSITIONS is a list of plists from the position helpers.  CASH is the
+cash balance including short-sale and option credits.
+Returns a plist:
+  :equity                CASH + sum of :market-value
+  :initial-requirement   sum of :initial + HOUSE-EXTRA-INITIAL
+  :maintenance-requirement sum of :maintenance + HOUSE-EXTRA-MAINTENANCE
+  :maintenance-excess    equity - maintenance requirement
+  :sma                   equity - initial requirement, floored at 0 (an
+                         approximation: real SMA is a running balance
+                         that never falls on price moves alone)
+  :option-bp             :sma less cash reserved for cash-secured puts
+  :stock-bp              2 x :option-bp (Schwab: Reg T 50%)
+  :intraday-bp           INTRADAY-MULTIPLE x maintenance excess (Schwab
+                         divides by 0.25), floored at 0
+  :margin-call           non-nil when maintenance excess < 0
+HOUSE-EXTRA-* are explicit dollar add-ons for house rules Schwab does
+not publish; see docs/margin.md for the fitted values."
+  (let* ((sum (lambda (k) (apply #'+ 0.0 (mapcar (lambda (p) (or (plist-get p k) 0.0))
+                                                 positions))))
+         (equity (+ cash (funcall sum :market-value)))
+         (init (+ (funcall sum :initial) house-extra-initial))
+         (maint (+ (funcall sum :maintenance) house-extra-maintenance))
+         (excess (- equity maint))
+         (sma (max 0.0 (- equity init)))
+         (obp (max 0.0 (- sma (funcall sum :cash-reserve)))))
+    (list :equity equity :initial-requirement init
+          :maintenance-requirement maint :maintenance-excess excess
+          :sma sma :option-bp obp :stock-bp (* 2 obp)
+          :intraday-bp (* intraday-multiple (max 0.0 excess))
+          :margin-call (< excess 0))))
+
 (provide 'schwab-broker-margin)
 ;;; schwab-broker-margin.el ends here

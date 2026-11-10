@@ -98,5 +98,33 @@ Stock initial 50% less the call credit."
   (should (schwab-broker-margin-test--near
            (plist-get (schwab-broker-margin-stock-short :price 100 :qty 10) :initial) 500.0)))
 
+(ert-deftest schwab-broker-margin-account-simple ()
+  "Cash 10,000 + long 100 sh @100: equity 20,000, init 5,000, maint 2,500."
+  (let ((a (schwab-broker-margin-account
+            :cash 10000.0
+            :positions (list (schwab-broker-margin-stock-long :price 100 :qty 100)))))
+    (should (schwab-broker-margin-test--near (plist-get a :equity) 20000.0))
+    (should (schwab-broker-margin-test--near (plist-get a :maintenance-excess) 17500.0))
+    (should (schwab-broker-margin-test--near (plist-get a :option-bp) 15000.0))
+    (should (schwab-broker-margin-test--near (plist-get a :stock-bp) 30000.0))
+    (should (schwab-broker-margin-test--near (plist-get a :intraday-bp) 70000.0))
+    (should-not (plist-get a :margin-call))))
+
+(ert-deftest schwab-broker-margin-account-margin-call ()
+  "Maintenance excess below zero flags a call and zeroes intraday BP."
+  (let ((a (schwab-broker-margin-account
+            :cash -9000.0
+            :positions (list (schwab-broker-margin-stock-long :price 100 :qty 100)))))
+    (should (plist-get a :margin-call))
+    (should (= 0.0 (plist-get a :intraday-bp)))))
+
+(ert-deftest schwab-broker-margin-account-csp-reserve ()
+  "A cash-secured put reserves its assignment value out of option BP."
+  (let ((a (schwab-broker-margin-account
+            :cash 20000.0
+            :positions (list (schwab-broker-margin-cash-secured-put
+                              :strike 100 :premium 1.0)))))
+    (should (schwab-broker-margin-test--near (plist-get a :option-bp) (- 19900.0 9900.0)))))
+
 (provide 'schwab-broker-margin-test)
 ;;; schwab-broker-margin-test.el ends here
