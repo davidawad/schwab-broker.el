@@ -206,3 +206,40 @@ long 135C @4.75, 100 lots: width 100,000, credit 43,000, max loss 57,000."
     (should (eq (plist-get r :type) 'vertical-credit))
     (should (schwab-broker-margin-test--near (plist-get r :initial) 500.0))
     (should (schwab-broker-margin-test--near (plist-get r :max-loss) 297.0))))
+
+(ert-deftest schwab-broker-margin-straddle-cboe-aapl ()
+  "CBOE AAPL Mar 130: short straddle 255,660 (net), long straddle 155,900."
+  (let ((s (schwab-broker-margin-straddle :strike 130 :put-price 8.94
+                                          :call-price 6.65 :underlying 127.83
+                                          :qty 100))
+        (l (schwab-broker-margin-straddle :side 'long :strike 130
+                                          :put-price 8.94 :call-price 6.65
+                                          :qty 100)))
+    (should (schwab-broker-margin-test--near (plist-get s :net) 255660.0 0.5))
+    (should (schwab-broker-margin-test--near (plist-get s :gross) 411560.0 0.5))
+    (should (schwab-broker-margin-test--near (plist-get l :initial) 155900.0 0.5))))
+
+(ert-deftest schwab-broker-margin-strangle-cboe-aapl ()
+  "CBOE AAPL Mar 125P/135C: short strangle 227,360 (net), long 110,800."
+  (let ((s (schwab-broker-margin-strangle :put-strike 125 :call-strike 135
+                                          :put-price 6.33 :call-price 4.75
+                                          :underlying 127.83 :qty 100))
+        (l (schwab-broker-margin-strangle :side 'long :put-strike 125
+                                          :call-strike 135 :put-price 6.33
+                                          :call-price 4.75 :qty 100)))
+    (should (schwab-broker-margin-test--near (plist-get s :net) 227360.0 0.5))
+    (should (schwab-broker-margin-test--near (plist-get l :initial) 110800.0 0.5))))
+
+(ert-deftest schwab-broker-margin-iron-condor-cboe-aapl ()
+  "CBOE AAPL short iron condors: 120/125/130/135 -> 10,700; 115/125/130/140 -> 32,300."
+  (let ((a (schwab-broker-margin-iron-condor
+            :put-long 120 :put-short 125 :call-short 130 :call-long 135
+            :put-long-price 4.30 :put-short-price 6.33
+            :call-short-price 6.65 :call-long-price 4.75 :qty 100))
+        (b (schwab-broker-margin-iron-condor
+            :put-long 115 :put-short 125 :call-short 130 :call-long 140
+            :put-long-price 2.83 :put-short-price 6.33
+            :call-short-price 6.65 :call-long-price 3.38 :qty 100)))
+    (should (schwab-broker-margin-test--near (plist-get a :net) 10700.0 0.5))
+    (should (schwab-broker-margin-test--near (plist-get b :net) 32300.0 0.5))
+    (should (schwab-broker-margin-test--near (plist-get a :initial) 50000.0 0.5))))

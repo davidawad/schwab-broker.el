@@ -247,5 +247,91 @@ example form and the true max loss.  Maintenance equals initial."
           :formula (list (if debit-p "debit spread: net debit paid in full"
                            "credit spread: strike width x 100 x qty; net = width - credit")))))
 
+(defun schwab-broker-margin--short-pair (type put call side)
+  "Combine PUT and CALL plists into one straddle/strangle plist of TYPE.
+SIDE is `short' or `long'.  Short: greater side's gross requirement plus
+the other side's premium (CBOE); long: both paid in full."
+  (let* ((credit (+ (plist-get put :credit) (plist-get call :credit)))
+         (req (if (eq side 'short)
+                  (max (+ (plist-get put :gross) (plist-get call :credit))
+                       (+ (plist-get call :gross) (plist-get put :credit)))
+                0.0)))
+    (list :type type :side side :put put :call call
+          :market-value (+ (plist-get put :market-value)
+                           (plist-get call :market-value))
+          :credit credit :gross req :net (- req credit)
+          :initial req :maintenance req :cash-reserve 0.0
+          :formula (list "greater side's requirement + other side's premium"
+                         "net = requirement - total credit (CBOE example form)"))))
+
+(defun schwab-broker-margin--long-pair (type put call)
+  "Long straddle/strangle of TYPE from priced PUT and CALL legs (paid in full)."
+  (let* ((cost (+ (plist-get put :market-value) (plist-get call :market-value))))
+    (list :type type :side 'long :put put :call call :market-value cost
+          :initial cost :maintenance cost :cash-reserve 0.0 :max-loss cost
+          :formula (list "long legs paid in full: sum of premiums"))))
+
+(cl-defun schwab-broker-margin--combo
+    (type side put-strike call-strike put-price call-price underlying qty)
+  "Build a TYPE combo of SIDE from a put and a call leg."
+  (if (eq side 'long)
+      (schwab-broker-margin--long-pair
+       type
+       (schwab-broker-margin-long-option :price put-price :qty qty)
+       (schwab-broker-margin-long-option :price call-price :qty qty))
+    (schwab-broker-margin--short-pair
+     type
+     (schwab-broker-margin-short-put :strike put-strike :premium put-price
+                                     :underlying underlying :qty qty)
+     (schwab-broker-margin-short-call :strike call-strike :premium call-price
+                                      :underlying underlying :qty qty)
+     'short)))
+
+;;;###autoload
+(cl-defun schwab-broker-margin-straddle
+    (&key (side 'short) strike put-price call-price underlying (qty 1))
+  "Straddle (same STRIKE put and call) on SIDE `short' or `long'.
+Short: greater of the two naked requirements plus the other side's
+premium; `:net' subtracts both credits (CBOE: 100 AAPL Mar 130 -> 255,660).
+Long: both premiums paid in full (CBOE 155,900)."
+  (schwab-broker-margin--combo 'straddle side strike strike put-price
+                               call-price underlying qty))
+
+;;;###autoload
+(cl-defun schwab-broker-margin-strangle
+    (&key (side 'short) put-strike call-strike put-price call-price
+          underlying (qty 1))
+  "Strangle (PUT-STRIKE below CALL-STRIKE) on SIDE `short' or `long'.
+Same rule as `schwab-broker-margin-straddle' (CBOE short: 227,360)."
+  (schwab-broker-margin--combo 'strangle side put-strike call-strike put-price
+                               call-price underlying qty))
+
+;;;###autoload
+(cl-defun schwab-broker-margin-iron-condor
+    (&key put-long put-short call-short call-long
+          put-long-price put-short-price call-short-price call-long-price
+          (qty 1))
+  "Short iron condor: bull put spread (PUT-LONG below PUT-SHORT) plus bear
+call spread (CALL-SHORT below CALL-LONG), prices per share, QTY condors.
+Only one side can finish in the money, so the requirement is the wider
+spread's width x 100 x QTY; `:net' = that less both credits (CBOE: AAPL
+120/125/130/135 -> 10,700).  Maintenance equals initial."
+  (let* ((p (schwab-broker-margin-vertical :kind 'put :long-strike put-long
+                                           :short-strike put-short
+                                           :long-price put-long-price
+                                           :short-price put-short-price :qty qty))
+         (c (schwab-broker-margin-vertical :kind 'call :long-strike call-long
+                                           :short-strike call-short
+                                           :long-price call-long-price
+                                           :short-price call-short-price :qty qty))
+         (req (max (plist-get p :width) (plist-get c :width)))
+         (credit (+ (plist-get p :credit) (plist-get c :credit))))
+    (list :type 'iron-condor :qty qty :put-spread p :call-spread c
+          :market-value (+ (plist-get p :market-value) (plist-get c :market-value))
+          :credit credit :net (- req credit) :max-loss (- req credit)
+          :initial req :maintenance req :cash-reserve 0.0
+          :formula (list "wider spread width x 100 x qty (one side can lose)"
+                         "net = width - total credit (CBOE example form)"))))
+
 (provide 'schwab-broker-margin)
 ;;; schwab-broker-margin.el ends here
