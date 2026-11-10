@@ -177,3 +177,32 @@ Stock initial 50% less the call credit."
 
 (provide 'schwab-broker-margin-test)
 ;;; schwab-broker-margin-test.el ends here
+
+(ert-deftest schwab-broker-margin-vertical-debit-cboe-aapl ()
+  "CBOE: long 100 Mar 125C @9.05, short 100 Mar 135C @4.75 -> $43,000."
+  (let ((r (schwab-broker-margin-vertical :kind 'call :long-strike 125
+                                          :short-strike 135 :long-price 9.05
+                                          :short-price 4.75 :qty 100)))
+    (should (eq (plist-get r :type) 'vertical-debit))
+    (should (schwab-broker-margin-test--near (plist-get r :initial) 43000.0 0.5))
+    (should (schwab-broker-margin-test--near (plist-get r :max-loss) 43000.0 0.5))))
+
+(ert-deftest schwab-broker-margin-vertical-credit ()
+  "Credit call spread (arithmetic, not a CBOE vector): short 125C @9.05,
+long 135C @4.75, 100 lots: width 100,000, credit 43,000, max loss 57,000."
+  (let ((r (schwab-broker-margin-vertical :kind 'call :long-strike 135
+                                          :short-strike 125 :long-price 4.75
+                                          :short-price 9.05 :qty 100)))
+    (should (eq (plist-get r :type) 'vertical-credit))
+    (should (schwab-broker-margin-test--near (plist-get r :initial) 100000.0 0.5))
+    (should (schwab-broker-margin-test--near (plist-get r :net) 57000.0 0.5))
+    (should (schwab-broker-margin-test--near (plist-get r :market-value) -43000.0 0.5))))
+
+(ert-deftest schwab-broker-margin-vertical-put-credit ()
+  "Bull put spread: short 125P @6.33, long 120P @4.30, 1 lot: 500, loss 297."
+  (let ((r (schwab-broker-margin-vertical :kind 'put :long-strike 120
+                                          :short-strike 125 :long-price 4.30
+                                          :short-price 6.33)))
+    (should (eq (plist-get r :type) 'vertical-credit))
+    (should (schwab-broker-margin-test--near (plist-get r :initial) 500.0))
+    (should (schwab-broker-margin-test--near (plist-get r :max-loss) 297.0))))

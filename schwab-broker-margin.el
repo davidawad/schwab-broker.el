@@ -221,5 +221,31 @@ where RESIDUAL = OBSERVED - COMPUTED (the gap a house rule must fill)."
                     (push (list k v c (- v c)) out))))
     (nreverse out)))
 
+;;;###autoload
+(cl-defun schwab-broker-margin-vertical
+    (&key kind long-strike short-strike long-price short-price (qty 1))
+  "Vertical spread of KIND (`call'/`put'), QTY spreads, prices per share.
+Debit spread (call: long strike below short; put: long strike above):
+the debit is paid in full, requirement = debit = max loss.  Credit
+spread: requirement = strike width x 100 x QTY (the credit sits in cash,
+so equity - requirement is right); `:net' = width - credit is the CBOE
+example form and the true max loss.  Maintenance equals initial."
+  (let* ((m schwab-broker-margin-multiplier)
+         (width (* (abs (- long-strike short-strike)) m qty))
+         (debit (* (- long-price short-price) m qty))
+         (debit-p (if (eq kind 'call) (< long-strike short-strike)
+                    (> long-strike short-strike)))
+         (req (if debit-p (max 0.0 debit) width))
+         (max-loss (if debit-p (max 0.0 debit) (max 0.0 (+ width debit)))))
+    (when (= long-strike short-strike)
+      (error "Vertical spread needs two different strikes"))
+    (list :type (if debit-p 'vertical-debit 'vertical-credit) :kind kind
+          :qty qty :long-strike long-strike :short-strike short-strike
+          :width width :debit debit :credit (max 0.0 (- debit))
+          :market-value debit :max-loss max-loss :net max-loss
+          :initial req :maintenance req :cash-reserve 0.0
+          :formula (list (if debit-p "debit spread: net debit paid in full"
+                           "credit spread: strike width x 100 x qty; net = width - credit")))))
+
 (provide 'schwab-broker-margin)
 ;;; schwab-broker-margin.el ends here
