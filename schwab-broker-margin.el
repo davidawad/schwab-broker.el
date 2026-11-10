@@ -89,5 +89,84 @@ MIN-PCT of the underlying value rather than the strike."
   (schwab-broker-margin--short-option 'call strike premium underlying qty
                                       pct min-pct house-extra))
 
+;;;###autoload
+(cl-defun schwab-broker-margin-cash-secured-put
+    (&key strike premium (qty 1))
+  "Cash-secured equity put (Schwab CSEP): no margin requirement.
+The holder must keep the assignment value in cash or cash equivalents:
+`:cash-reserve' = STRIKE*100*QTY - credit (PREMIUM is the per-share
+credit).  Schwab lists cash, money funds, Schwab Bank deposits and
+T-bills under a year as cash equivalents; it does not list ETFs."
+  (let* ((m schwab-broker-margin-multiplier)
+         (credit (* premium m qty)))
+    (list :type 'cash-secured-put :qty qty :strike strike :premium premium
+          :market-value (- credit) :credit credit
+          :initial 0.0 :maintenance 0.0
+          :cash-reserve (- (* strike m qty) credit)
+          :formula (list "margin requirement 0; reserve = strike x 100 x qty - credit"))))
+
+;;;###autoload
+(cl-defun schwab-broker-margin-covered-call
+    (&key strike premium underlying (qty 1))
+  "Covered short call: the long stock covers it, so the option adds 0.
+The stock leg is margined by `schwab-broker-margin-stock-long'; the
+credit lowers the net requirement (CBOE: 50% stock - call credit).
+STRIKE and UNDERLYING are recorded only; PREMIUM is per share."
+  (let ((credit (* premium schwab-broker-margin-multiplier qty)))
+    (list :type 'covered-call :qty qty :strike strike :premium premium
+          :underlying underlying :market-value (- credit) :credit credit
+          :initial 0.0 :maintenance 0.0 :cash-reserve 0.0
+          :formula (list "covered by long stock: option requirement 0"))))
+
+;;;###autoload
+(cl-defun schwab-broker-margin-long-option
+    (&key price (qty 1) months-to-expiry (leaps-margin-pct 1.0))
+  "Long equity option bought at PRICE per share, QTY contracts.
+Schwab's published rule is 100% of cost, same for maintenance.  FINRA
+4210(f)(1)/(2)(B) lets a listed option with more than 9 months to
+expiry carry margin of 75% of market value (a 25% loan value): pass
+`:leaps-margin-pct 0.75' with MONTHS-TO-EXPIRY above 9 to apply it.
+Default 1.0 = Schwab's published paid-in-full treatment."
+  (let* ((mv (* price schwab-broker-margin-multiplier qty))
+         (leaps (and months-to-expiry (> months-to-expiry 9)))
+         (pct (if leaps leaps-margin-pct 1.0))
+         (req (* pct mv)))
+    (list :type 'long-option :qty qty :market-value mv :leaps leaps
+          :margin-pct pct :loan-value (- mv req)
+          :initial req :maintenance req :cash-reserve 0.0
+          :formula (list (format "%.0f%% of market value%s" (* 100 pct)
+                                 (if leaps " (listed, > 9 months)" ""))))))
+
+;;;###autoload
+(cl-defun schwab-broker-margin-stock-long
+    (&key price (qty 1) (initial-pct 0.50) (house-pct 0.25) (marginable t))
+  "Long stock or non-leveraged ETF, QTY shares at PRICE.
+Reg T initial is INITIAL-PCT (50%).  Schwab maintenance is 25% of market
+value, or HOUSE-PCT when Schwab sets a higher level (commonly 50%).
+Under $3.00 a share, or when MARGINABLE is nil, the requirement is 100%."
+  (let* ((mv (* price qty))
+         (full (or (not marginable) (< price 3.0)))
+         (init (if full mv (* initial-pct mv)))
+         (maint (if full mv (* house-pct mv))))
+    (list :type 'stock-long :qty qty :price price :market-value mv
+          :initial init :maintenance maint :cash-reserve 0.0
+          :formula (list (format "initial %.0f%%, maintenance %.0f%% of market value"
+                                 (* 100 (/ init mv)) (* 100 (/ maint mv)))))))
+
+;;;###autoload
+(cl-defun schwab-broker-margin-stock-short (&key price (qty 1))
+  "Short stock or non-leveraged ETF, QTY shares at PRICE (Schwab table).
+Initial: 50% of net proceeds.  Maintenance: 30% of short market value
+above $16.66; $5 per share from $5.00 to $16.66; 100% from $2.50 to
+$4.99; $2.50 per share below $2.50."
+  (let* ((mv (* price qty))
+         (maint (cond ((> price 16.66) (* 0.30 mv))
+                      ((>= price 5.0) (* 5.0 qty))
+                      ((>= price 2.5) mv)
+                      (t (* 2.5 qty)))))
+    (list :type 'stock-short :qty qty :price price :market-value (- mv)
+          :initial (* 0.5 mv) :maintenance maint :cash-reserve 0.0
+          :formula (list "initial 50% of proceeds; Schwab short maintenance tier"))))
+
 (provide 'schwab-broker-margin)
 ;;; schwab-broker-margin.el ends here

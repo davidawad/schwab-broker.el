@@ -46,5 +46,57 @@
                                            :underlying 100)))
     (should (schwab-broker-margin-test--near (plist-get r :gross) 510.0))))
 
+(ert-deftest schwab-broker-margin-covered-call-cboe-aapl ()
+  "CBOE: long 10,000 AAPL @127.83 + short 100 Mar 130C @6.65 -> $572,650.
+Stock initial 50% less the call credit."
+  (let* ((st (schwab-broker-margin-stock-long :price 127.83 :qty 10000))
+         (cc (schwab-broker-margin-covered-call :strike 130 :premium 6.65
+                                                :underlying 127.83 :qty 100)))
+    (should (schwab-broker-margin-test--near (plist-get st :initial) 639150.0 0.5))
+    (should (schwab-broker-margin-test--near
+             (- (+ (plist-get st :initial) (plist-get cc :initial))
+                (plist-get cc :credit))
+             572650.0 0.5))))
+
+(ert-deftest schwab-broker-margin-csp-reserve ()
+  "NVDA 170P @2.97: reserve 17,000 - 297 = 16,703; no margin requirement."
+  (let ((r (schwab-broker-margin-cash-secured-put :strike 170 :premium 2.97)))
+    (should (schwab-broker-margin-test--near (plist-get r :cash-reserve) 16703.0))
+    (should (= 0.0 (plist-get r :maintenance)))))
+
+(ert-deftest schwab-broker-margin-long-option ()
+  "Paid in full by default; FINRA 75% minimum applies only beyond 9 months."
+  (let ((a (schwab-broker-margin-long-option :price 6.33 :qty 100))
+        (b (schwab-broker-margin-long-option :price 20 :months-to-expiry 12
+                                             :leaps-margin-pct 0.75))
+        (c (schwab-broker-margin-long-option :price 20 :months-to-expiry 6
+                                             :leaps-margin-pct 0.75)))
+    (should (schwab-broker-margin-test--near (plist-get a :initial) 63300.0))
+    (should (schwab-broker-margin-test--near (plist-get b :initial) 1500.0))
+    (should (schwab-broker-margin-test--near (plist-get b :loan-value) 500.0))
+    (should (schwab-broker-margin-test--near (plist-get c :initial) 2000.0))))
+
+(ert-deftest schwab-broker-margin-stock-long ()
+  "Schwab: 50% initial, 25% maintenance; house 50%; < $3 is 100%."
+  (let ((r (schwab-broker-margin-stock-long :price 127.83 :qty 10000))
+        (h (schwab-broker-margin-stock-long :price 100 :qty 10 :house-pct 0.5))
+        (p (schwab-broker-margin-stock-long :price 2 :qty 100)))
+    (should (schwab-broker-margin-test--near (plist-get r :maintenance) 319575.0 0.5))
+    (should (schwab-broker-margin-test--near (plist-get h :maintenance) 500.0))
+    (should (schwab-broker-margin-test--near (plist-get p :initial) 200.0))))
+
+(ert-deftest schwab-broker-margin-stock-short ()
+  "Schwab short-sale maintenance tiers."
+  (should (schwab-broker-margin-test--near
+           (plist-get (schwab-broker-margin-stock-short :price 100 :qty 10) :maintenance) 300.0))
+  (should (schwab-broker-margin-test--near
+           (plist-get (schwab-broker-margin-stock-short :price 10 :qty 10) :maintenance) 50.0))
+  (should (schwab-broker-margin-test--near
+           (plist-get (schwab-broker-margin-stock-short :price 3 :qty 10) :maintenance) 30.0))
+  (should (schwab-broker-margin-test--near
+           (plist-get (schwab-broker-margin-stock-short :price 2 :qty 10) :maintenance) 25.0))
+  (should (schwab-broker-margin-test--near
+           (plist-get (schwab-broker-margin-stock-short :price 100 :qty 10) :initial) 500.0)))
+
 (provide 'schwab-broker-margin-test)
 ;;; schwab-broker-margin-test.el ends here
