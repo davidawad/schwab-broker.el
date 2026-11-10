@@ -364,3 +364,61 @@ a credit spread is allowed and needs its full width in cash."
             :positions (list (schwab-broker-margin-stock-long :price 50 :qty 100)))))
     (should (= (plist-get r :buying-power) 0.0))
     (should (schwab-broker-margin-test--near (plist-get r :shortfall) 4900.0))))
+
+(defun schwab-broker-margin-test--snapshot ()
+  "Synthetic trader-API snapshot shaped like the 2026-11-09 screenshot."
+  `((securitiesAccount
+     . ((type . "MARGIN")
+        (positions
+         . (((longQuantity . 491) (shortQuantity . 0) (marketValue . 49345.5)
+             (instrument . ((assetType . "COLLECTIVE_INVESTMENT") (symbol . "SGOV"))))
+            ((longQuantity . 0) (shortQuantity . 1) (marketValue . -104.0)
+             (instrument . ((assetType . "OPTION") (symbol . "NVDA  261113P00165000")
+                            (putCall . "PUT") (underlyingSymbol . "NVDA"))))))
+        (currentBalances
+         . ((equity . 51273.22) (optionBuyingPower . 23072.99)
+            (stockBuyingPower . 46145.98) (dayTradingBuyingPower . 141966.20)))))))
+
+(ert-deftest schwab-broker-margin-explain-screenshot-residuals ()
+  "Explain reproduces the documented screenshot residuals from a snapshot."
+  (let* ((r (schwab-broker-margin-explain
+             (schwab-broker-margin-test--snapshot)
+             :quotes '(("NVDA" . 178.9))))
+         (res (lambda (k) (nth 3 (assq k (plist-get r :residuals))))))
+    (should (= (length (plist-get r :positions)) 2))
+    (should (schwab-broker-margin-test--near (funcall res :equity) 0.0))
+    (should (schwab-broker-margin-test--near (funcall res :option-bp) -1235.48 0.02))
+    (should (schwab-broker-margin-test--near (funcall res :stock-bp) -2470.96 0.04))
+    (should (schwab-broker-margin-test--near (funcall res :intraday-bp) -4613.18 0.05))
+    (should (cl-some (lambda (n) (string-match-p "cash derived" n))
+                     (plist-get r :notes)))))
+
+(ert-deftest schwab-broker-margin-explain-vertical-and-covered ()
+  "Equal-qty same-expiry legs pair as a vertical; covered call needs no quote."
+  (let* ((snap `((positions
+                  . (((longQuantity . 1) (shortQuantity . 0) (marketValue . 100.0)
+                      (instrument . ((assetType . "OPTION")
+                                     (symbol . "XYZ   261120P00090000"))))
+                     ((longQuantity . 0) (shortQuantity . 1) (marketValue . -300.0)
+                      (instrument . ((assetType . "OPTION")
+                                     (symbol . "XYZ   261120P00095000"))))
+                     ((longQuantity . 100) (shortQuantity . 0) (marketValue . 5000.0)
+                      (instrument . ((assetType . "EQUITY") (symbol . "ABC"))))
+                     ((longQuantity . 0) (shortQuantity . 1) (marketValue . -50.0)
+                      (instrument . ((assetType . "OPTION")
+                                     (symbol . "ABC   261120C00060000"))))))
+                 (currentBalances . ((cashBalance . 1000.0)))))
+         (r (schwab-broker-margin-explain snap))
+         (types (mapcar (lambda (p) (plist-get p :type)) (plist-get r :positions))))
+    (should (memq 'vertical-credit types))
+    (should (memq 'covered-call types))
+    (should (memq 'stock-long types))
+    (should (null (plist-get r :residuals)))))
+
+(ert-deftest schwab-broker-margin-explain-missing-quote-errors ()
+  "A naked short option without a quote is an error, not a guess."
+  (should-error
+   (schwab-broker-margin-explain
+    '((positions . (((longQuantity . 0) (shortQuantity . 1) (marketValue . -104.0)
+                     (instrument . ((assetType . "OPTION")
+                                    (symbol . "NVDA  261113P00165000"))))))))))

@@ -496,5 +496,157 @@ calendars and condors (initial in cash).  Returns:
           :option-bp (max 0.0 (- settled-cash req))
           :sma 0.0 :margin-call nil)))
 
+;; -- snapshot explain ---------------------------------------------------
+
+(defun schwab-broker-margin--parse-occ (symbol)
+  "Parse an OCC option SYMBOL into (UNDERLYING EXPIRY KIND STRIKE) or nil.
+EXPIRY is the YYMMDD string, KIND is `call'/`put', STRIKE a float."
+  (when (string-match
+         "\\`\\([A-Z.]+\\) *\\([0-9]\\{6\\}\\)\\([CP]\\)\\([0-9]\\{8\\}\\)\\'"
+         (or symbol ""))
+    (list (match-string 1 symbol) (match-string 2 symbol)
+          (if (equal (match-string 3 symbol) "C") 'call 'put)
+          (/ (string-to-number (match-string 4 symbol)) 1000.0))))
+
+(defun schwab-broker-margin--snapshot-legs (positions)
+  "Turn trader-API POSITIONS into a list of leg plists.
+Each leg has :asset (`stock'/`option'), :symbol, :side (`long'/`short'),
+:qty, :mv (absolute market value), and for options :under :expiry :kind
+:strike."
+  (let (legs)
+    (dolist (p positions)
+      (let* ((inst (alist-get 'instrument p))
+             (sym (alist-get 'symbol inst))
+             (occ (and (equal (alist-get 'assetType inst) "OPTION")
+                       (schwab-broker-margin--parse-occ sym)))
+             (lq (or (alist-get 'longQuantity p) 0))
+             (sq (or (alist-get 'shortQuantity p) 0))
+             (mv (abs (or (alist-get 'marketValue p) 0))))
+        (dolist (side '(long short))
+          (let ((q (if (eq side 'long) lq sq)))
+            (when (> q 0)
+              (push (append (list :asset (if occ 'option 'stock) :symbol sym
+                                  :side side :qty q
+                                  :mv (* mv (/ (float q) (+ lq sq))))
+                            (when occ (list :under (nth 0 occ) :expiry (nth 1 occ)
+                                            :kind (nth 2 occ) :strike (nth 3 occ))))
+                    legs))))))
+    (nreverse legs)))
+
+(defun schwab-broker-margin--leg-price (leg)
+  "Per-share price of option LEG from its market value."
+  (/ (plist-get leg :mv) (* schwab-broker-margin-multiplier (plist-get leg :qty))))
+
+(defun schwab-broker-margin--build-positions (legs quotes)
+  "Map LEGS to (POSITIONS . NOTES) of margin helper plists using QUOTES."
+  (let* ((m schwab-broker-margin-multiplier)
+         positions notes
+         (stock (cl-remove-if-not (lambda (l) (eq (plist-get l :asset) 'stock)) legs))
+         (opts (cl-remove-if-not (lambda (l) (eq (plist-get l :asset) 'option)) legs))
+         (shares (lambda (sym) (apply #'+ 0 (mapcar (lambda (l) (if (and (equal (plist-get l :symbol) sym)
+                                                                           (eq (plist-get l :side) 'long))
+                                                                      (plist-get l :qty) 0))
+                                                    stock))))
+         (groups nil))
+    (dolist (l stock)
+      (let ((px (/ (plist-get l :mv) (plist-get l :qty))))
+        (push (if (eq (plist-get l :side) 'long)
+                  (schwab-broker-margin-stock-long :price px :qty (plist-get l :qty))
+                (schwab-broker-margin-stock-short :price px :qty (plist-get l :qty)))
+              positions)))
+    (dolist (o opts)
+      (let* ((key (list (plist-get o :under) (plist-get o :expiry) (plist-get o :kind)))
+             (cell (assoc key groups)))
+        (if cell (push o (cdr cell)) (push (list key o) groups))))
+    (dolist (g (nreverse groups))
+      (let* ((legs (cdr g))
+             (kind (nth 2 (car g)))
+             (under (nth 0 (car g)))
+             (longs (cl-remove-if-not (lambda (l) (eq (plist-get l :side) 'long)) legs))
+             (shorts (cl-remove-if-not (lambda (l) (eq (plist-get l :side) 'short)) legs)))
+        (if (and (= (length longs) 1) (= (length shorts) 1)
+                 (= (plist-get (car longs) :qty) (plist-get (car shorts) :qty))
+                 (/= (plist-get (car longs) :strike) (plist-get (car shorts) :strike)))
+            (let ((l (car longs)) (s (car shorts)))
+              (push (schwab-broker-margin-vertical
+                     :kind kind :long-strike (plist-get l :strike)
+                     :short-strike (plist-get s :strike)
+                     :long-price (schwab-broker-margin--leg-price l)
+                     :short-price (schwab-broker-margin--leg-price s)
+                     :qty (plist-get l :qty))
+                    positions)
+              (push (format "%s %s paired as vertical" under kind) notes))
+          (dolist (l legs)
+            (let ((q (plist-get l :qty)) (px (schwab-broker-margin--leg-price l)))
+              (push
+               (cond
+                ((eq (plist-get l :side) 'long)
+                 (schwab-broker-margin-long-option :price px :qty q))
+                ((and (eq kind 'call)
+                      (>= (funcall shares under) (* m q)))
+                 (schwab-broker-margin-covered-call
+                  :strike (plist-get l :strike) :premium px :qty q))
+                (t
+                 (let ((u (or (cdr (assoc under quotes))
+                              (error "No quote for %s (pass :quotes ((\"%s\" . price)))"
+                                     under under))))
+                   (funcall (if (eq kind 'call)
+                                #'schwab-broker-margin-short-call
+                              #'schwab-broker-margin-short-put)
+                            :strike (plist-get l :strike) :premium px
+                            :underlying u :qty q))))
+               positions))))))
+    (cons (nreverse positions) (nreverse notes))))
+
+;;;###autoload
+(cl-defun schwab-broker-margin-explain (snapshot &key quotes (intraday-multiple 4))
+  "Explain a trader-API account SNAPSHOT against Schwab's displayed numbers.
+SNAPSHOT is a `securitiesAccount' alist as returned by
+`schwab-broker-account-sync' with positions (or the wrapper alist holding
+it): `positions' and `currentBalances' with fields such as equity,
+cashBalance, maintenanceRequirement, sma, buyingPower, optionBuyingPower,
+stockBuyingPower, dayTradingBuyingPower (absent fields are skipped).
+QUOTES is an alist of (UNDERLYING . price) needed for naked options.
+Positions are rebuilt into helper plists (equal-quantity same-expiry
+long/short pairs become verticals; short calls covered by shares are
+covered), `schwab-broker-margin-account' is run on them, and every
+numeric balance Schwab reports is reconciled against the computed value.
+Returns a plist:
+  :positions  helper plists   :computed  account plist
+  :observed   Schwab figures  :residuals (KEY OBSERVED COMPUTED RESIDUAL)
+  :notes      strings (derived cash, pairings)
+A nonzero residual is the gap a Schwab house rule must fill; this
+function never invents one.  Read-only; no account identifiers are kept."
+  (let* ((acct (or (alist-get 'securitiesAccount snapshot) snapshot))
+         (bal (alist-get 'currentBalances acct))
+         (num (lambda (k) (let ((v (alist-get k bal))) (and (numberp v) v))))
+         (built (schwab-broker-margin--build-positions
+                 (schwab-broker-margin--snapshot-legs (alist-get 'positions acct))
+                 quotes))
+         (positions (car built))
+         (notes (cdr built))
+         (mv (apply #'+ 0.0 (mapcar (lambda (p) (plist-get p :market-value)) positions)))
+         (equity-obs (or (funcall num 'equity) (funcall num 'liquidationValue)))
+         (cash (cond ((funcall num 'cashBalance))
+                     (equity-obs (push "cash derived as equity - position value (equity residual is 0 by construction)"
+                                       notes)
+                                 (- equity-obs mv))
+                     (t 0.0)))
+         (computed (schwab-broker-margin-account
+                    :cash cash :positions positions
+                    :intraday-multiple intraday-multiple))
+         (pairs '((:equity . equity) (:maintenance-requirement . maintenanceRequirement)
+                  (:sma . sma) (:option-bp . optionBuyingPower)
+                  (:stock-bp . stockBuyingPower) (:intraday-bp . dayTradingBuyingPower)))
+         (observed (apply #'append
+                          (mapcar (lambda (c)
+                                    (let ((v (if (eq (car c) :equity) equity-obs
+                                               (funcall num (cdr c)))))
+                                      (when v (list (car c) v))))
+                                  pairs))))
+    (list :positions positions :computed computed :observed observed
+          :residuals (schwab-broker-margin-reconcile observed computed)
+          :notes (nreverse notes))))
+
 (provide 'schwab-broker-margin)
 ;;; schwab-broker-margin.el ends here
