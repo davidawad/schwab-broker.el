@@ -282,3 +282,39 @@ vertical debit 430 + one naked 135C (20%% x 12,783 - 717 OTM + 475 = 2,314.6)."
                          :short-qty 1 :underlying 127.83)
                         :initial)
              430.0))))
+
+(ert-deftest schwab-broker-margin-call-price-short-put ()
+  "Short 5 NVDA 165P marked at max(1.04, intrinsic) plus 491 SGOV, cash
+2,031.72: scanning NVDA down from 178.9 finds a trigger price, checked
+against the account function a hair either side."
+  (let* ((fn (lambda (u)
+               (list (schwab-broker-margin-stock-long :price 100.50 :qty 491)
+                     (schwab-broker-margin-short-put
+                      :strike 165 :premium (max 1.04 (- 165 u))
+                      :underlying u :qty 5))))
+         (cash 2031.72)
+         (excess (lambda (u)
+                   (plist-get (schwab-broker-margin-account
+                               :cash cash :positions (funcall fn u))
+                              :maintenance-excess)))
+         (r (schwab-broker-margin-call-price :cash cash :positions-fn fn
+                                             :price 178.9 :bound 20.0))
+         (p (plist-get r :price)))
+    (should p)
+    (should (< p 165.0))
+    (should (< (funcall excess (- p 0.02)) 0))
+    (should (>= (funcall excess (+ p 0.02)) 0))))
+
+(ert-deftest schwab-broker-margin-call-price-none-and-already ()
+  "Long stock only: a price rise never triggers; a deep drop does."
+  (let* ((fn (lambda (u) (list (schwab-broker-margin-stock-long :price u :qty 100))))
+         (up (schwab-broker-margin-call-price :cash -4000.0 :positions-fn fn
+                                              :price 100.0 :bound 200.0))
+         (down (schwab-broker-margin-call-price :cash -4000.0 :positions-fn fn
+                                                :price 100.0 :bound 10.0))
+         (called (schwab-broker-margin-call-price :cash -9000.0 :positions-fn fn
+                                                  :price 100.0 :bound 10.0)))
+    (should-not (plist-get up :price))
+    ;; equity = 100 U - 4000; maintenance = 25 U; excess = 75 U - 4000 -> U = 53.33
+    (should (schwab-broker-margin-test--near (plist-get down :price) 53.33 0.02))
+    (should (plist-get called :already-called))))

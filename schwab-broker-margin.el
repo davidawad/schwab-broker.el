@@ -404,5 +404,46 @@ in full; `:net' = short gross - net credit (CBOE short calendar: 300,460)."
               :formula (list "short leg naked (expires later than the long); long paid in full"
                              "net = short gross - net credit (CBOE example form)"))))))
 
+;;;###autoload
+(cl-defun schwab-broker-margin-call-price
+    (&key cash positions-fn price bound (steps 2000)
+          (house-extra-initial 0.0) (house-extra-maintenance 0.0))
+  "Underlying price at which the book first goes into maintenance call.
+POSITIONS-FN maps an underlying price to the full list of position
+plists (so the rest of the book, other legs and fixed positions, rides
+along); CASH is the cash balance.  Walks from PRICE toward BOUND in STEPS
+grid steps, finds the first grid cell where maintenance excess turns
+negative, then bisects it to a cent.  Returns a plist with `:price' (the
+trigger, nil when no call occurs on the path), `:excess-at-start',
+`:excess-at-bound' and `:already-called' (non-nil when the book is
+already in call at PRICE, trigger = PRICE).  Nonmonotone books are safe:
+the first crossing is reported."
+  (let* ((excess (lambda (p)
+                   (plist-get
+                    (schwab-broker-margin-account
+                     :cash cash :positions (funcall positions-fn p)
+                     :house-extra-initial house-extra-initial
+                     :house-extra-maintenance house-extra-maintenance)
+                    :maintenance-excess)))
+         (e0 (funcall excess price))
+         (e-bound (funcall excess bound)))
+    (if (< e0 0)
+        (list :price price :already-called t
+              :excess-at-start e0 :excess-at-bound e-bound)
+      (let* ((step (/ (- bound price) (float steps)))
+             (hit (cl-loop for i from 1 to steps
+                           for p = (+ price (* i step))
+                           when (< (funcall excess p) 0) return i))
+             trigger)
+        (when hit
+          (let ((good (+ price (* (1- hit) step)))
+                (bad (+ price (* hit step))))
+            (while (> (abs (- bad good)) 0.005)
+              (let ((mid (/ (+ good bad) 2.0)))
+                (if (< (funcall excess mid) 0) (setq bad mid) (setq good mid))))
+            (setq trigger bad)))
+        (list :price trigger :already-called nil
+              :excess-at-start e0 :excess-at-bound e-bound)))))
+
 (provide 'schwab-broker-margin)
 ;;; schwab-broker-margin.el ends here
