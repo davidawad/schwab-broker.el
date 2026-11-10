@@ -333,5 +333,76 @@ spread's width x 100 x QTY; `:net' = that less both credits (CBOE: AAPL
           :formula (list "wider spread width x 100 x qty (one side can lose)"
                          "net = width - total credit (CBOE example form)"))))
 
+;;;###autoload
+(cl-defun schwab-broker-margin-ratio-spread
+    (&key kind long-strike short-strike long-price short-price
+          long-qty short-qty underlying)
+  "Ratio spread of KIND (`call'/`put'): LONG-QTY longs, SHORT-QTY shorts.
+The matched pairs (min of the two) are margined as a vertical spread; each
+extra short is margined as a naked option (needs UNDERLYING); each extra
+long is paid in full.  Requirement is the sum.  `:net' subtracts the
+net credit (CBOE example form)."
+  (let* ((matched (min long-qty short-qty))
+         (extra-short (- short-qty matched))
+         (extra-long (- long-qty matched))
+         (v (schwab-broker-margin-vertical
+             :kind kind :long-strike long-strike :short-strike short-strike
+             :long-price long-price :short-price short-price :qty matched))
+         (naked (when (> extra-short 0)
+                  (funcall (if (eq kind 'call)
+                               #'schwab-broker-margin-short-call
+                             #'schwab-broker-margin-short-put)
+                           :strike short-strike :premium short-price
+                           :underlying underlying :qty extra-short)))
+         (long (when (> extra-long 0)
+                 (schwab-broker-margin-long-option :price long-price
+                                                   :qty extra-long)))
+         (parts (delq nil (list v naked long)))
+         (sum (lambda (k) (apply #'+ 0.0 (mapcar (lambda (x) (or (plist-get x k) 0.0))
+                                                 parts))))
+         (mv (funcall sum :market-value))
+         (req (funcall sum :initial)))
+    (list :type 'ratio-spread :kind kind :long-qty long-qty :short-qty short-qty
+          :vertical v :naked naked :extra-long long :naked-shorts extra-short
+          :market-value mv :initial req :maintenance req :cash-reserve 0.0
+          :net (+ req mv)
+          :formula (list "matched pairs: vertical spread rule"
+                         "extra shorts: naked option rule; extra longs: paid in full"))))
+
+;;;###autoload
+(cl-defun schwab-broker-margin-calendar
+    (&key kind long-strike short-strike long-price short-price
+          long-expires-later underlying (qty 1))
+  "Calendar (same strike) or diagonal (different strikes) of KIND.
+LONG-EXPIRES-LATER non-nil: the long leg covers the short.  Requirement
+is the net debit paid in full (CBOE long calendar: 45,000), plus the
+strike differential when the long strike is worse than the short
+(call: long above short; put: long below short).  nil (short calendar):
+the short leg is margined naked (needs UNDERLYING) and the long is paid
+in full; `:net' = short gross - net credit (CBOE short calendar: 300,460)."
+  (let* ((m schwab-broker-margin-multiplier)
+         (debit (* (- long-price short-price) m qty))
+         (mv debit))
+    (if long-expires-later
+        (let* ((diff (* m qty (max 0.0 (if (eq kind 'call)
+                                           (- long-strike short-strike)
+                                         (- short-strike long-strike)))))
+               (req (+ (max 0.0 debit) diff)))
+          (list :type 'calendar-long :kind kind :qty qty :debit debit
+                :differential diff :market-value mv :max-loss (max 0.0 debit)
+                :net req :initial req :maintenance req :cash-reserve 0.0
+                :formula (list "net debit paid in full + strike differential if long strike is worse")))
+      (let* ((short (funcall (if (eq kind 'call)
+                                 #'schwab-broker-margin-short-call
+                               #'schwab-broker-margin-short-put)
+                             :strike short-strike :premium short-price
+                             :underlying underlying :qty qty))
+             (req (plist-get short :gross)))
+        (list :type 'calendar-short :kind kind :qty qty :debit debit :short short
+              :market-value mv :net (+ req debit) :initial req :maintenance req
+              :cash-reserve 0.0
+              :formula (list "short leg naked (expires later than the long); long paid in full"
+                             "net = short gross - net credit (CBOE example form)"))))))
+
 (provide 'schwab-broker-margin)
 ;;; schwab-broker-margin.el ends here

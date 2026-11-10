@@ -243,3 +243,42 @@ long 135C @4.75, 100 lots: width 100,000, credit 43,000, max loss 57,000."
     (should (schwab-broker-margin-test--near (plist-get a :net) 10700.0 0.5))
     (should (schwab-broker-margin-test--near (plist-get b :net) 32300.0 0.5))
     (should (schwab-broker-margin-test--near (plist-get a :initial) 50000.0 0.5))))
+
+(ert-deftest schwab-broker-margin-calendar-cboe-aapl ()
+  "CBOE AAPL: long calendar Jun/Mar 130C -> 45,000; short calendar -> 300,460."
+  (let ((l (schwab-broker-margin-calendar :kind 'call :long-strike 130
+                                          :short-strike 130 :long-price 11.15
+                                          :short-price 6.65
+                                          :long-expires-later t :qty 100))
+        (s (schwab-broker-margin-calendar :kind 'call :long-strike 130
+                                          :short-strike 130 :long-price 6.65
+                                          :short-price 11.15 :underlying 127.83
+                                          :qty 100)))
+    (should (schwab-broker-margin-test--near (plist-get l :initial) 45000.0 0.5))
+    (should (schwab-broker-margin-test--near (plist-get s :net) 300460.0 0.5))))
+
+(ert-deftest schwab-broker-margin-diagonal-differential ()
+  "Call diagonal with long strike 135 above short strike 130, 1 lot:
+differential 500 added to the 300 debit.  Derived, not a CBOE vector."
+  (let ((r (schwab-broker-margin-calendar :kind 'call :long-strike 135
+                                          :short-strike 130 :long-price 5.00
+                                          :short-price 2.00
+                                          :long-expires-later t)))
+    (should (schwab-broker-margin-test--near (plist-get r :initial) 800.0))))
+
+(ert-deftest schwab-broker-margin-ratio-spread ()
+  "1x2 call ratio, long 125C @9.05, short 2x 135C @4.75, AAPL 127.83, 1 lot:
+vertical debit 430 + one naked 135C (20%% x 12,783 - 717 OTM + 475 = 2,314.6)."
+  (let ((r (schwab-broker-margin-ratio-spread
+            :kind 'call :long-strike 125 :short-strike 135 :long-price 9.05
+            :short-price 4.75 :long-qty 1 :short-qty 2 :underlying 127.83)))
+    (should (= (plist-get r :naked-shorts) 1))
+    (should (schwab-broker-margin-test--near (plist-get r :initial) 2744.6))
+    ;; 1x1 reduces to the vertical
+    (should (schwab-broker-margin-test--near
+             (plist-get (schwab-broker-margin-ratio-spread
+                         :kind 'call :long-strike 125 :short-strike 135
+                         :long-price 9.05 :short-price 4.75 :long-qty 1
+                         :short-qty 1 :underlying 127.83)
+                        :initial)
+             430.0))))
