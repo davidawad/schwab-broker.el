@@ -42,12 +42,14 @@
   "Shares per standard equity option contract.")
 
 (defun schwab-broker-margin--otm (kind underlying strike)
-  "Per-share out-of-the-money amount of a KIND (`put'/`call') option."
+  "Per-share out-of-the-money amount of a KIND (`put'/`call') option.
+STRIKE and UNDERLYING are prices."
   (max 0.0 (if (eq kind 'put) (- underlying strike) (- strike underlying))))
 
 (defun schwab-broker-margin--short-option (kind strike premium underlying qty
                                                 pct min-pct house-extra)
-  "Shared naked-option math for KIND, with leg percentages PCT and MIN-PCT."
+  "Shared naked-option math for KIND, STRIKE, PREMIUM, UNDERLYING and QTY.
+PCT and MIN-PCT are the leg percentages; HOUSE-EXTRA is a dollar add-on."
   (let* ((m schwab-broker-margin-multiplier)
          (credit (* premium m qty))
          (otm (* (schwab-broker-margin--otm kind underlying strike) m qty))
@@ -84,8 +86,9 @@ override; default none).  `:net' subtracts the credit (CBOE example form)."
 (cl-defun schwab-broker-margin-short-call
     (&key strike premium underlying (qty 1) (pct 0.20) (min-pct 0.10) house-extra)
   "Naked short equity CALL requirement (Schwab / CBOE strategy-based).
-Same keys as `schwab-broker-margin-short-put'; the minimum leg is
-MIN-PCT of the underlying value rather than the strike."
+STRIKE, PREMIUM, UNDERLYING, QTY, PCT, MIN-PCT and HOUSE-EXTRA are as
+in `schwab-broker-margin-short-put'; the minimum leg is MIN-PCT of the
+underlying value rather than the strike."
   (schwab-broker-margin--short-option 'call strike premium underlying qty
                                       pct min-pct house-extra))
 
@@ -108,7 +111,7 @@ T-bills under a year as cash equivalents; it does not list ETFs."
 ;;;###autoload
 (cl-defun schwab-broker-margin-covered-call
     (&key strike premium underlying (qty 1))
-  "Covered short call: the long stock covers it, so the option adds 0.
+  "Covered short call: the long stock covers it, so the option needs 0.
 The stock leg is margined by `schwab-broker-margin-stock-long'; the
 credit lowers the net requirement (CBOE: 50% stock - call credit).
 STRIKE and UNDERLYING are recorded only; PREMIUM is per share."
@@ -126,7 +129,7 @@ Schwab's published rule is 100% of cost, same for maintenance.  FINRA
 4210(f)(1)/(2)(B) lets a listed option with more than 9 months to
 expiry carry margin of 75% of market value (a 25% loan value): pass
 `:leaps-margin-pct 0.75' with MONTHS-TO-EXPIRY above 9 to apply it.
-Default 1.0 = Schwab's published paid-in-full treatment."
+Default LEAPS-MARGIN-PCT 1.0 = Schwab's published paid-in-full."
   (let* ((mv (* price schwab-broker-margin-multiplier qty))
          (leaps (and months-to-expiry (> months-to-expiry 9)))
          (pct (if leaps leaps-margin-pct 1.0))
@@ -203,6 +206,20 @@ not publish; see docs/margin.md for the fitted values."
           :sma sma :option-bp obp :stock-bp (* 2 obp)
           :intraday-bp (* intraday-multiple (max 0.0 excess))
           :margin-call (< excess 0))))
+
+;;;###autoload
+(defun schwab-broker-margin-reconcile (observed computed)
+  "Compare OBSERVED Schwab numbers with COMPUTED account numbers.
+Both are plists using the keys of `schwab-broker-margin-account'
+\(:equity :option-bp :stock-bp :intraday-bp ...).  Returns a list of
+\(KEY OBSERVED COMPUTED RESIDUAL) for each key present in OBSERVED,
+where RESIDUAL = OBSERVED - COMPUTED (the gap a house rule must fill)."
+  (let (out)
+    (cl-loop for (k v) on observed by #'cddr
+             do (let ((c (plist-get computed k)))
+                  (when (numberp c)
+                    (push (list k v c (- v c)) out))))
+    (nreverse out)))
 
 (provide 'schwab-broker-margin)
 ;;; schwab-broker-margin.el ends here

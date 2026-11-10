@@ -126,5 +126,54 @@ Stock initial 50% less the call credit."
                               :strike 100 :premium 1.0)))))
     (should (schwab-broker-margin-test--near (plist-get a :option-bp) (- 19900.0 9900.0)))))
 
+;; -- Screenshot reconciliation (Schwab screen, 2026-11-09 ~15:10 CT) --
+;; Observed: Account Value 51,273.22; Option BP 23,072.99; Stock BP
+;; 46,145.98; Intraday BP 141,966.20.  Holdings: SGOV 491 sh @ ~100.50,
+;; short 1x NVDA 11/13 165P @1.04, NVDA ~178.9.  Cash was NOT observed:
+;; it is derived from Account Value (51,273.22 - SGOV value + put
+;; liability) = 2,031.72.  See docs/margin.md "Screenshot reconciliation".
+
+(defconst schwab-broker-margin-test--observed
+  '(:equity 51273.22 :option-bp 23072.99 :stock-bp 46145.98
+    :intraday-bp 141966.20))
+
+(defun schwab-broker-margin-test--screenshot (&rest extras)
+  "Compute the screenshot account with EXTRAS passed to the account fn."
+  (apply #'schwab-broker-margin-account
+         :cash (+ (- 51273.22 (* 491 100.5)) 104.0)
+         :positions (list (schwab-broker-margin-stock-long :price 100.5 :qty 491)
+                          (schwab-broker-margin-short-put
+                           :strike 165 :premium 1.04 :underlying 178.9))
+         extras))
+
+(ert-deftest schwab-broker-margin-screenshot-published-rules ()
+  "Published rules reproduce equity exactly and the rest within a known gap."
+  (let* ((c (schwab-broker-margin-test--screenshot))
+         (res (schwab-broker-margin-reconcile
+               schwab-broker-margin-test--observed c)))
+    (should (schwab-broker-margin-test--near (plist-get c :equity) 51273.22))
+    ;; put requirement: 20% leg binds: 3,578 - 1,390 + 104 = 2,292
+    (should (schwab-broker-margin-test--near
+             (plist-get c :maintenance-requirement) (+ 12336.375 2292.0)))
+    ;; Schwab's own numbers are internally consistent: Stock BP = 2 x Option BP
+    (should (schwab-broker-margin-test--near 46145.98 (* 2 23072.99)))
+    ;; Schwab intraday BP / 4 = the maintenance excess Schwab used
+    (should (schwab-broker-margin-test--near (/ 141966.20 4) 35491.55))
+    ;; Documented residuals (observed - computed), the unexplained house gap:
+    (should (schwab-broker-margin-test--near
+             (nth 3 (assq :option-bp res)) -1235.48))
+    (should (schwab-broker-margin-test--near
+             (nth 3 (assq :stock-bp res)) -2470.96))
+    (should (schwab-broker-margin-test--near
+             (nth 3 (assq :intraday-bp res)) -4613.18))))
+
+(ert-deftest schwab-broker-margin-screenshot-fitted-house-extra ()
+  "FITTED, not published: explicit house add-ons close every number."
+  (let ((c (schwab-broker-margin-test--screenshot
+            :house-extra-initial 1235.48 :house-extra-maintenance 1153.295)))
+    (should (schwab-broker-margin-test--near (plist-get c :option-bp) 23072.99))
+    (should (schwab-broker-margin-test--near (plist-get c :stock-bp) 46145.98))
+    (should (schwab-broker-margin-test--near (plist-get c :intraday-bp) 141966.20))))
+
 (provide 'schwab-broker-margin-test)
 ;;; schwab-broker-margin-test.el ends here

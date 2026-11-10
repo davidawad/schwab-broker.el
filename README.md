@@ -257,3 +257,10 @@ path, elisp function, mocked/live test status). In short:
 - LIVE tests live in `test/live/schwab-broker-live-test.el` -- hit the
   real Schwab API against a real account, self-skip without a live
   token, and never run in CI. Run via `test/live/run-live-tests.sh`.
+
+## Margin helpers
+
+`schwab-broker-margin.el` holds pure, read-only Reg T / Schwab margin and
+buying-power helpers (no network). Rules, citations and the 2026-11-09
+screenshot reconciliation: `docs/margin.md`. Tests:
+`emacs -Q --batch -L . -L test -l test/schwab-broker-margin-test.el -f ert-run-tests-batch-and-exit`.
