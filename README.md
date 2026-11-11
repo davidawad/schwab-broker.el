@@ -9,7 +9,7 @@ third-party HTTP or JSON library. Requires Emacs 27.1+.
 ## Install
 
 Copy `schwab-broker.el`, `schwab-broker-oauth.el`, `schwab-broker-marketdata.el`,
-`schwab-broker-orders.el`, and `schwab-broker-trader.el` somewhere on
+`schwab-broker-orders.el`, `schwab-broker-ticket.el`, and `schwab-broker-trader.el` somewhere on
 your `load-path`, then:
 
 ```elisp
@@ -204,6 +204,66 @@ for equities, `"BUY_TO_OPEN"`/`"BUY_TO_CLOSE"`/`"SELL_TO_OPEN"`/
        (spec (schwab-broker-order-equity-limit "AAPL" "BUY" 1 150.00)))
   (schwab-broker-preview-order-sync hash spec))
 ```
+
+## thinkorswim web order tickets (`schwab-broker-ticket.el`)
+
+Pure elisp (no network, no Schwab API call, no Rust) that builds
+`https://trade.thinkorswim.com/trade?...` URLs which open a **prefilled draft**
+order ticket in thinkorswim web, plus OCC <-> TOS option-symbol conversion.
+Opening the URL only drafts a ticket in a signed-in browser session; it sends
+nothing and is not gated by `schwab-broker-allow-orders`.
+
+**Review the ticket on screen before pressing Place.** The URL has no
+to-open/to-close parameter and no account parameter (the ticket uses whichever
+account is selected in the site and decides open vs close itself), and the site
+silently substitutes defaults for several bad inputs, including an order type
+that may be MARKET. So `:order-type` and `:tif` are required and everything the
+site would silently reinterpret is a hard error: unknown order type or TIF,
+`WALK_LIMIT` (unverified), zero or non-integer quantity, more than 4 legs or more
+than one non-option leg, mismatched option roots, a symbol containing `* + -`,
+a missing limit (LIMIT/LOC/STOPLIMIT) or stop (STOP/STOPLIMIT), a stop on
+non-stop types, non-positive or non-tick-sized prices (0.01 for options or prices
+>= 1, 0.0001 for sub-$1 stock-only orders, or `:tick`). The URL schema is
+undocumented by Schwab, read from the site's JavaScript, and specified with
+evidence and confidence tags in the sibling Rust crate
+[tos-ticket-rs](../tos-ticket-rs) (`docs/tos-ticket-url-schema.md`); this file
+mirrors it and shares its golden test vectors
+(`test/golden/tos-ticket-golden.json`).
+
+An order is a plist; `:legs` carry signed integer quantities (negative sells):
+
+```elisp
+(let ((order '(:legs ((:qty 1 :instrument ".NVDA261113P165"))   ; or "NVDA  261113P00165000"
+               :order-type limit :limit 0.05 :tif gtc)))
+  (schwab-broker-ticket-summary order) ; => "BUY 1 NVDA 13 Nov 26 165 PUT, LIMIT 0.05, GTC"
+  (schwab-broker-ticket-url order)
+  ;; => "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=GTC"
+  (schwab-broker-ticket-open order))   ; browse-url the draft ticket
+
+;; Close an existing position: short 1 put => buy 1 of the same put.
+(schwab-broker-ticket-for-position
+ '((longQuantity . 0) (shortQuantity . 1)
+   (instrument . ((assetType . "OPTION") (symbol . "NVDA  261113P00165000"))))
+ :order-type "LIMIT" :limit 0.05 :tif "GTC")
+
+(schwab-broker-ticket-option-to-tos "NVDA  261113P00165000") ; => ".NVDA261113P165"
+(schwab-broker-ticket-option-to-occ ".SPY261113C450.5")      ; => "SPY   261113C00450500"
+```
+
+| Function | Description |
+| --- | --- |
+| `schwab-broker-ticket-url ORDER &optional COPY` | Validate and return the URL; interactively prompts and copies it to the kill ring. |
+| `schwab-broker-ticket-open ORDER` | Same, then `browse-url` it. Interactively prompts for the order. |
+| `schwab-broker-ticket-summary ORDER` | One-line human-readable summary (`BUY 1 NVDA 13 Nov 26 165 PUT, LIMIT 0.05, GTC`). |
+| `schwab-broker-ticket-violations ORDER` | Sorted list of rule violations (symbols such as `missing_tif`); empty means expressible. |
+| `schwab-broker-ticket-for-position POSITION &key order-type limit stop tif` | The order that closes a Schwab position alist (from `schwab-broker-positions`). |
+| `schwab-broker-ticket-close-position &optional POSITION` | Interactive: pick a position from `schwab-broker-positions-sync`, prompt for price and TIF, open the closing ticket. |
+| `schwab-broker-ticket-from-order-spec SPEC` | Translate an order-spec built by `schwab-broker-orders.el`. |
+| `schwab-broker-ticket-option-to-tos` / `-to-occ` / `-to-occ-compact` | Convert an option symbol (any form in, any form out). |
+
+Tests: `emacs -Q --batch -L . -L test -l test/schwab-broker-ticket-test.el -f ert-run-tests-batch-and-exit`
+(includes an independent elisp port of the site's URL parser, so every golden
+order is checked as parse(generate(order)) == order).
 
 ## Order safety
 
