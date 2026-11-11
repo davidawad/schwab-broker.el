@@ -27,6 +27,9 @@ jobs:
       - name: Run tests
         run: emacs -Q --batch -L . -L test -l test/schwab-broker-test.el -f ert-run-tests-batch-and-exit
 
+      - name: Run ticket tests
+        run: emacs -Q --batch -L . -L test -l test/schwab-broker-ticket-test.el -f ert-run-tests-batch-and-exit
+
       # *-model.el needs the sibling broker-model.el package (local-only,
       # not on CI); its tests skip themselves when broker-model is absent.
       - name: Byte-compile

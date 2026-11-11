@@ -33,7 +33,7 @@
 ;; package refreshes the access token on disk automatically as it
 ;; nears expiry.
 ;;
-;; Provided by the four files this one loads:
+;; Provided by the five files this one loads:
 ;;
 ;;   `schwab-broker-oauth' -- credentials, the manual-authorize flow,
 ;;   the on-disk token store, and the shared async HTTP/request core
@@ -61,6 +61,12 @@
 ;;   alists the order endpoints above send (`schwab-broker-order-spec'
 ;;   and convenience wrappers like `schwab-broker-order-equity-market').
 ;;
+;;   `schwab-broker-ticket' -- pure builder of thinkorswim web PREFILLED
+;;   order-ticket URLs (a draft ticket in the browser; nothing is
+;;   sent, no API call) plus OCC <-> TOS option-symbol conversion
+;;   (`schwab-broker-ticket-open', `schwab-broker-ticket-url',
+;;   `schwab-broker-ticket-for-position').
+;;
 ;; Every entry point above has both an async form (its bare name,
 ;; taking a CALLBACK of (DATA ERR)) and a blocking `-sync' form that
 ;; returns DATA directly or signals `schwab-broker-error'.
@@ -79,6 +85,7 @@
 (require 'schwab-broker-oauth)
 (require 'schwab-broker-marketdata)
 (require 'schwab-broker-orders)
+(require 'schwab-broker-ticket)
 (require 'schwab-broker-trader)
 
 (provide 'schwab-broker)
