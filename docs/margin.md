@@ -195,3 +195,25 @@ Local snapshots (fetched 2026-11-09) live in the deal research folder
 - https://cdn.cboe.com/resources/membership/Margin_Manual.pdf
 - https://cdn.cboe.com/resources/membership/Margin_Requirement_Examples.pdf
 - https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210
+
+## broker-model registration (schwab-broker-model.el)
+
+The rules above are also registered, as data, with the sibling package
+`../broker-model.el` (see its README and `docs/rules-matrix.md`). Each
+Schwab cell names its document (short names from
+`docs/schwab-margin/index.md`) or kd fact id and a confidence:
+
+| account type | baseline | Schwab overrides (confidence) |
+|---|---|---|
+| `reg-t` | Reg T + FINRA 4210 + Cboe | REQ tables: long >= $3 50/25, < $3 100%; short tiers; 2X/3X ETFs; money funds 10/10; T-bills 10/1; naked 20%/10% (broad index 15%), $100/contract floor, leverage-scaled; long options 100% (no LEAPS carve-out); spreads, straddles, protective puts, collars; $2,000 margin and $5,000 naked minimum equity; BP 2x / 4x maintenance excess (all official). Option BP = SMA - reserves (inferred). CSP premium netted (inferred). House surcharges and RBC concentration (unpublished). PDT vs intraday-margin regime (unpublished). |
+| `portfolio-margin` | FINRA 4210(g) + OCC TIMS | equities and narrow indexes +/-15% 10 points; SPX/NDX +/-15% 20 points (wider than TIMS +6/-8); $0.375 x multiplier; stocks < $3 and leveraged ETFs margined Reg T; $125,000 / $100,000 equity (official). T-bill ETFs 7% (community). IV shocks and house stress tests (unpublished: results are floors). |
+| `ira` | Reg T cash | no naked or short; spreads hold max loss in cash, $5,000 spread minimum (official); settled cash only and the strategy list (inferred, as `schwab-broker-margin-ira`). |
+| `cash` | Reg T cash | CSEP collateral list (official). |
+
+`test/schwab-broker-model-test.el` checks the registration against this
+package's helpers on the same inputs (parity), reproduces the screenshot
+residuals, and shows that an INFERRED 1.5x house multiplier on NVDA
+options (`schwab-broker-model-set-house-option-multiplier`, kd
+f-schwab-nvda-165p-gap-inferred) leaves the 7.29 maintenance residual
+from `docs/schwab-margin/empirical.md`. The multiplier is not registered
+by default.

@@ -264,3 +264,28 @@ path, elisp function, mocked/live test status). In short:
 buying-power helpers (no network). Rules, citations and the 2026-11-09
 screenshot reconciliation: `docs/margin.md`. Tests:
 `emacs -Q --batch -L . -L test -l test/schwab-broker-margin-test.el -f ert-run-tests-batch-and-exit`.
+
+## broker-model registration
+
+`schwab-broker-model.el` registers Schwab with the sibling
+[broker-model.el](../broker-model.el) package (local-only): account types
+`cash`, `reg-t`, `portfolio-margin` and `ira`, each a set of rule cells
+(value, source, confidence) layered on the regulatory baseline, so the
+same position can be compared across Schwab account types, other brokers
+and the regulatory minimum:
+
+```elisp
+(require 'schwab-broker-model)   ; needs ../broker-model.el on load-path
+(broker-model-show-compare
+ '(:type option :symbol "NVDA" :side short :right put :strike 165
+   :price 1.04 :qty 1 :underlying-price 178.9)
+ '((schwab . reg-t) (schwab . portfolio-margin) (schwab . ira) (regulatory . reg-t)))
+```
+
+It is the only file here that depends on broker-model; the rest of the
+package (including `schwab-broker-margin.el`, whose public functions are
+unchanged) still has zero external dependencies. Unpublished Schwab
+values (house surcharges, RBC concentration numbers, PM IV shocks,
+option-BP formula, PDT vs intraday-margin choice) are cells marked
+`unpublished`, never guessed. Tests (skip without broker-model):
+`emacs -Q --batch -L . -L test -l test/schwab-broker-model-test.el -f ert-run-tests-batch-and-exit`.

@@ -61,6 +61,13 @@ that `schwab-broker-place-order`/`schwab-broker-preview-order`/
 | `schwab-broker-order-option-market` | yes | |
 | `schwab-broker-order-option-limit` | yes | |
 
+## Margin model (pure, no endpoint)
+
+| File | Mocked test | Notes |
+|---|---|---|
+| `schwab-broker-margin.el` | yes (`test/schwab-broker-margin-test.el`) | Reg T helpers, screenshot reconciliation, IRA, snapshot explain |
+| `schwab-broker-model.el` | yes (`test/schwab-broker-model-test.el`, skips without broker-model) | registers Schwab cash / reg-t / portfolio-margin / ira with `../broker-model.el`; parity with the helpers; PMUND and REQ vectors |
+
 ## Out of scope for this version
 
 | Item | Status | Notes |

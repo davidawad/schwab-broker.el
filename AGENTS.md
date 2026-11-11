@@ -43,6 +43,14 @@ per-endpoint coverage matrix.
   `schwab-broker-preview-order` is never gated -- it only simulates.
   Do not loosen or bypass this gate without explicit direction, and
   never call place/replace/cancel from a live test.
-- Zero external elisp dependencies. Keep it that way.
+- Zero external elisp dependencies. Keep it that way. The one
+  exception is `schwab-broker-model.el`, which registers Schwab's
+  account rules with the sibling local-only package `broker-model.el`
+  (`../broker-model.el`); nothing else may require it, CI does not
+  byte-compile it, and `test/schwab-broker-model-test.el` skips when
+  broker-model is not on the load path (`$BROKER_MODEL_DIR` or
+  `../broker-model.el`). Every rule cell there cites a doc in
+  `docs/schwab-margin/` or a kd fact id with a confidence; mark
+  unpublished values `unpublished`, never guess.
 - The Streamer WebSocket API is out of scope for this package -- see
   ROADMAP.md. Do not add it without explicit direction.
