@@ -1,0 +1,69 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/1micod0/how_picky_is_schwab_when_it_comes_to_buying_stock/",
+ "title": "How picky is Schwab when it comes to buying stock with PM ?",
+ "created": "2025-08-05",
+ "body": "I have a $200k account and don't use PM for options, just stock.\nOften times my available BP DTBP (Day Trade Buying Power) is close to $1 million, and I'll occasionally buy or short $200k - $250k of (mostly) large cap stocks, such as TSLA, NVDA, XOM, WFC, SPY, etc. Sometimes I'll buy $50k of GME or something a bit more risky. At times, my BP DTBP could be down to $300k - $400k. Sometimes it'll be a day trade and I'll exit the position before market close, and other times I'll hold it for days / weeks, especially if the stock starts to take off.\n(A perfect example: I just bought XOM 20 minutes ago and as I was typing this out, it popped. Closed the trade and made $900)\n\nIs this the type of thing Schwab wants - so they can make $$ on PFOF & interest ?\nOr will this eventually get my PM turned off ? (Or to ask it another way: what would it take to get my PM turned off ?)",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "greytoc",
+   "d": "2025-08-05",
+   "s": "12",
+   "t": "Afaik - Schwab doesn't remove PM unless you breach their house margin rules. But depending on how you day trade - Schwab can decide to end doing business with you if the trading style is considered toxic - it wouldn't matter if you have pm, reg-t, or cash. My understanding is that it's usually high-freq type scalping behavior. It doesn't sound like you are doing that sort of trading. You could also call Schwab and ask them. And if they tell you - please do share the outcome."
+  },
+  {
+   "a": "Puzzlehead50",
+   "d": "2025-08-05",
+   "s": "3",
+   "t": "Thanks for the tip about HFT; I had previously talked with the PM desk and asked a similar question. I got a generic answer, and didn't want to push it and possibly get a negative internal note put on my account - which is why I'm asking specifics on here. I think it was also on here that someone said their buddy had a big account, but PM was removed for doing too many big & risky trades - although the account was not closed. I know sometimes when brokerages don't post specific info on their sites, it falls under 'proprietary.' Basically, I want to play by the rules and make sure I don't make them mad !"
+  },
+  {
+   "a": "greytoc",
+   "d": "2025-08-05",
+   "s": "4",
+   "t": "There are plenty of PMT'ers that day trade and take on a lot of leverage. Some of us even use bots to help with our trading. Schwab doesn't really care if a customer is making a risky trade as long as the risk doesn't extend to them or their other customers. And as long as the customer understands the risk and Schwab cannot be perceived as violating Reg BI or similar. Schwab also supports Rule 390 option traders so it's not necessarily about HFT. It's likely more about whether the trading may be perceived as manipulative or toxic. I.e. behavior that looks like layering or spoofing. And as far as removing PM - could be that they simply violating PM house rules too often."
+  },
+  {
+   "a": "greytoc",
+   "d": "2025-08-08",
+   "s": "1",
+   "t": "I just saw that you updated your post. Fwiw - DTBP is not a Schwab specific concept or term. It's a regulatory defined concept for margin accounts and specific to pattern day trading. When someone is classified as a PDT, their margin allowance on day trades increases to 4x of the previous day's maintenance excess. If you are concerned about DTBP - that's a very different problem for why Schwab will close an account. When you breach the DTBP - you are issued a day margin call. This is a type of margin call that doesn't necessarily mean that you have a margin deficit or that you have losses. It's because over-trading occurred and DTBP was breached. If you don't meet repeated DTBP calls - Schwab and most brokers will close the account or restrict trading. The part that I'm unfamiliar is how DTBP gets calculated in a PM account vs Reg-T account. If there is no difference - and I don't think there is. It may be easier to breach DTBP in a PM account because the margin requirements in PM for many equities and ETFs can be lower than in a Reg-T account - so it can be easier to over-trade. At least - that's my recollection about how DTBP works. I don't really day trade any more so I haven't "
+  },
+  {
+   "a": "alberto3333",
+   "d": "2025-08-06",
+   "s": "3",
+   "t": "I would recommend getting really familiar with the difference between margin and buying power and the implications of each. It looks like you're confusing the two. As an example, even in a PM account, your buying power will never be greater than your NLV."
+  },
+  {
+   "a": "Puzzlehead50",
+   "d": "2025-08-07",
+   "s": "1",
+   "t": "Updated BP to DTBP - Day Trade Buying Power"
+  },
+  {
+   "a": "OldSchoolHead",
+   "d": "2025-08-11",
+   "s": "1",
+   "t": "Maybe this is broker dependant. On IBKR, BP is much larger than NLV. Margin and excessive liquidity combined equals NLV."
+  },
+  {
+   "a": "LoveOfProfit",
+   "d": "2025-08-13",
+   "s": "1",
+   "t": "It is. Schwab has BP = NLV at max, but positions take far less BP when opening. IBKR gives you more BP but then positions use more of it."
+  },
+  {
+   "a": "bebenashville",
+   "d": "2025-08-07",
+   "s": "1",
+   "t": "When you mean BP down $300-400k means your BP is negative? Did they margin call you?"
+  },
+  {
+   "a": "Puzzlehead50",
+   "d": "2025-08-07",
+   "s": "1",
+   "t": "Schwab calls it DTBP - Day Trade Buying Power. If I have $1 million available and buy $600k SPY, my DTBP will be down to $400k."
+  }
+ ]
+}

@@ -1,0 +1,63 @@
+{
+ "url": "https://www.reddit.com/r/Schwab/comments/1uaidpz/margin_equity_requirement_rates/",
+ "title": "Margin equity requirement rates",
+ "created": "2026-06-20",
+ "body": "I know base equity requirement rates are high on 'leveraged' equities, but I'm curious why KSS (Kohl's) is 70% in my Schwab account (last I checked)? ALL my other stocks are 30% base rate - several with similar price volatility. Just strictly referring to base rates here. What kinds of things determine this rate? This is a profitable dividend-paying company with recent credit rating upgrades. I could be utilizing more margin otherwise.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "BullfrogCommon9559",
+   "d": "2026-06-20",
+   "s": "6",
+   "t": "It’s based on a formula and volatility is a large component."
+  },
+  {
+   "a": "Compound30",
+   "d": "2026-06-20",
+   "s": "0",
+   "t": "I would love to know more about that formula! At least to have some idea when to anticipate a rate change in either direction."
+  },
+  {
+   "a": "TaleRevolutionary573",
+   "d": "2026-06-20",
+   "s": "5",
+   "t": "52 week range of $7-$25 too"
+  },
+  {
+   "a": "[deleted]",
+   "d": "2026-06-20",
+   "s": "4",
+   "t": "Well 25% short interest isn't bad compared to CBRL (45% short) - and CBRL margin requirement is the standard 30%. If there's some other profitable company with more than a 30% base requirement, I don't even know what it is..."
+  },
+  {
+   "a": "Compound30",
+   "d": "2026-06-21",
+   "s": "-1",
+   "t": "Well 25% short interest isn't bad compared to CBRL (45% short) - and CBRL margin requirement is the standard 30%. If there's some other profitable company with more than a 30% base requirement, I don't even know what it is..."
+  },
+  {
+   "a": "phatelectribe",
+   "d": "2026-06-22",
+   "s": "1",
+   "t": "Dude. Zoom out and look at KSS chart. It’s all over the place. Highly volatile and high risk. They don’t just make this shit up. It’s also likely they have an army of analysts looking at exactly this sort of thing and thing KSS is doomed."
+  },
+  {
+   "a": "papakong88",
+   "d": "2026-06-20",
+   "s": "2",
+   "t": "ALL my other stocks are 30% It is now 25%. What kinds of things determine this rate? Maybe by FINRA or the Exchange. Fidelity also requires 70%."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2026-06-22",
+   "s": "1",
+   "t": "Thanks. According to this any common unleveraged stock >$3.00 should have 25% base maintenance margin. Not 70% 🤔 Page 12/35"
+  },
+  {
+   "a": "Compound30",
+   "d": "2026-06-22",
+   "s": "1",
+   "t": "Thanks. According to this any common unleveraged stock >$3.00 should have 25% base maintenance margin. Not 70% 🤔 Page 12/35"
+  }
+ ]
+}

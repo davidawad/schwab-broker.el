@@ -1,0 +1,75 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/158hyrj/are_there_really_options_with_3750_maintenance/",
+ "title": "Are there really options with $37.50 maintenance requirement?",
+ "created": "2023-07-24",
+ "body": "Longtime listener, first time caller.\n\nI've been trading ratio spreads (mostly) on a Reg-T account for a while, but I recently switched my main account (taxable, non-retirement) to Interactive Brokers and when they asked if I wanted to apply for Portfolio Margin, I went for it. I'd been thinking about it for a while, but hadn't pulled the trigger.\n\nLooking for my next trades, I've noticed the margin requirements are a little higher than I expected. I know the minimum requirement is 0.375 times the index. I thought that meant if I'm selling an option for 100 shares, the minimum would be $37.50. Do I have the right? I also realize the stress test isn't exactly spelled out (and depends on what else is in my portfolio), but just for educational purposes, I looked at a $560 TSLA call (over 100% out of the money) and it still had a maintenance requirement showing in the IBKR app of more than $500 per contract. Most reasonable options are $2000/contract or more.\n\nSo, my questions:\n\nIs it feasible to find options to sell that are at the minimum ($37.50) requirement or would they be so low risk that no one would buy them?\n\nWhen I setup my ratio spreads, I'm seeing the requirement as the same amount as if I sold the excess short contracts by themselves. For example, if selling 1 call requires $1000 maintenance, selling 2 while buying 1 at a lower strike shows $1000 as well. This is what I'm used to with Reg-T, but if both are out of the money so that some of the stress test points would see my position gain, I would have thought this would be lower. I haven't actually placed an order yet so maybe what's showing in the app isn't exactly right?\n\nThanks in advance for any advice/answers. Reading this sub has already been very helpful.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "LoveOfProfit",
+   "d": "2023-07-25",
+   "s": "7",
+   "t": "That's correct, but every broker can apply their own house rules on top of that. IBKR isn't as generous for far otm options on PM as TDA is."
+  },
+  {
+   "a": "psyche444",
+   "d": "2023-07-25",
+   "s": "6",
+   "t": "What u/Loveofprofit said is the exact reason I went through the big hassle of switching from IBKR to TDA. There are good reasons to be at each of them that you have to balance, but if selling far OTM options for low BP were your only criteria, TDA would win hands down. And yes, some options on TDA only require that 37.50 minimum (the vast majority that you'd consider selling take more though). Also -- far OTM options may have a low probability of touch but I personally I would not call them \"low risk\" ... they can still move big against you, margin requirements can expand massively, premiums can explode during an IV spike, etc. And it is tempting to oversize positions... Anyway you probably know all that but maybe someone reading this doesn't. Have fun with PM."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2023-07-25",
+   "s": "3",
+   "t": "Do you have any general rules for sizing far otm positions? Is it done by buying power or notional risk or Greeks?"
+  },
+  {
+   "a": "psyche444",
+   "d": "2023-07-25",
+   "s": "7",
+   "t": "It is really hard to answer since there are so many scenarios... but all the things you mentioned are good to look at for sizing. And I guess I size differently depending on my plan if it goes against me (close at a certain price/loss, or hedge, or HODL). For the portfolio as a whole, one place to start is keeping your buying power utilization (BPu) below certain percentages, which can change with VIX. This is from an old post by u/thetagangalwayswins : \"Vix below 15 = <20% BPu 15<vix<20 = around 25% BPu but up to 30% before I start trimming 20<vix<40 = uncomfortable above 40% BPu Vix>40 = no more than 50% BPu and I religious trimming positions to stay under 50% BPu.\" I don't personally follow those strictly but I think it is a nice guideline, and I know I'm taking on elevated risk if I go above that. When VIX is low, there is more potential for the required buying power to expand when VIX increases. That is extra true for far OTM positions where vega plays a big part. If you are selling close-dated ATM puts you don't need to worry much about margin expansion, whereas the notional risk becomes much more important. Also: https://www.reddit.com/r/PMTraders/comments/o16oip/qa_from_our"
+  },
+  {
+   "a": "ReThinkingForMyself",
+   "d": "2023-07-24",
+   "s": "6",
+   "t": "Sorry if this is kind of a crappy reply. No one else responded yet so here goes. It's been a couple of years since I tried it, but I wasn't able to duplicate the changes in maintenance requirement and buying power that result from a particular trade with my portfolio margin account. As I recall, there are some dynamic variables that go into the broker's calculations and some of their formula may be proprietary. The values you found may be a Reg-T estimate with actual impact to be calculated at trade time. It's worth the time to look up the process on your broker's website. I've also noticed that MR and BP fluctuate without my putting any new trades on. I suggest just putting on a small credit spread to see the effects. I sell PCS's on SPX every week and the impact is predictable. Congrats on getting PM, I'm interested in what you learn."
+  },
+  {
+   "a": "NH_trader",
+   "d": "2023-07-25",
+   "s": "4",
+   "t": "I'm relatively new to PM coming from reg-T so take my input with some caution. My trading approach (selling) is always focused on return on capital (ROC)….vs looking for just premium. I moved to PM because I understood the BP usage (capital) would be less per trade. I had been trading ES which uses SPAN (similar to PM) but wanted to move to SPX. Unfortunately the BP for SPX did not reduce that much from reg-T to PM...I was disappointed, so I stayed with SPAN. Then I read the PM guide that u/Adderalin posted here and it piqued my interest in the low BP requirements he pointed out for short selling an equity trade. So I tried doing a far OTM on an equity trade (historically I've only traded indexes and ETF's). What a surprise....I didn't get $37.50, but got a really low BP requirement (I'm on TDA). My annualized return/trade has spiked to over 100%…..can this be real? The guide write up seemed to indicate that potential. For example, today META is at 295 and for an 8 DTE short put that is 30% OTM, I.e., 200 (I feel that is safe for 8 days), TDA is looking for $118 BPR which shows me a 227% annualized ROC. I need to spend more time analyzing this to be sure the rate and risk are real "
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-07-25",
+   "s": "5",
+   "t": "Yes the return is real. Yes you can annualize 100%+ on PM. The key is very small sizing taking on low notional risk per ticker and avoiding the SIVBs, SBNYs, NVDAs(short calls), etc."
+  },
+  {
+   "a": "psyche444",
+   "d": "2023-07-25",
+   "s": "4",
+   "t": "\"can\" ... but in practice this is like <1% of people using PM that I am aware of. I just don't want to raise any false expectations."
+  },
+  {
+   "a": "psyche444",
+   "d": "2023-07-25",
+   "s": "3",
+   "t": "Thank you for sharing! Yes, PM turbocharges both the profit potential and the risks. Just wanted to mention that the person who wrote those helpful guides is u/Adderalin (I think there was a typo above and just want to make sure people get to the right place... I don't mean to criticize!) Cheers and happy trading."
+  },
+  {
+   "a": "NH_trader",
+   "d": "2023-07-25",
+   "s": "4",
+   "t": "Nothing more embarrassing then getting a name wrong....thank you for the correction."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2023-07-26",
+   "s": "2",
+   "t": "IBKR calculates your margin requirements based on the net total exposure of your portfolio. If you want to sell very far OTM options, they need to stay balanced or your margin requirements will go up significantly. Play around with strangles/straddles/flys/condors to see what works for you."
+  }
+ ]
+}

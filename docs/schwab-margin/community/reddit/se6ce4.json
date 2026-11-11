@@ -1,0 +1,153 @@
+{
+ "url": "https://www.reddit.com/r/thetagang/comments/se6ce4/2k_minimum_margin_requirement_avoid_forced/",
+ "title": "$2k minimum margin requirement (avoid forced liquidation)",
+ "created": "2022-01-27",
+ "body": "This is just like a public service announcement cause it took me totally off-guard. I have a margin account and just use it for thetagang stuff. This morning my phone buzzes because Fidelity closed my PMCC on TSLA, a huge position, to meet a \"minimum margin\" requirement of $2k. This is even though the PMCC is totally self-secured, and my other options were just a few leaps.\n\nThis is what the CS rep says: spreads have to be done on margin and so I had to have at least $2k in cash or equities and the requirement is regulatory. I found it here:\n\nhttps://www.sec.gov/oiea/investor-alerts-and-bulletins/ib_marginaccount#:~:text=Know%20the%20Margin%20Rules&text=Before%20trading%20on%20margin%2C%20FINRA,to%20deposit%20more%20than%20%242%2C000\n\nThis is even though the PMCC and leaps had no margin risk. The PMCC is self-secured because early exercise of the short call (unlikely, but could happen) would just trigger exercise of the leap. The other long options were just lottery tickets. So there was no margin risk, but the requirement is what it is and Fidelity opted to just close whatever position was available to meet the requirement. I'd apparently be out of compliance for 3 weeks but didn't receive any notification or call.\n\nThe rep basically said it was my fault for not reading the fine print! It was extremely frustrating cause they could have let me know, either via message or calling before the forced liquidation (which is pretty stressful to see on one's account randomly). They could also not let me enter into the transaction that dropped the account below $2k, but no.\n\nAnyway, just thought if someone sees this it might avoid a similar situation. The only saving grace was that TSLA was in free-fall this morning. I actually re-entered almost the same spread and avoided some of the pain.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "stonk_fish",
+   "d": "2022-01-27",
+   "s": "38",
+   "t": "I want to clarify when you say PMCC on TSLA, what was your position and account size, because 2K is irrelevant as a sum when talking about TSLA given that even a 1DTE ATM call is $1500. If you were running a PMCC on TSLA you'd need to have a 5 figure account to do that."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2022-01-27",
+   "s": "4",
+   "t": "Account size is around 50k. The leap cost around 45k and the short call brings in a few thousand a month. The CS rep had no concerns besides the 2k minimum margin req. I agree the 2k is irrelevant but it is a regulatory requirement, likely why they were so eager to liquidate my position to restore it. I re-entered the same strat right after. A ~43k long leap, with a ~3k short weekly call sold against it, netting enough cash to not have to worry about the minimum going forward"
+  },
+  {
+   "a": "BillyTables",
+   "d": "2022-01-27",
+   "s": "7",
+   "t": "The PMCC is self-secured because early exercise of the short call (unlikely, but could happen) would just trigger exercise of the leap. Can you explain this part? I trade only on fidelity. What mechanism is there to have a \"In every conceivable circumstance, exercise both sides of this spread at the same time..\"?"
+  },
+  {
+   "a": "[deleted]",
+   "d": "2022-01-28",
+   "s": "2",
+   "t": "I don't understand. If your account is $50k then you're easily above the $2k margin requirement."
+  },
+  {
+   "a": "Dignam3",
+   "d": "2022-01-27",
+   "s": "15",
+   "t": "Also confused - Fidelity won't let you trade spreads without an acct value over $10k, at least at level 3 options."
+  },
+  {
+   "a": "Soprelos",
+   "d": "2022-01-28",
+   "s": "3",
+   "t": "Option value isn't considered towards margin equity, so putting $45k into a call reduced his equity from $50k to $5k then other positions pushed it below $2k from there. Link to Fidelity's margin FAQ. Minimum margin requirements for spreads is explained about two thirds of the way down."
+  },
+  {
+   "a": "OptionExpiration",
+   "d": "2022-01-27",
+   "s": "20",
+   "t": "Minimum margin is a FINRA rule, not a Fidelity rule. Regardless of which broker you had the position on, you have to meet the $2000 equity requirement (unless the broker had higher margin requirements). https://www.sec.gov/oiea/investor-alerts-and-bulletins/ib_marginaccount From the above link: Before trading on margin, FINRA, for example, requires you to deposit with your brokerage firm a minimum of $2,000 or 100 percent of the purchase price of the margin securities, whichever is less. This is known as the “minimum margin.” Some firms may require you to deposit more than $2,000."
+  },
+  {
+   "a": "Positivedrift",
+   "d": "2022-01-28",
+   "s": "4",
+   "t": "I think the real PSA here is don't max out your account. Seems obvious, but apparently not. If your account is $50K, it means you have less than 4% of your capital available. If we are at the beginning of a bear market, having your TSLA LEAP closed is the least of your problems."
+  },
+  {
+   "a": "Electrical-Bug-9330",
+   "d": "2022-01-28",
+   "s": "1",
+   "t": "I'd apparently be out of compliance for 3 weeks but didn't receive any notification or call. That's surprising - I would ask about that. This is even though the PMCC is totally self-secured, and my other options were just a few leaps. Yes and no. The PMCC is self-secured assuming they auto-execute the long call if your short call is executed, but if you're on a margin account and can short stock, they may not do that. Unfortunately, when you're on margin and you push your buying power to the limit, stuff like this can happen."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2022-01-28",
+   "s": "1",
+   "t": "I've never \"traded on margin\" in the sense that I took on more positions or risk than the cash value of the account, regardless of what happens with those positions. But for some reason, the nature of this spread, according to the rep anyway, required the account to be a margin account (and for the trade to exist on the \"margin side\" (no idea what this means), making my account subject to the $2k requirement. So this wasn't pushing anything to the limit. Because even in the very worst case scenarios, the account cannot have a balance due greater than the its cash value. It was simply not knowing about that requirement, and not being warned by Fidelity before they started closing positions. The 3 weeks thing we figured out on the call. It's because I had a few thousand dollars in cash until I decided to buy some leaps on MTTR (bad idea lol)."
+  },
+  {
+   "a": "Electrical-Bug-9330",
+   "d": "2022-01-28",
+   "s": "1",
+   "t": "I've never \"traded on margin\" Yes and no - being short calls without underlying shares means you have to have a margin account and are subject to the $2k requirement. Even though you weren't using any margin, you're still in a margin account."
+  },
+  {
+   "a": "ScottishTrader",
+   "d": "2022-01-27",
+   "s": "7",
+   "t": "Fidelity and margin confusion is one of the reasons I stopped using them to trade options . . . They used to send me margin calls when I had zero open positions! Lol"
+  },
+  {
+   "a": "Competitive_Ad498",
+   "d": "2022-01-27",
+   "s": "8",
+   "t": "One thing most people don’t realize about their brokers is that they’re not their friend. They want to make money off of you. Nothing more. They will take your commission. They will gouge you on currency exchange. They will take the other side of your trade as a market maker if they operate as one and most do so they can scalp you on the bid ask spread and use your trade data against you. Like if they know you have a poor success rate they trade against you as the market maker and don’t bother hedging knowing you’re likely to lose to them. If you have a high success rate they hedge so they still scalp the bid/ask but take on less risk against you. And yes, they will screw you over with fine print scam tactics if given the opportunity. They see you as the easy mark in their scam system. Your best chance is to look for the flaws in their system and use it against them. They are your true e"
+  },
+  {
+   "a": "[deleted]",
+   "d": "2022-01-28",
+   "s": "2",
+   "t": "I am still trying to understand this. Would the TL;DR be - you need to have +$2K cash in your account or your PMCC might be margin called in a tough market?"
+  },
+  {
+   "a": "eternalfrost",
+   "d": "2022-01-28",
+   "s": "3",
+   "t": "If there is even a question of NOT having 2K in your account, you frankly do not have nearly enough capital to efficiently trade derivatives. It is just a fact, just like you cant roll into real-estate with 2K... By law, you need 2K to engage in margin. In reality, you should only be utilizing 20-40% of your BP, so closer to 10K is the sane bare minimum if you dont expect to wipe out, and that is only going to swing one or two small defined risk positions.... Buy and hold equity indices until you have a sufficient bank roll..."
+  },
+  {
+   "a": "DerbyGoodbird",
+   "d": "2022-01-28",
+   "s": "2",
+   "t": "Thank you for posting this- it's helpful to know."
+  },
+  {
+   "a": "Fizban2",
+   "d": "2022-01-28",
+   "s": "1",
+   "t": "Why would they close the long call and not the short call?"
+  },
+  {
+   "a": "JewishPornographer",
+   "d": "2022-01-28",
+   "s": "2",
+   "t": "if they closed the short call they would be debiting the account even further. do you not understand the situation?"
+  },
+  {
+   "a": "Fizban2",
+   "d": "2022-01-28",
+   "s": "1",
+   "t": "The short call is what needs the margin"
+  },
+  {
+   "a": "ComputerNerdGuy",
+   "d": "2022-01-27",
+   "s": "1",
+   "t": "They actually called you on the phone? Anytime I’ve had a margin call I’ve only been informed by the website. I’ve never had an actual employee call me. I assume the $2k is per debit spread? That’s odd because when I look at the options in fidelity I see margin amounts for my puts but not for my short calls."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2022-01-27",
+   "s": "1",
+   "t": "Because your short calls are covered?"
+  },
+  {
+   "a": "p0mmesbude",
+   "d": "2022-01-27",
+   "s": "1",
+   "t": "Just for my understanding. There is the rule that you need to have $2000 in your account to be eligible for margin. But actually you need more, because as soon as there is some danger that you might go below 2k with your positions they liquidate you?"
+  },
+  {
+   "a": "addmadscientist",
+   "d": "2022-01-28",
+   "s": "1",
+   "t": "The problem is that you think it was covered, but if the option you sold gets exercised and then you exercise the one you own to cover it, it is possible the person on the other side of the contract could default and not have the shares. So now you don't have the shares and have to default on your side. This is why there's a margin requirements, you're still borrowing things you don't down to cover your purchase."
+  },
+  {
+   "a": "libob",
+   "d": "2022-05-11",
+   "s": "1",
+   "t": "thx OP for the post, was hitting by this stupid rule, my SPY debit spread was forced liquidated today because Fidelity think the value of my spread dip below 2k minimum requirement, which was sold for 3k. no even a warning message or email and CS blame me for not reading their oPtiOn aGreEmEnt, where it was just a learning article and I never received so call agreement that clearly saying minimum requirement."
+  }
+ ]
+}

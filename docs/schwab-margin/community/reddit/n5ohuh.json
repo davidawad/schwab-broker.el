@@ -1,0 +1,99 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/n5ohuh/my_workflow_for_earnings_short_strangles/",
+ "title": "My workflow for earnings short strangles",
+ "created": "2021-05-05",
+ "body": "Ok, lots of people asked about my workflow to find and put on earnings strangles so here is a write up of how I’ve been doing it. So far, it seems to be working out ok.\n\nPart 1 - Identifying the Stocks\n\nI’m using Think or Swim and I’ve been using the scan feature but I’m sure this part of my process will be the part that evolves the most as there is still some manual review involved. For now, this is how it’s setup. I scan in All Optionable.\n\nStock - Last, min 10, no max\n\nStock - Volume, min 500,000\n\nStock - Market cap $M, 1,000 min, no max\n\nStudy IV_Percentile, IV percentile is between 23% and 300% (I need to refine these numbers to cut back on results)\n\nStudy Earnings, has and earnings announcement any time in the next 7 days\n\nI sort the resulting list by Vol Index. This is the manual part, I start at the top and scan down the list for tickers I recognize. I avoid stuff I don’t know and skip over any biotech. I make a list and then head over to excel/google sheets.\n\nPart 2 - the spreadsheet\n\nI have a tab setup in my google sheets spreadsheet that has the following headings. I pair up two lines with one for the call and one for the put\n\nTicker\n\nLast Change (I use googlefinance api calls in googlesheets to update this on the fly so I can see what had a big up or down day to go reverify the strikes before I open)\n\nExpiration\n\nStrike (needs to be just outside Expected Price x1.5 cell I’ll talk about in a few)\n\nLast Stock Price (this is used by the other cells coming up)\n\nOut of the Money Amount (difference in Last and Strike)\n\nOut of the Money Percentage (OTM divided by Last, helps to see if my strangle is centered or if it’s too tight for some reason)\n\nExpected Move (I get this by going to the Trade tab in ToS and looking at the header for that particular stocks option chain for whatever expiration day I’m using. It looks something like 92.78% (+-6.68). I put the dollar move into this cell.)\n\nExpected Price (Last plus or minus Expected Move depending if it’s call or put)\n\nExpected Price x1.5 (This is what I use to pick the strikes, I like a little extra buffer around the expected move. Since google sheets is constantly updating the Last Stock price, all of these auto change, I only have to go back and update the expected move before I sell to open.)\n\nBreakeven (strike plus total premium received)\n\nQuantity\n\nPrice (price of each option contract I want to sell)\n\nPremium (this is calculated by multiplying quantity and price so I can change the quantity and have everything do the math)\n\nNotional Value\n\nFees\n\nReturn on Buying Power (this gets calculated with upcoming data but it’s Premium divided by Buying Power Reduction. I target min 20%. )\n\nReg-T Buying Power (this is a weird one and I’m playing around with figuring out sizing. I don’t want to have too much ridiculous notional value so I’m using the assumption that if I get assigned on the put sides in a massive selloff, I’d need to make sure I have 30% of the strike * quantity * 100. I know for PM that’s going to be totally different but something in my research led to me to trying this method for quantity. For now, I’m setting this number to 3% of my buying power available. This def requires some further experimentation and thought but it helps to keep it more mechanical.)\n\nBuying Power Reduction for 1 (when I pull all my data from the options chain on exp move, price etc. I also load up a strangle order for 1 contract and get the BPR. I know when it scales up it is sometimes off but it mostly works fine to calculate the next cell)\n\nBuying Power Reduction (BPR for 1 * Quantity. This is used to figure out Return on Buying Power. It doesn’t have to be exact as the RoBP just needs to be a ballpark number.)\n\nPart 3 - the orders\n\nI usually do this work on Sat or Sun for the upcoming week so I have a basic plan in place. Once the week starts, I identify which stocks are announcing that day and I update the expected moves. I look at the Expected Price x1.5 cell and verify my strike is",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "thetagangalwayswins",
+   "d": "2021-05-05",
+   "s": "5",
+   "t": "I regularly trade earnings too but mostly stick to the put side because it’s easier to defend. Not many do and most here quote TT and optionalpha’s backtest on why you shouldn’t. So you do mind answering the following questions I normally get asked? How long have you been doing this? What do you do if the trade goes against you? Have you ever been badly burned doing strangles (like zm’s monster move last year)?"
+  },
+  {
+   "a": "bazonkers",
+   "d": "2021-05-05",
+   "s": "4",
+   "t": "Yeah no, problem. I'm by no means an expert, just sharing what I'm doing and what seems to be working for me. People have given me some good ideas so I hope to give back. I've been trading options for a long time but I've only done earnings strangles for the last year or so. I don't do them all the time, only around these times of year where these is a big cluster of companies I follow. I came from a tech background so I have a heavier bias towards tech in my investments. Lately I've been doing more of these because IV is so low it's becoming harder for me to find other trades I like. If the trade goes against me, I do the standard stuff, roll up or down the untested side to increase my breakeven and then roll out if I need. I don't think I've ever inverted a strangle. I've had a few get a little excited on me and I had to manage them but I've been ultimately lucky and got out with a slight loss or breakeven. I fully understand that can change but fingers crossed. UPS was one that I was watching last week but I didn't trade because my Return on Buying Power was only something like 6%. My call strike would have been 195 I think so that one would have been a loser or a roller. No maj"
+  },
+  {
+   "a": "thetagangalwayswins",
+   "d": "2021-05-05",
+   "s": "3",
+   "t": "Thanks for the replies! I wish you luck and you seem to have a good strategy. ZM was over 20% outside the expected move and was a margin call nightmare. I luckily only had ours. What percent of buying power do you use for each trade?"
+  },
+  {
+   "a": "SoMuchRanch",
+   "d": "2021-05-06",
+   "s": "3",
+   "t": "Do you look at short interest % at all for when you write naked calls? After getting anal donged from the market-wide GME-induced short squeeze back in January, I now filter out anything greater than 10% short interest when writing naked calls."
+  },
+  {
+   "a": "bazonkers",
+   "d": "2021-05-06",
+   "s": "3",
+   "t": "That's probably something I should check just in case. Good idea."
+  },
+  {
+   "a": "dkcubed",
+   "d": "2021-05-06",
+   "s": "3",
+   "t": "Very much appreciate your info and I like your approach. I just recently started diving into Earnings Short Strangles (in fact - I'm still doing them in PaperMoney mode the past few weeks) - I noticed I had overlapped with several of your picks. I'll start posting mine when I'm using real money. Like you - I put the BTC order at 50% - I was surprised that all of my BTC trades this morning went through before I even woke up (at a lower price than my limit). I will go through your approach this weekend - I do have a few questions: 1) Do you find any value in the ToS \"Sizzle Index\"? As cheesy as it sounds - I noticed that my Fidelity screener used \"Options Volume\" and it appears to be that ToS uses the Sizzle Index as the closest equivalent I could find. The Sizzle Index measures the current options volume to the past 5-day average. I tried to go with higher numbers like >2. Not sure if tracking Option Volume vs. Stock Volume matters - but I figured a higher Options volume might equate to more liquidity. 2) Isn't the IV_Percentile study actually the relative RANK (0-100%) of the Volatility Index (or IV) over the past 12 months? (IV_Percentage in the Study or Option Statistics is the s"
+  },
+  {
+   "a": "bazonkers",
+   "d": "2021-05-06",
+   "s": "1",
+   "t": "Thanks! As for the sizzle index, I never really took the time to fully grasp that. It's on my list to look into. IV_Percentile and Vol Index on ToS is a thorn in my side on the scanner. You're right, it should be 100% max and I was thinking Vol Index. Vol Index on the ToS app matches IV on the ToS website. I need to refine that part of my scan more but I sort the Vol Index column from high to low and that does what I need for now. I think they could use clearer terms that are more consistent. I think I use IV_Percentile in the scanner because I couldn't find Vol Index as an option. Do you know if it's hiding somewhere?"
+  },
+  {
+   "a": "dkcubed",
+   "d": "2021-05-06",
+   "s": "1",
+   "t": "Vol Index is a stock filter. Here's my current scan (definitely subject to updates). I have IV_Percentile in as a column but am not currently using that in the scan (yet) https://imgur.com/kBBLCwE"
+  },
+  {
+   "a": "boilinic3",
+   "d": "2022-03-14",
+   "s": "1",
+   "t": "hey man. Just wanted to ask if you've transitioned to real money yet and how's your progress? I've started a spreadsheet and have been actively tracking it for a month now, haven't dived into using real money yet as well."
+  },
+  {
+   "a": "LoveOfProfit",
+   "d": "2021-05-05",
+   "s": "7",
+   "t": "This is excellent. Thanks for writing it up. u/SoMuchRanch uses the TOS scanner a ton to identify his lotto sale opportunities. I know he has a way to filter out a ton of crap like biotech stocks etc. I think he has another watchlist where he puts all that garbage in and filters it out - I haven't used TOS in a while so I'm not 100% on the scanner usage, but that could help you narrow your results over time."
+  },
+  {
+   "a": "SoMuchRanch",
+   "d": "2021-05-06",
+   "s": "3",
+   "t": "I think he has another watchlist where he puts all that garbage in and filters it out Yep! Then I just use the \"Exclude\" in the scanners to remove everything on that watchlist. I'll re-visit the \"shit list\" every few months or so to see if anything has become worthy. Well worth it for something you plan to use long-term."
+  },
+  {
+   "a": "GatorsILike",
+   "d": "2021-05-06",
+   "s": "1",
+   "t": "Two Qs for you. 1) is there a filter for earnings date? I.e. exclude if earnings <7 days or whatever. 2) is there a column in the scan report for the price of the underlying itself? I think that would be incredibly helpful. I looked through the gajillion column options, couldn’t find one."
+  },
+  {
+   "a": "ash-t-1",
+   "d": "2021-10-25",
+   "s": "1",
+   "t": "nice writeup u/bazonkers! 2 questions / ideas for potential discussion: I'd appreciate your thoughts on tightening up the implied breakeven estimate a bit. The TOS breakeven price is up to option expiry which happens a few days later. For instance, currently, I see FB breakeven is $22 with 4 days remaining to expiry. So, roughly, the 1-day breakeven is 22*sqrt(1/4) = roughly $11 (assuming a vol crush from 80% to 50% implied tomorrow). As you'll agree, 1-day breakeven is expiry breakeven * square-root (1/DTE). 2) Can we compare the above implied breakeven to fundamental/historical data? I like Earnings Whispers data but I wanted to brainstorm this idea: We collate analyst estimates and actual 1-day earnings moves from the past. Earnings Whisper has info on the former and Market Chameleon has data on the later. Actually, buddyboh12 on thetagang also publishes some historical moves. Then check if breakeven is 2x or more than actual past moves and analysts estimates and then short a strangle or straddle. Long story short: we find the biggest implied - estimated (historical) discrepancies and short them. We can then discuss the optimal strikes (1.5 of actual breakeven strangles sounds g"
+  },
+  {
+   "a": "bazonkers",
+   "d": "2021-10-25",
+   "s": "2",
+   "t": "Interesting timing on your post because I'm focusing Q4 to tighten up this strategy to increase my profits. This strategy was initially created because I felt that 1.5x was a pretty good safe range for most moves as you're playing the probabilities of a 1.5x vs the expected 1x. I was recommended a site called Predicting Alpha ($80 a month, seems expensive but totally worth it) and it was much of the data you mention including past average vs expected moves, profitability of straddles over time, etc. Tons of really great info. They have a 14 day trial, I'd check it out. I don't make any money from getting people to sign up and I'm not part of running the site. I'm just a firm believer that more data to make decisions is better and they have the data I need for earnings. The data I now have access to is letting me take skew into account. There have been lots of strangles that I've sold at 1.5x (profitable) that would have been more profitable had I skewed the strikes in the direction that the stock historically moved. In addition, there are also times I think you could sell straddles ATM and be even more profitable due to the wide implied vs the narrow average. This post is a snapsho"
+  },
+  {
+   "a": "ash-t-1",
+   "d": "2021-10-25",
+   "s": "2",
+   "t": "https://discord.gg/UjN8HnmDX3 perfect! ty bazonkers, I've joined now. Will check out predicting alpha as well!"
+  }
+ ]
+}

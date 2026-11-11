@@ -1,0 +1,33 @@
+{
+ "url": "https://www.reddit.com/r/thinkorswim/comments/lev01c/specific_margin_requirement_concentration/",
+ "title": "Specific Margin Requirement & Concentration %",
+ "created": "2021-02-07",
+ "body": "TDA’s specific margin requirements depends on the % of the portfolio, but I’m having trouble understanding how it works.\n\nCan some help explain how margin requirements work when you have a concentrated position? TDA for example shows for ticker ABC:\n\nMargin % = 50%\n\nConcentration Requirement (50%) -> Margin % = 70%\n\nConcentration Requirement (70%) -> Margin % = 100%\n\nConcentration Requirement (100%) -> Margin % = 100%\n\nLet’s say the cash value is $100k. Does this mean at most I could only buy $100k of ABC (given the 100% margin requirement)?\n\nWhat about if there were 2 more tickers with the exact same margin requirements as above (so 3 stocks now). In this case, if I wanted to use the full cash position + maximize margin use, how much of each security could I buy?",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "[deleted]",
+   "d": "2021-02-07",
+   "s": "1",
+   "t": "How you would calculate is based off position value divided by total position value. That would give you the concentration percentage. For example 1, you are correct if the margin requirement for a stock is 100% thus TD wont lend you money for the stock. If the margin requirement were 50% for a 100% concentration then you would take your cash and divide by the margin percentage. Math: Cash / margin requirement Math: 100000/1 = 100000; 100000/.5 = 200000; 100000/.7 = 142857.14 Example 2: Each security would have a position value of $66,666.66. This way each is held to the lowest requirement as each would have only a concentration of 33%. Example 2 Math: cash / margin req = total margin to use / 3 = position value of each stock / total margin to use = concentration per position. 100000/.5 = 200000/3 = 66666.66/200000 = .33"
+  },
+  {
+   "a": "organic_yellow",
+   "d": "2021-02-07",
+   "s": "1",
+   "t": "thank you! so if my understanding is correct: my maintenance margin in Example 2 is $100,000 with a total portfolio value of $200,000. so I have a pretty big buffer before getting a maintenance call In example 2: if 1 of the securities appreciates 100% to a market value of $133,333.32 while there’s no change in the other two - now the total portfolio is $266,666.34 and that security’s concentration is now 50% (133333/266666). Does this mean now the margin requirement for that security will rise to 70%? if so, is the only consequence i need to worry about is that my maintenance requirement went up an additional $30k...from ($66,666 * 0.5) * 3 = $100,000 to 133333 * .7+(66666.66 * .5)*2 = $159,999.76 [as opposed to 133333 * .5+(66666.66 * .5) * 2 = $133,333.16 if still 50% requirement instead of 70%]"
+  },
+  {
+   "a": "[deleted]",
+   "d": "2021-02-08",
+   "s": "1",
+   "t": "my maintenance margin in Example 2 is $100,000 with a total portfolio value of $200,000. so I have a pretty big buffer before getting a maintenance call Yes, that is if you had 100k cash meeting regT, 50% purchase price, you have available BP of an additional 100k so total bp is 200k for a security held at 50% requirement. However, if it is 70% requirement in a concentration of 100% then you would be in a call if you use the whole $200k. Does this mean now the margin requirement for that security will rise to 70%? Theoretically yes but the one stock doubled. Because of this, your equity in that position increased. Since you only owe $33,333 on that one security position is now worth $133,332, you own around $100k. It shouldn't put you in a call but its possible."
+  },
+  {
+   "a": "Septime",
+   "d": "2021-02-07",
+   "s": "1",
+   "t": "If 50% of your portfolio is a single stock the margin requirement goes to 70%, if you increase it to 70% or higher then you can no longer use margin"
+  }
+ ]
+}

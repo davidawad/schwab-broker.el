@@ -1,0 +1,57 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/1qtle8p/how_much_can_i_borrow_with_short_box_spreads/",
+ "title": "How Much Can I Borrow With Short Box Spreads?",
+ "created": "2026-02-02",
+ "body": "With PM, Schwab says you can leverage yourself up to 6.6x\n\nBut I wanted to make sure I understand this correctly. If I have a $200k portfolio, how much can I borrow with short box spreads before getting margin called?",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "pancaf",
+   "d": "2026-02-02",
+   "s": "11",
+   "t": "With or without box spreads on a PM acct your ability to leverage will generally be about the same or probably slightly less with the box. The box doesn't let you leverage more. It just gives you cash so you can leverage without paying margin interest."
+  },
+  {
+   "a": "LoveOfProfit",
+   "d": "2026-02-02",
+   "s": "2",
+   "t": "You won't get margin called for just borrowing. You can borrow a lot. Deploying that cash you'll eventually run into one of Schwab's limit or another, either running out of BP, or if you have BP offsetting positions, for example the 50x gross position value to net liquidity ratio (30x at IBKR). You'll get margin called if you leverage up 50x and then your position goes down 2%. lol"
+  },
+  {
+   "a": "UnableFix4224",
+   "d": "2026-02-02",
+   "s": "1",
+   "t": "Oh okay. So what would the math be if I was leveraging myself 3x? How much would my position have to go down to get margin called? Is 33% correct?"
+  },
+  {
+   "a": "InterestingFee885",
+   "d": "2026-02-02",
+   "s": "2",
+   "t": "If you’re looking for the max amount of set it and forget it leverage, it’s about 1.5x. Anything more than that will cause a margin call in a bear market, even with PM. Worst bears in modern history have been a -50% drawdown, so 1.5x is an 80% drawdown accounting for the cost of the leverage. 3x requires tail risk hedging or a fundamentally hedged portfolio, because you are carrying so much risk that even an average bear market of -33% zeroes you out."
+  },
+  {
+   "a": "LoveOfProfit",
+   "d": "2026-02-02",
+   "s": "2",
+   "t": "In practice, less. You would lose portfolio margin well before that."
+  },
+  {
+   "a": "thekoonbear",
+   "d": "2026-02-02",
+   "s": "2",
+   "t": "With portfolio margin, many equities require just 15% of notional as collateral. That’s where the 6.67x leverage comes from. Normally if you buy all these securities, you may a margin rate on the borrowed capital. That rate is set by the exchange. If you sell boxes, you trade that exchange margin rate for one set by the market. It can be a nontrivial amount depending on your brokerage and account level. But, it doesn’t change how much you can leverage whatsoever. Simply changes the rate and who you’re borrowing against."
+  },
+  {
+   "a": "OurNewestMember",
+   "d": "2026-02-02",
+   "s": "1",
+   "t": "Adding the short box spread doesn't reducing your buying power by much, so you can borrow a large amount (eg, maybe 10s of millions in cash on hundreds of thousands in equity). But presumably you want that short box cash to add meaningful risk to the account (eg leveraged securities positions), so it's that (ie \"using the cash from the box spreads\") which brings your buying power closer to zero (maybe it will be 6.6x leverage or whatever). So technically the short box itself will only slightly reduce your max leverage typically (it reduces buying power slightly), but still the main thing that determines your risk (and how close to a margin call, etc) is whatever larger risk positions in the account (typically, whatever you did with the box cash proceeds)"
+  },
+  {
+   "a": "CHL9",
+   "d": "2026-04-15",
+   "s": "1",
+   "t": "Can you detail with box spreads what exactly deltas and expiries you sell to make it?"
+  }
+ ]
+}

@@ -1,0 +1,69 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/qyjdx8/are_leaps_calls_margined_in_a_pm_account/",
+ "title": "Are LEAPS calls margined in a PM account?",
+ "created": "2021-11-21",
+ "body": "Hi there everyone, kinda new to PM & kinda noob so this might sound stupid.\n\nI have been trading for almost a year now and recently leveled up to PM account from a Reg-T account. I only trade options, mostly long calls but sometimes short puts in case I want to transform a leaps call into a synthetic position.\n\nI rarely sold covered calls to hedge since in a Reg-T account long calls are not margined so you cannot get a margin call if the market goes down and you only hold long calls.\n\nNow since I have PM I kinda noticed that every time I buy new leaps calls my maintenance margin goes up. When I had a Reg-T margin account my maintenance margin was almost 0 (I did have 4 shares of COIN back then).\n\nAm I running a risk of getting margin called in case my positions take a dive? Also I am very concentrated into one position where I have 95% of my NLV.\n\nI use IBKR\n\nThank you in advance,\n\nSilviu",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "wavyleafplant",
+   "d": "2021-11-21",
+   "s": "9",
+   "t": "What one position do you have 95% of your NLV???? Sign me up for that too!!"
+  },
+  {
+   "a": "ssavu",
+   "d": "2021-11-21",
+   "s": "1",
+   "t": "175x SOFI 20Jan23 $25call"
+  },
+  {
+   "a": "[deleted]",
+   "d": "2021-11-23",
+   "s": "2",
+   "t": "You’re gonna be better off with Reg T than portfolio margin likely, because they will hate that concentration risk."
+  },
+  {
+   "a": "ssavu",
+   "d": "2021-11-23",
+   "s": "1",
+   "t": "As long as it’s leaps calls I don’t think there’s a problem… the problem starts 90DTE because the broker expects you to have money to exercise"
+  },
+  {
+   "a": "[deleted]",
+   "d": "2021-11-23",
+   "s": "2",
+   "t": "Do you have portfolio margin? Every broker I know of curtails leverage if you have a concentrated position, which most define at 30% NLV. At 95% NLV in 1 options position, I would be surprised if they would even approve a portfolio margin account. Why would you want a broker to look at your portfolio on a risk basis rather than the Reg T rules?"
+  },
+  {
+   "a": "psyche444",
+   "d": "2021-11-22",
+   "s": "2",
+   "t": "If you have a portfolio of LEAPS and still have excess liquidity, I don't think you run any risk of a standard margin call or liquidation (just as u/dimonoid123 said)... however, you *can* lose portfolio margin if your account drops below a certain level. Still, with LEAPS and excess liquidity, it sounds like you wouldn't be liquidated even if the account was reset to Reg-T. (To the best of my knowledge, yada yada, not financial advice.) You clearly have high conviction about SOFI."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2021-11-21",
+   "s": "1",
+   "t": "Please message the mods with proof of Portfolio Margin or equivalent account size to receive a Verified flair and unlock the ability to make top level comments on a post. You can still reply freely to any comment on a post, including the AutoModerator comment for Non-Verified users. I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns."
+  },
+  {
+   "a": "AutoModerator",
+   "d": "2021-11-21",
+   "s": "1",
+   "t": "Please message the mods with proof of Portfolio Margin or equivalent account size to receive a Verified flair and unlock the ability to make top level comments on a post. You can still reply freely to any comment on a post, including the AutoModerator comment for Non-Verified users. I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2021-11-21",
+   "s": null,
+   "t": "Please message the mods with proof of Portfolio Margin or equivalent account size to receive a Verified flair and unlock the ability to make top level comments on a post. You can still reply freely to any comment on a post, including the AutoModerator comment for Non-Verified users. I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns."
+  },
+  {
+   "a": "AutoModerator",
+   "d": "2021-11-21",
+   "s": "1",
+   "t": "Please message the mods with proof of Portfolio Margin or equivalent account size to receive a Verified flair and unlock the ability to make top level comments on a post. You can still reply freely to any comment on a post, including the AutoModerator comment for Non-Verified users. I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns."
+  }
+ ]
+}

@@ -1,0 +1,159 @@
+{
+ "url": "https://www.reddit.com/r/thetagang/comments/1vr18ij/puts_secured_by_money_market_sgov/",
+ "title": "Puts secured by Money Market / SGOV",
+ "created": "2026-08-17",
+ "body": "Say I hold a bunch of equities and 50k cash as dry powder in etrade. Selling CSP on this now. If I invested the 50k into a money market fund or SGOV is that not treated as a cash equivalent? As such could I not continue to sell “cash secured” puts against that balance? Would this incur any margin debt so long as the puts remained unassigned or if assigned if the cost of assignment is below the amount held in the money market fund?",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "mrCortadito",
+   "d": "2026-08-17",
+   "s": "17",
+   "t": "You get better BP Usage % buying T-Bills directly.. 0.2%, around $100 Requirement..per $10K T-Bill. I started with SGOV and switched T-Bills for that very reason. You have enough cash.. T-Bills that are 1-4 months build a ladder that matures every month.. you buy them as discount to the $10K and get your money at maturity.. rinse and repeat"
+  },
+  {
+   "a": "ikarumba123",
+   "d": "2026-08-17",
+   "s": "4",
+   "t": "2 questions. 1. Is the money you get treated as capital gains or interest payments? I live in high state tax state. 2. Which broker allows this. I don't think this can be done at Robinhood. Fidelity?"
+  },
+  {
+   "a": "OurNewestMember",
+   "d": "2026-08-18",
+   "s": "6",
+   "t": "Pretty sure fixed income with less than 1 year to go is treated as ordinary income (whether you get coupons or just bought at a discount). Fidelity has a bond picker tool last I checked, so I'd be shocked if they didn't have a decent selection of treasuries. They're usually not fun to deal with as retail, though."
+  },
+  {
+   "a": "mrCortadito",
+   "d": "2026-08-17",
+   "s": "4",
+   "t": "To tell you the truth I just did the switch from SGOV to T-Bills... I'm not sure how it will be treated.. Good question... The T-Bill Matures so I really have not sold it.. it might a divi... I have my first one maturing tomorrow 8/18... Will check out the daily statement when the $10k hits my account at the end of the day and let you know... Come to Florida...no State Tax.. My broke is Tastytrade, but you can buy them directly at Fidelity... not sure about RH. But this is the way to go... only 2% is held as Requirement by the broker..."
+  },
+  {
+   "a": "zachalicious",
+   "d": "2026-08-17",
+   "s": "3",
+   "t": "Do you have to hold them to maturity though? Nice thing about SGOV is it appreciates between ex-div dates and can liquidate at any time to cover an assignment."
+  },
+  {
+   "a": "ducatista9",
+   "d": "2026-08-17",
+   "s": "4",
+   "t": "You can sell them, and you’d get the interest earned as a higher price plus any effect from interest rate changes since you bought. However I usually tried to not sell my t-bills so as not to have to lose out on whatever the spread was. I kept a buffer against losses in a money market and then the bulk of my cash in t-bills."
+  },
+  {
+   "a": "OurNewestMember",
+   "d": "2026-08-18",
+   "s": "2",
+   "t": "Most brokers should let you sell marketable bills, but it can be a real pain (eg, separate website or phone call, request for bid first, no ability to set the price, limited trading hours). SGOV is easy easier, but each serves a purpose"
+  },
+  {
+   "a": "png81",
+   "d": "2026-08-17",
+   "s": "2",
+   "t": "Hi. What are the tickers for the T-Bills you use? Thanks"
+  },
+  {
+   "a": "Enough-Beginning3687",
+   "d": "2026-08-17",
+   "s": "9",
+   "t": "Fidelity does this automatically for cash in accounts. Moves all cash to moneymarket, zero effort required."
+  },
+  {
+   "a": "charlesleestewart",
+   "d": "2026-08-17",
+   "s": "6",
+   "t": "Vanguard does that very nicely. Their option trading interface is practically non-existent however."
+  },
+  {
+   "a": "mrCortadito",
+   "d": "2026-08-19",
+   "s": "2",
+   "t": "Trading options at Vanguard is like traveling back in time.."
+  },
+  {
+   "a": "WhiteSox2112",
+   "d": "2026-08-17",
+   "s": "4",
+   "t": "I was wondering the same thing a few months ago so I bought SGOV to test it. My platform treated SGOV like a regular stock, my marginable and non-marginable purchasing power went down and my CSP power was now limited to on-hand cash and my naked put power % against the SGOV stock. I then sold it and exited the test and haven’t revisited as of lately because I only do CSPs with cash, not naked puts at the moment. So if there is a way to do what you are asking, I would like to know what security or treasury to buy where I can maintain my full cash CSP power. Edit add: to answer the second half of your question…no, assuming you have margin approved, you can sell naked puts against the security and will not incur margin interest costs unless exercised. Also, your margin % is limited on non-margin transactions (naked puts) to something like 60-70% of the security if cash can’t cover the rest."
+  },
+  {
+   "a": "ducatista9",
+   "d": "2026-08-18",
+   "s": "4",
+   "t": "As you say, you use a margin account to do this. You have to keep track yourself of what notional value of puts you want to sell against your sgov (or whatever) to stay cash secured. So while your broker does not consider it a cash secured put because you’ve used your cash to buy sgov, in a realistic view of your position it is cash secured."
+  },
+  {
+   "a": "ThetaEdgeHQ",
+   "d": "2026-08-17",
+   "s": "6",
+   "t": "The piece that keeps getting muddled here is that there are two different things and brokers treat them the opposite way. A core money market sweep (Fidelity SPAXX, Schwab's default, Vanguard settlement) is still counted as cash, so your puts stay genuinely cash secured and your buying power is untouched. Buying SGOV or a treasury bill as a ticker converts that cash into a marginable security, so now the put is secured by margin buying power against a position, not by cash. That is exactly why WhiteSox watched his CSP power drop the moment he bought SGOV. No interest accrues while unassigned in either case, that part is right. The risk nobody mentioned is the assignment settlement gap. If you get assigned and your collateral is sitting in a treasury bill that has not matured, you cannot liquidate it same day to fund the shares, so you can sit in a real (small) margin debit for a day or t"
+  },
+  {
+   "a": "seaningtime",
+   "d": "2026-08-17",
+   "s": "8",
+   "t": "You don't incur any margin until you are assigned"
+  },
+  {
+   "a": "downtofinance",
+   "d": "2026-08-17",
+   "s": "4",
+   "t": "You never do when you sell puts but your buying power gets reduced and quite sure the broker won't let OP use the cash to buy anything if the cash is collateral for those puts."
+  },
+  {
+   "a": "lobeams",
+   "d": "2026-08-17",
+   "s": "2",
+   "t": "Some brokers will let you do that and some won't. Call and ask."
+  },
+  {
+   "a": "TestTrenMike",
+   "d": "2026-08-18",
+   "s": "2",
+   "t": "Think buying put options on SGOV is a better option"
+  },
+  {
+   "a": "mrCortadito",
+   "d": "2026-08-17",
+   "s": "1",
+   "t": "Now the margin account where I hold T-Bills are collateral, I don't use it to sell CSP (which require alot of Option BP).. I mainly trade credit spread and iron condors (defined risk, which don't require much Option BP)... but It should work because at the end of the day the Option BP is reduced by the broker when you sell the put.. Cash comes in.. there is no debit... However, you need enough Option BP to cover the cost of those shares... So it comes from the overall Net Liq of the account.... This might leave you in a precarious place... if your NetLiq is $50K and 2% is Required by broker...then you have $49K in Option BP... now if you sell a CSP that requires $45K... then you are left with $5K in Maintenance Excess.. If that CSP starts working against you...and the Maintenance Excess goes negative, you will be issued a margin call... So you will need to deposit Cash or marginable secu"
+  },
+  {
+   "a": "papakong88",
+   "d": "2026-08-17",
+   "s": "1",
+   "t": "You will get the correct answer by identifying your broker and account type."
+  },
+  {
+   "a": "YoshimuraPipe",
+   "d": "2026-08-17",
+   "s": "1",
+   "t": "It’s profolio secured puts you are selling. You are not borrowing anything so no interest incurred unless there is an assignment in which you don’t have enough cash to cover."
+  },
+  {
+   "a": "Strong-You1234",
+   "d": "2026-08-18",
+   "s": "1",
+   "t": "The answer I believe is yes the SGOV is treated as cash equivalent at least for my brokerage company. You would not incur any margin debt or interest unless assigned and not covered with funds."
+  },
+  {
+   "a": "MerryRunaround",
+   "d": "2026-08-19",
+   "s": "1",
+   "t": "Policies vary by broker. I would never use a broker that won't let me collect interest on the cash equivalent I use to secure a short put. That interest is silently priced into the put contract so it is a serious headwind if you leave it on the table for your broker to gobble up. It's really a \"screw you dummy\" from that broker."
+  },
+  {
+   "a": "Grouchy-Tomorrow3429",
+   "d": "2026-08-19",
+   "s": "1",
+   "t": "Funny you posted this. I just bought a whole bunch of (can’t remember what I bought 😂). I’ll edit FLOT. Better than SGOv. Pays about 4% and payments go up a little if rates go up."
+  },
+  {
+   "a": "Juhkwan97",
+   "d": "2026-08-20",
+   "s": "1",
+   "t": "there sis a place on the etrade website that will tell you how much margin your holdings are good for. You just enter the symbol. I used to have SGOV and that was 70% marginable. I switched to UST bonds and those are 92 % marginable."
+  }
+ ]
+}

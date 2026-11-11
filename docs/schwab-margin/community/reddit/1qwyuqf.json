@@ -1,0 +1,129 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/1qwyuqf/max_leverage_review/",
+ "title": "Max Leverage Review",
+ "created": "2026-02-05",
+ "body": "Hi All:\n\nA year ago, I made this (controversial?) post on a new strategy I employed:\nMax Leverage, Minimal Risk Portfolio Margin Trades : r/PMTraders\n\nWell, it's been a little over a year, and how did it pan out? I put about 1/2 of my portfolio to work executing the strategy, and at the end of December (for tax purposes) closed out 100% of the positions.\n\nI netted after fees and slippage just over $1.02M in profit on this trade, or about 13% against the portfolio value, or about 26% against the leverage that I was afforded at Schwab. I didn't fully ramp up the leverage as I wanted to see the results appear prior to going full bore.\n\nI've started into executing the same type of trade this year but have made significant adjustments given the nature of how SPX extrinsic pricing is working and the shifting interest rate environment. If IVV generates about $8.5 / share in dividends, then I am expecting to generate ~18% against my portfolio value at 75% leveraged. I've taken up a smaller test account that had $200K in it to max leverage and found intriguing problems that happen: TIMS margin, OCC overnight settlement prices are vastly mis-priced causing margining issues, daily fluctuations in the extrinsic value that can be as high as $7. I've had to develop techniques to accommodate all of these \"quirks\". I've largely overcome those problems now and working to ramp up the account.\n\nWith a $9M tradable PM account, at full deployment, I'll have ~$350M worth of IVV ownership generating close to $4M in dividends that will be offset by ~$2.2M - $2.4M in extrinsic and interest fees that will be paid.\n\nThis trade looks great on paper, and there is profit to be had here, but it's not for the faint of heart. There is a lot of work that goes into legging into positions, ensuring no margin breach, taxation reporting due to mixed straddles, and cash management.\n\nSince this strategy is a long-only strategy, I have paired with my strangle selling strategy, that historically has generated 15% in an average year. If the markets provide a flat to slightly down year, the combination of the two strategies should generate about 35% yoy with fairly managed downside risk.\n\nI have no idea if it presents well, but here are all of the open / exit trades that were made against this strategy for last year. If there is a problem with display, I'll try to figure out a way to create a shared CSV for people to look at. You'll see in the trades that I started with SPY / VOO and eventually converted everything to IVV - lower expense ratio and the dividend payouts happen a few days after ex-div date.\n\nEDIT: There were too many columns in the table to post, so I have converted it to a CSV, and will need to share over DMs to those who ask.\n\nEDIT EDIT: Here is a link to the file with the trades: https://limewire.com/d/OUUQ7#2KLojsCuqc",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "Able-FI-4906",
+   "d": "2026-02-05",
+   "s": "4",
+   "t": "The bid - ask spread on the SPX $200 is a reflection of the markets perception of dividend payouts, risk free rate, and implied volatility. The IV for deep itm spx calls has virtually no impact on price. I almost always get filled within a couple points on the midpoint of the bid-ask spread. I am very careful to set my limit price to something that doesn't get an immediate fill and let the market come to my price. The extrinsic that you have to pay can move quite a bit week to week, and I keep a tracking metric and only enter new positions when the extrinsic is favorable to me."
+  },
+  {
+   "a": "Few_Speaker_9537",
+   "d": "2026-02-06",
+   "s": "3",
+   "t": "At what point do you consider extrinsic favorable to you?"
+  },
+  {
+   "a": "Able-FI-4906",
+   "d": "2026-02-06",
+   "s": "4",
+   "t": "I've got a spreadsheet that tracks the extrinsic / day rate from the last 2 trading years. I take the number of days to expiration and divide that into the extrinsic. I then look at the 7-day, 14-day, and 60 day averages. I'm looking to buy when it's below the line. And potentially sell when it's above the line. Interestingly - earlier this week I was buying 2030, $400 calls at around $185 extrinsic for 1780 days until expiration. With today's bruhaha they were around $195. I actually sold a few positions in one account because it offered such a good return. But the trend line right now is around $191."
+  },
+  {
+   "a": "Decent-Influence4920",
+   "d": "2026-02-06",
+   "s": "2",
+   "t": "Thanks so much for the follow-up. I had this trade on all of last year and closed out in December. Similar issues, even though I was running on a much smaller scale. I had been looking to roll out further with some new positions but the extrinsic value had moved quite a bit against our favor that made this trade less attractive. I'll keep monitoring for a good entry point but it seems that this trade is slowly getting arbitraged away."
+  },
+  {
+   "a": "Able-FI-4906",
+   "d": "2026-02-06",
+   "s": "2",
+   "t": "That isn't what I see. If you take the December 2030 $400 put, it is estimated to burn about $3K - $3.5K over 1 year for 1000 shares. You can check this by looking at the same strike for 2029. If you assume that IVV will generate $8.5K this year, the spread is about $5 to your advantage, and probably around $4.5K if you assume entry and exit slippage. $4.5K - $5.5K gain for an investment of $59K which can be sold for $55.5K a year later sounds like a good deal to me."
+  },
+  {
+   "a": "Decent-Influence4920",
+   "d": "2026-02-06",
+   "s": "2",
+   "t": "OK, looking at the Dec 2030 Call 400 strike I see an annual extrinsic of $4.2k, with a wide bid/ask. Looking at the 400 strike for Dec 2027, I see an annual extrinsic of about $6.2k but a tighter bid/ask. I had been seeing annual extrinsic of > $6k on the Dec 2026 200 strike. Looking at it now it shows $7.7k. For the $8.5k in dividends, the profits are shrinking smaller and smaller. Let me/us know if you are seeing something different as I am still interested in this trade, but concerned about the narrowing arbitrage opportunity."
+  },
+  {
+   "a": "WhereasNo4929",
+   "d": "2026-02-10",
+   "s": "2",
+   "t": "So this assumes IVV and SPX move 1:1 lockstep. What happens if in extreme black swan panics, IVV could \"de-peg\" from SPX a period of time because of liquidity issues? If IVV falls 10% but SPX only drops 8% in a crash, woudln’t you get a massive loss show up and broker auto liquidates you?"
+  },
+  {
+   "a": "WhereasNo4929",
+   "d": "2026-02-10",
+   "s": "3",
+   "t": "Ok i looked it up, this is crazy: “August 24, 2015: On this morning, the S&P 500 opened down significantly, triggering a wave of \"circuit breakers\" on individual stocks. Because so many of the 500 underlying stocks were halted, market makers couldn't calculate the \"fair price\" of IVV. • The De-peg: While the SPX Index was down about 5%, the price of IVV plummeted nearly 25% in a matter of minutes. • The Gap: At one point, there was a 349-point difference between where the SPX Index said the market was and where IVV was actually trading.”"
+  },
+  {
+   "a": "Able-FI-4906",
+   "d": "2026-02-10",
+   "s": "1",
+   "t": "I think in this case there would be a margin call and I would have to rely upon the policies of my broker. If it was IBKR it would be an instant liquidation - disaster, but that is why I am at Schwab and there would be a 72 hour window to correct it. Hopefully the depeg is corrected the next time the markets trade and it would be corrected."
+  },
+  {
+   "a": "RaisinStrawberry",
+   "d": "2026-04-18",
+   "s": "1",
+   "t": "Thanks so much for this writeup. It is really inspiring stuff! I ran it by Claude (I am not the smartest to ingest the whole idea) and it flagged the dividends possibly being taxed as ordinary income instead of qualified dividends, something about a tax note. Should I actually be worried about this?"
+  },
+  {
+   "a": "Able-FI-4906",
+   "d": "2026-04-18",
+   "s": "2",
+   "t": "Yes - they are technically ordinary dividends. I have offsets in my trading strategy to help with this. But even if they are fully taxed it is still the easiest money to make."
+  },
+  {
+   "a": "OurNewestMember",
+   "d": "2026-02-05",
+   "s": "2",
+   "t": "Thanks for the follow up! I'm interested in the times and prices because I was originally curious how much of the returns could actually be related to volatility exposure in the delta hedge leg (as well as illiquidity). I also wondered how consistent the cash relationship is between IVV and SPX (or SPY or VOO) (is the premium consistent?). Basically, these two factors made it unclear to me how one would ensure a \"fair\" entry on such a contract structure, so consider my interest piqued!"
+  },
+  {
+   "a": "mawora",
+   "d": "2026-02-06",
+   "s": "2",
+   "t": "Great you had success with that strategy! How do you ensure no margin breach during any mispricing or overnight quirks? Do you do anything specific?"
+  },
+  {
+   "a": "Morning6655",
+   "d": "2026-02-06",
+   "s": "2",
+   "t": "Thank you. How to prevent the slippage, if legging into the trade? Do you sell SPX call first and then buy IVV? Do you know why this arbitrage exist? Could it be due to possibility of huge slippage when legging-in? Just tring to understand."
+  },
+  {
+   "a": "LoveOfProfit",
+   "d": "2026-02-05",
+   "s": "2",
+   "t": "fyi a number of us in the Discord run a similar strategy on a variety of underlyings, and we're facing all the same issues and challenges. A majority of us were pushing 50x leverage ratio limits last year. lol Its a great edge to harvest while it continues to be available."
+  },
+  {
+   "a": "Ok-Review2161",
+   "d": "2026-02-06",
+   "s": "2",
+   "t": "Any pointers on when to see the conversation if you don't mind about these trades in the Discord ? Thanks"
+  },
+  {
+   "a": "thisisvv",
+   "d": "2026-02-08",
+   "s": "1",
+   "t": "Would like to see the discord server as well as lot of PM activity has moved there."
+  },
+  {
+   "a": "LoveOfProfit",
+   "d": "2026-02-08",
+   "s": "1",
+   "t": "I'll DM you a discord invite since you're already Verified."
+  },
+  {
+   "a": "Defiant-Salt3925",
+   "d": "2026-04-11",
+   "s": "1",
+   "t": "Why not delta hedge your long IVV position with ES futures instead of short calls?"
+  },
+  {
+   "a": "thisisvv",
+   "d": "2026-07-02",
+   "s": "1",
+   "t": "Is CBOE stopping 200 strike price SPX options. I don't see anything after June-2027."
+  }
+ ]
+}

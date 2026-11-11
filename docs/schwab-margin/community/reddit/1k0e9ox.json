@@ -1,0 +1,33 @@
+{
+ "url": "https://www.reddit.com/r/Schwab/comments/1k0e9ox/does_anyone_know_what_products_count_as_cash_for/",
+ "title": "Does anyone know what products count as cash for Portfolio Margin?",
+ "created": "2025-04-16",
+ "body": "To make a long story short, I have a Portfolio Margin account currently with a lot of cash in part due to some short positions and wanted to put it somewhere to make interest. I confirmed with two different reps that SWVXX counted as cash in the equity percentage calculation.\n\nBefore buying SWVXX I was at 100% equity percentage, after I put half my cash into it I was at 60%, so obviously that was not true. Which was pretty infuriating because I literally double checked to make sure this wouldn't happen.\n\nAfter talking to another rep they mentioned that because I had a PM account the information was likely not accurate and that I should talk to the PM team directly. The problem is the PM team has hours that makes it hard for me to talk to them directly, basically trading hours only.\n\nDoes anyone else have a PM account and know for sure what products count as cash?\n\nEDIT: I thought I would post an update in case anyone in the future ran across this post and had a similar question. N0downtime was on the right track. So attached to your PM account internally is a \"Type 1\" and \"Type 2\" pool of securities. The \"Type 1\" pool does not count towards margin calculations, the \"Type 2\" pool does.\n\nThe calculated margin figures you see in TOS and on the website only take into account the \"Type 2\" pool. So what happens is, the Money Market funds (and likely other products) are in the \"Type 1\" pool because they are not marginable. Then all the margin calculations are done using only the \"Type 2\" pool, so because all your cash-equivalent-securities are in the \"Type 1\" pool, the equity percentage is signifncatly off.\n\nWhen actually charging margin interst though, they consider all funds in the \"Type 1\" and \"Type 2\" pool so as long as your actual equity percentage is 100% (i.e. the real figure calculated with \"Type 1\" and \"Type 2\" securities and not just \"Type 2\" securities) you will not be charged margin interest.\n\nAs far as the rep knows, there is no way to see what securities are in what pool on any of their trading platforms, and the only way to keep track of your \"Type 1\" cash-equivalents is via the positions page at schwab.com.\n\nI really hope they fix this. Having to manually calculate your \"real\" equity percentage is a huge PITA.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "[deleted]",
+   "d": "2025-04-16",
+   "s": "4",
+   "t": "Call the trade desk. Sgov is 70% BP in a regular Margin, and 90%+ in a PM, no waiting for marginable , meaning it becomes Cash the second you sell for trading."
+  },
+  {
+   "a": "N0downtime",
+   "d": "2025-04-16",
+   "s": "3",
+   "t": "I thought funds like SWVXX took 30 days to become marginable. You could wait the 30 days and see what happens to your equity percent then. I usually use SGOV as it’s marginable right away. The reduction in buying power isn’t too much. My experience is that anything but cash will lower your buying power to some degree."
+  },
+  {
+   "a": "Chuu",
+   "d": "2025-04-16",
+   "s": "1",
+   "t": "I'm not worried about Buying Power, I'm specifically worried about equity percentage. Specifically as long as it counts as cash in terms of equity percentage I don't care if it reduces BP. Edit: Made a small clarification to the op."
+  },
+  {
+   "a": "Nysoz",
+   "d": "2025-04-16",
+   "s": "1",
+   "t": "https://www.schwab.com/margin/margin-rates-and-requirements"
+  }
+ ]
+}

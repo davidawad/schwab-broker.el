@@ -1,0 +1,57 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/1aqkg9a/concentration_risk_over_the_weekend/",
+ "title": "Concentration Risk Over the Weekend?",
+ "created": "2024-02-14",
+ "body": "What occurs if you get into a situation of getting flagged for concentration risk over the weekend? For example, imagine a short calendar spread where your long call option expires on Friday causing your short calls to become naked.\n\nWill the broker take any action, or not because the long calls expire after the market closes on Monday?\n\nBackground: TDA / thinkorswim PM",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "Adderalin",
+   "d": "2024-02-14",
+   "s": "4",
+   "t": "Are you talking in terms of BP or PNR? Either way it's best that you don't let that stuff happen and risk manage it before or on expiration."
+  },
+  {
+   "a": "Adderalin",
+   "d": "2024-02-16",
+   "s": "2",
+   "t": "Never heard an answer to my question u/dreadnought89. If in terms of BP you'd definitely risk a TIMS call, which is a straight up cash deposit which you can only risk/reduce/liquidate out of 3 times as it'd be your own fault. BP is based on TIMS. If its just PNR then you get PNR locked, no big deal, just risk reduce. You really don't want to be so uncovered you face PNR < EPR, as stocks can and do open 30-50% down depending on TDA's expected price range. It's a lot more easy to be PNRed than lose BP, as PNR is tail risk based. No margin calls for that, no cash deposit, still, as I said in the above post - manage it before/on exp day. And if you don't know what PNR is based on not responding to my question yet - uninstall PM. Don't risk your account/possibly owing your broker until you study more."
+  },
+  {
+   "a": "dreadnought89",
+   "d": "2024-02-17",
+   "s": "2",
+   "t": "Thank you for both replies and I apologize for the delay! I am specifically talking about PNR being less than EPR, which I was referring to by saying concentration risk. I am in a position of more risk that I'd like, with short calls that are around 90 DTE and long calls rolling off. Not where I like to be. It turns out, TOS was incorrectly modeling my PNR because I also trade futures options. As such, my PNR is being pegged against margin equity whereas I learned Friday by talking to TDA customer support it should be based on Net liq minus Futures Cash. As such, ANALYZE scenarios I am running are showing inappropriately that I trigger concentration risk when those long calls expire. I'm still not where I'd like to be on the position, to even be having to ask this question. I've been taking other positions off this week to reduce risk, and making some deposits to help. I feel very strong"
+  },
+  {
+   "a": "dreadnought89",
+   "d": "2024-02-17",
+   "s": "2",
+   "t": "I'll just add that I have a solid handle on buying power, which is positive with lots of wiggle room."
+  },
+  {
+   "a": "greytoc",
+   "d": "2024-02-14",
+   "s": "3",
+   "t": "Your best bet is to contact Schwab/TDA. I suspect that they would adjust your margin requirements on the concentrated position. I have a concentrated position in my Fidelity PM account and that's how it's handled at Fidelity."
+  },
+  {
+   "a": "alberto3333",
+   "d": "2024-02-14",
+   "s": "2",
+   "t": "The action TDA takes is going to depend on how offsides you get. If losing your long options leads to your BP usage being down by 1% of NLV, they will probably let you coast for a few days. If it puts you down by 30% of NLV, you will get a call much quicker. This last scenario will probably generate what they term a TIMS margin call, which can only be satisfied by adding money and not by closing positions. If you don't add money, you get a strike. After three strikes, you lose your PM status."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2024-02-14",
+   "s": null,
+   "t": "Thanks for the reply. You are correct about long options expiring exposing short options over the weekend. It is, however, not a BP issue (BP is positive, with lots of room and no risk of going negative due to expiration). The issue is the expiration causes TOS to model the PNR is being less than the EPR. I did learn that there is an issue with this calculation because I also hold futures positions. Learning the appropriate way to model this PNR/concentration risk, coupled with other de-risking activities this week, has helped me mitigate the issue."
+  },
+  {
+   "a": "dreadnought89",
+   "d": "2024-02-17",
+   "s": "2",
+   "t": "Thanks for the reply. You are correct about long options expiring exposing short options over the weekend. It is, however, not a BP issue (BP is positive, with lots of room and no risk of going negative due to expiration). The issue is the expiration causes TOS to model the PNR is being less than the EPR. I did learn that there is an issue with this calculation because I also hold futures positions. Learning the appropriate way to model this PNR/concentration risk, coupled with other de-risking activities this week, has helped me mitigate the issue."
+  }
+ ]
+}

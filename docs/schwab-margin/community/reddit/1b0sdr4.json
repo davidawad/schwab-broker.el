@@ -1,0 +1,51 @@
+{
+ "url": "https://www.reddit.com/r/thetagang/comments/1b0sdr4/margin_for_cash_secured_puts_in_schwab/",
+ "title": "Margin for Cash Secured Puts in Schwab",
+ "created": "2024-02-26",
+ "body": "Hi,\n\nI google around and searched this sub-reddit but did not find this exact answer. I also posted in r/options but they recommended I post this here too.\n\nCan I use margin for selling cash secured puts? I thought I could, but I went to do it this am and i could only sell a put for the amount of cash on hand in my account.\n\nIf, so how do I go about enabling this?\n\nThank you in advance.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "ducatista9",
+   "d": "2024-02-27",
+   "s": "3",
+   "t": "It’s not cash secured if you don’t have the cash in your account. It’s a naked put. The reason terminology is worth being precise about is that it implies whether you’re using leverage or not and thus how much risk you’re taking."
+  },
+  {
+   "a": "DexicJ",
+   "d": "2024-02-27",
+   "s": "3",
+   "t": "Take your cash and invest it or put it into a high yield saving account... then sell puts on margin with level 3. Makes 5% plus your put premium. If you get assigned sell the hysa to fund it."
+  },
+  {
+   "a": "firemanjeremy",
+   "d": "2024-02-27",
+   "s": "3",
+   "t": "With a Schwab margin account selling about just lowers your buying power. You don’t pay interest on money on hold only if it gets assigned and the shares actually purchase"
+  },
+  {
+   "a": "Mariox",
+   "d": "2024-02-26",
+   "s": "2",
+   "t": "On Schwab it is level 3 options. Somewhere on their site is a Option Trading Application, fill that out and they need to approve it. The longer you have traded options the more likely you get approved. Opening a cash secured put is level 0."
+  },
+  {
+   "a": "NeutrinoPanda",
+   "d": "2024-02-26",
+   "s": "1",
+   "t": "Schwab does allow for selling CSP on margin. That doesn't mean that you can (might be an option level thing, a minimum equity requirement thing, etc.), or that they may not allow it on the instrument you trying to sell a put on (for instance, I believe is if the share price is under $3 they don't allow trading it on margin). https://www.schwab.com/public/file/P-4193744/MKT105883-02.pdf"
+  },
+  {
+   "a": "OkAnt7573",
+   "d": "2024-02-27",
+   "s": "1",
+   "t": "As suggested you can use a combination of any cash on hand and margin access that the account is enabled for (non-IRA, just general brokerage account) to cover the naked puts you are writing. Keep in mind that if you move your money into a high yield money market account there will be a 31 day period before that can be used to write against, after the 31 days it is as good as cash."
+  },
+  {
+   "a": "Uvraman1",
+   "d": "2024-02-28",
+   "s": "1",
+   "t": "I use a level 1 options access in a Schwab margin account to sell “covered puts”. The equities in my account are collateral at ~50% value, and my money market and Treasuries with < 1 year maturity provide 90% collateral for what would have to be CSP with level 0 options access. I tend to use T-Bills over money market funds because T-Bills immediately qualify for collateral, while MMF have to be on deposit for 30 days to qualify. There are different collateral rules if you are trading in an IRA…"
+  }
+ ]
+}

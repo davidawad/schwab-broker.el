@@ -1,0 +1,159 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/13m8gyt/portfolio_margin_guide/",
+ "title": "Portfolio Margin Guide",
+ "created": "2023-05-19",
+ "body": "What is portfolio margin? It is a risked based method of giving you margin based on the expected worst case one day move.\n\nMax out your BP unwisely all long SPY at 15% margin (6.66x leverage) then if you lose exactly one dollar on the position = $1 dollar margin call. Spy gaps down 15% overnight = lose entire account. Spy gaps down 20% overnight = owe your broker.\n\nYou need $110k - $125k - $175k - $250k of equity to enable it with various brokerages.\n\nReg-T vs Portfolio Margin\n\nReg-T margin is strategy based. It's based on over time that roughly a 100% spy position happens to lose 50% of it's value before recovering, long individual stocks likewise don't drop more than 50% before a broker can reasonably react in a few days, and short options probably introduce 20% losses of the underlying's stock price.\n\nReg-T breaks margin into initial and maintenance margin. Most brokerages offer 2x initial margin for stocks, and 25%-30% maintenance margin.\n\nIf you have a 100k account you can buy 200k of SPY and your stock buying power is $0 and options buying power is $0. You have a negative 100k cash balance - your margin loan.\n\nThen you currently have $100k equity as a millisecond later you can probably close your trade for the same exact price and pay off your margin loan.\n\nNow let's say spy dips down to where you have $25k equity. This would be a 125k spy position on 100k margin loan. Spy would have to drop 37.5%. At this point you are at 5x leverage and you're putting your brokers money at risk. With a 25% maintenance margin broker you will now send you a margin call. Most brokers use 30% maintenance margin.\n\nPortfolio Margin is Different:\n\nPortfolio Margin is risk based. It is based on the realistic risk how various stocks and indexes move in one day. Portfolio margin stress tests your individual positions based on a \"risk array\" testing down moves at -3%, -6%, -9%, -12%, and -15% for most stocks and indexes. It also tests up moves in the same percentages. Whatever is the maximum loss becomes the margin required.\n\nPortfolio Margin your initial margin = maintenance margin. You get immediate margin relief. Unlike Reg-T margin where you only get extra leverage if it goes against you, PM gives it to you right away.\n\nThen at TD Ameritrade, it is displayed differently. Everyone is used to options BP = cash and stock BP = 2x cash, and if you spend all of your money on long spy unlevered you only have .5x option BP.\n\nFor a $100k Reg-T account buying $100k of spy you will have $50k option BP remaining and $100k stock BP remaining.\n\nOn a $100k PM account you'll see $100k option BP and $100k stock BP. I've seen some people get really upset and turn off PM thinking they didn't get any leverage. However if you try to buy $100k of spy that will cost $15k option and stock BP (from here on it's going to be just BP.) Leaving you with $85k BP left to deploy capital more efficiently or do other trades with leverage!\n\nOn PM having $0 BP = instant margin call if you close or open the next day $0 or negative for roughly the amount of BP needed to bring it back up.\n\nI like to keep a healthy buffer.\n\nOptions Trading Reg-T vs Portfolio Margin\n\nSo you might be thinking - well what's great about PM if Reg-T gives me 100-50k options BP and PM gives me 100k-85k?\n\nThe answer is BP calculations are different. Read over The Margin Investor's Reg-T Calculation Guide and how various Option Strategies Perform under PM.\n\nMost of us have found that selling naked calls and naked puts tend to bring in the most money profitably. The Reg-T calculations work by:\n\nUncovered Call (i.e. Naked Call)\nA short in-the-money (or at-the-money) call: 100% of the option market value plus 15% of the underlying price for Broad Based Indexes or 20% for Equities and Narrow Based Indexes.\nA short out-of-the-money call must have an amount posted into the account equal to the maximum of: 1) 100% of the option market value plus 10% of the underlying price or 2) 100% of the option market value pl",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "LoveOfProfit",
+   "d": "2023-05-19",
+   "s": "19",
+   "t": "Thanks for the post, I'll be adding a link to this to the wiki!"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-05-20",
+   "s": "13",
+   "t": "Thank you! That means so much to me! :D"
+  },
+  {
+   "a": "plasticpanda",
+   "d": "2023-05-19",
+   "s": "11",
+   "t": "Excellent information. Much thanks!"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-05-19",
+   "s": "5",
+   "t": "Thank you! :D"
+  },
+  {
+   "a": "Theta_God",
+   "d": "2023-05-20",
+   "s": "9",
+   "t": "Just commenting to pile on the praise. Haven’t read a post of this quality in a while. Is the discord you referenced any good?"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-05-20",
+   "s": "4",
+   "t": "Yes the PM Traders discord is amazing. I highly recommend joining!"
+  },
+  {
+   "a": "lktz601",
+   "d": "2023-05-19",
+   "s": "6",
+   "t": "Awesome write up! Really helpful to me as I just got my PM approved this week haha. While still digesting some of your post, just wondering for lottos, how do you find weeklies 50% OTM with decent liquidity? I found a lot of tickers don’t even have weeklies that far OTM; even if some do, there’s barely any volume. I will try running a screener later on this."
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-05-20",
+   "s": "6",
+   "t": "Awesome write up! Really helpful to me as I just got my PM approved this week haha. Thank you!! how do you find weeklies 50% OTM with decent liquidity? Sadly - you can't anymore. :( It was the popular Let's talk about LOTTOS strategy. A lot of people called it picking up pennies in-front of a steamroller. I stumbled upon that post and the PMTraders subreddit a year ago when I had heavy HFEA losses and decided it was a good time to start trading options again in a bear market. At first I had the same knee-jerk-reaction and penciled down and did the math vs realistic risks, and went HOLY SHIT at the return. I joined right as it was 5c a week, then due to the huge influx of users it became 5c a month, now even 5c a month is pretty dead. Given how popular lottos has gotten then died, I want to be careful about talking about any of my current edges. I hope you can understand that! I'm sure you can apply the same risk-vs-reward principles I used as an example strategy to see if there are any other worthwhile trades. For instance on portfolio margin selling straddles has a potential 50% return on capital for the BPu if you could always hit the mid-point. Obviously you can't hit the mid-po"
+  },
+  {
+   "a": "mawora",
+   "d": "2023-05-20",
+   "s": "3",
+   "t": "This is an amazing post, thank you very much! This week I realized just how annoying it is to be limited by BP using IBKR because of some high margin requirements... As a european with no access to TDA/TOS, which broker would you suggest for selling lottos (account size sits at 155k and I can get to 200 due to some incoming capital in the next 3 months)? IBKR, tastytrade or something else entirely? Excuse me for the beginner question and thank you very much in advance!"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-05-21",
+   "s": "3",
+   "t": "As a European So googling this, it depends on if you're an UK citizen, or EU citizen, or others. I was researching some legalities on international and PM regulations/etc, and internationally. I don't have any FIRM answers to this unfortunately, but this appears to be the situation for most international people unless you're from China/North Korea or anything else the US has sanctions with: Canada - no PM for you as Canada thinks its too risky and banned it for all Canadian citizens. IDK about prime brokerage accounts. UK Citizen - same 100k minimums for PM. Possibly $500k prime minimums. Certain ETF/LETF investments are banned if they directly leverage vs ETNs. EU Citizen/Others - Possibly $0 legal-minimum for a PM/risk based margin account. Possibly $0 legal-minimum for a prime-brokerage account too. If we jump over to IBKR's ireland website, ALL their accounts get this for margin: https://www.interactivebrokers.ie/en/index.php?f=37749&hm=eu&ex=eu&rgt=0&rsk=1&pm=0&rst=040404040404040104 What is risk based margining? A risk based margin system evaluates your portfolio to set your margin requirements. The risk valuations of your positions are created using simulated market movement"
+  },
+  {
+   "a": "svix_ftw",
+   "d": "2023-05-20",
+   "s": "3",
+   "t": "Amazing post! I also read your other post \"Whats next after PM\". Im still not understanding the advantage of Prime Brokers? It allows better locating of borrowable shares and better order fills? And is the difference for short options margin very large for IBKR vs TOS? Thanks."
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-05-20",
+   "s": "9",
+   "t": "Im still not understanding the advantage of Prime Brokers? It allows better locating of borrowable shares and better order fills? I'm happy to answer! I ran out of 40k character limits to list all the advantages I can think of: Get max margin available. Lightspeed requires 20% extra house margin above and beyond TIMS unless you have $5m. TD Ameritrade limits your short-option margin with the short-unit test which makes short options effectively be a minimum margin of $200 if you're a calls-only or puts-only guy, or $100 if you max both puts and calls. IBKR has volatility targeting house-rules that likewise tightens the margin considerably, and so on. Get MUCH better execution. Prime brokerage allows you to execute away with any broker. TD Ameritrade takes roughly 350 to 500 milliseconds to execute a order from receiving it to it getting on the market. and you can easily get executions down to 1 or 2 milliseconds. It might be really important for both algo traders and scalpers! Yes even TOS takes half a second to execute. TD Ameritrade's API only allows one order every 500 milliseconds and they buffer those orders if you exceed that restriction. Get better locates of borrowable shar"
+  },
+  {
+   "a": "psyche444",
+   "d": "2023-05-20",
+   "s": "2",
+   "t": "Very comprehensive -- thank you! I'll have to look more into those short calendar trades. The \"confession\" section seems out of place in this guide, just my opinion, but hey -- artistic license! So... I can see the benefits of switching to a mini prime in terms of potentially better margining for equity options and/or more lenient \"SPXBT\" / stress testing, but for me personally, almost everything I'm doing these days is on SPAN margin at TDA, all /ES. It is unclear to me if there would be any margining benefit at a mini prime (or prime?) for SPAN options, vs. TDA. Obviously the more lenient \"SPXBT\" / stress testing would still apply though."
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-05-20",
+   "s": "3",
+   "t": "The \"confession\" section seems out of place in this guide I debated removing it or keeping it, but when the fake blowup post happened everyone and their mother blamed me claiming the OCC removing correlation offsets completely from PM due to my blow, or TDA removed it as a house margin rule due to my blowup. I decided to keep it in and come clean here as I didn't want any trolls possibly catching on/or making it a huger issue in the future. I've also gotten a ton of troll posts on all my other guides/etc of - hey don't listen to him he blew up an account. So including it or not including it was the toughest decision ever on this guide, even though I came clean a year ago. It is unclear to me if there would be any margining benefit at a mini prime (or prime?) for SPAN options Mini prime might not be helpful for futures. I've ran into character limits on just focusing the discussion on the equities side as I personally trade equities options. I wanted to still include SPAN as it IS a portfolio margin methodology for futures and available at any account size vs the antiquated 100k capital limits of equities PM. Although some reg-t brokers require 100k on reg-t these days to even short"
+  },
+  {
+   "a": "iPisslosses",
+   "d": "2023-05-21",
+   "s": "2",
+   "t": "Just to be clear , if I have 250k in ibkr suppose what's the BP I can expect. Strictly trading short strangles a) for >0dte b)0dte According to me you get 2x margin for over night and 4x for intrady but does it apply to options?"
+  },
+  {
+   "a": "geoffbezos",
+   "d": "2023-05-21",
+   "s": "2",
+   "t": "Hey u/adderalin, great write-up as always. I have a few follow-up questions here, some related specifically to PM and some that aren't: I come up with % out of the money targets I close all my trades at What are your personal sizing rules and rules to close out certain positions? I really like the examples you gave around hedging - were most of these from the \"Second Leg Down\" book? The long calendar trade is +theta, +vega, -gamma. (long leg is further DTE) What is the intuitive reason for long calendars having this greek profile? Specifically on the vega / gamma? I understand why it is a positive theta trade - in general, the closer DTE the larger the theta burn. If we exclude binary events (eg earnings) what is the explanation for this trade being long vega, short gamma? Building on 3, what are situations where you want to be long calendar / short calendar? I understand you want to be long vega if you think there'll be a spike in vol and short if you think there will be vol crush. When would you want to be long / short gamma? And more specifically when would you want to be long gamma, short vega and the inverse short gamma, long vega? In my most recent margin call I didn't realiz"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-05-21",
+   "s": "3",
+   "t": "What are your personal sizing rules and rules to close out certain positions? I don't like risking more than 1-3% of my account on any one trade for \"realistic risks\", it depends on the EV profile and so on. I don't like risking more than 5-10% of my account on any one short option position if it were to suddenly go 50% against me (hasn't happened yet knock on wood.) I really like the examples you gave around hedging - were most of these from the \"Second Leg Down\" book? Thank you! Yes. what is the explanation for this trade being long vega, short gamma? If you understand why it's +theta then you would understand it's vega and gamma relationship. Why is it +theta? You have two options of the same strike with time the only difference. The long calendar is short the nearer contract and long the further out contract. Thus theta burn is quicker and so on. Likewise, as you go out further... you have more and more vega. If you take it to the extremes let's say you short a 1 month contract on SIVB at the $265 put and go long a 1 year contract on SIVB at the $265 put as you want to collect that theta every month. Your short is collecting a ton of theta but has a ton of gamma risk. The long "
+  },
+  {
+   "a": "karl_ae",
+   "d": "2023-05-28",
+   "s": "2",
+   "t": "Wow you wrote an encyclopedia on the matter. It's going to take me a week to digest all this information. I wonder how long it took you to plan, write and edit this. Thanks for taking the time Out of all this one thing stood out for me. For someone who has access to all this buying power, why do you bother selling 5$ options? I understand that it's virtually risk free, but still you have to put in all these trades, keep an eye on the earnings calendar, and when the time comes to manage them, you will have a hard time closing the positions. Oh and you have to pay 1$ per trade, which effectively reduces your profits to 80% of your projection Not nit picking, just curious on your motivation. I'll come back with other \"real\" questions once I digest your post"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-05-28",
+   "s": "2",
+   "t": "First TD Ameritrade is at most 0.65 a trade, not $1 Having a pm account they'll bring it down to .55 or .50 easily. I'm at .35 contract with them and people have gotten as low as .20 You don't close the trade the original lotto trade expired every week. Even if you paid $1 a contract you got your math backwards. 1/5 collected is only 20% cost you're keeping 80% profit. Ok then compounding at 4% per week. The strategy was so popular that it's dead. You can't do it anymore. That's why I'm openly discussing it on Reddit. Making 5% a week almost risk free when we only had say 12 tickers put anyone at risk of losses last year (Activision blizzard, etc) was huge. If you don't understand how crazy compounding at 5% per week is then trading isn't for you. I suggest to make yourself a spreadsheet and see how crazy of growth that is."
+  },
+  {
+   "a": "saripalli",
+   "d": "2023-05-19",
+   "s": "7",
+   "t": "This is a great post! Very well explained!"
+  },
+  {
+   "a": "CrwdsrcEntrepreneur",
+   "d": "2023-05-19",
+   "s": "6",
+   "t": "Great post!"
+  },
+  {
+   "a": "flynrider58",
+   "d": "2023-05-20",
+   "s": "4",
+   "t": "Amazing information, test"
+  },
+  {
+   "a": "Jeffde",
+   "d": "2023-05-20",
+   "s": "4",
+   "t": "What a post! Nice job 👍"
+  },
+  {
+   "a": "algidx",
+   "d": "2023-05-21",
+   "s": "4",
+   "t": "This kind of comprehensive info about an otherwise mostly secretive industry is pure gold (or should I say BTC :wink:) Thanks for being so generous about sharing this and the time/effort in putting this together."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2024-06-21",
+   "s": "1",
+   "t": "OP did you elect trader tax status? I'm trying to figure out if it makes sense to treat short term trading gains as ordinary income due to the SE tax probably offsetting any deductible expenses."
+  }
+ ]
+}

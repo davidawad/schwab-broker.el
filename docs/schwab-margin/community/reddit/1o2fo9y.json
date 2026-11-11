@@ -1,0 +1,63 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/1o2fo9y/confused_about_box_spread_vs_sgov_margin_treatment/",
+ "title": "Confused about box spread vs SGOV margin treatment",
+ "created": "2025-10-09",
+ "body": "I need some loans and was checking the box spreads and playing around\n\nI’ve been running numbers on box spreads and SGOV, but I’m getting tripped up by the margin mechanics. Maybe someone here can sanity-check me. • Example: A box spread goes for $940k today and pays $980k at expiry (so ~4.25% implied rate). • Broker says it only needs 57k margin to hold that box. • Now, suppose instead I buy $980k of SGOV directly. If I level it to match the $940k I raised from the box, the margin required drops to about $77k. So I can buy 980k sgov and sell box spread and get 940k and total money needed is 70k or 70+40 110k?\n\nSo here’s my confusion:\n\nIf I already have $77k available, isn’t it strictly better to just buy $980k SGOV and let the box expire — instead of holding a $55k margin position with a $40k liability attached?\n\nWhy would anyone choose the 55k margin + 40k liability structure, when the 77k margin path seems cleaner?\n\nAm I misunderstanding how brokers calculate the margin, or missing something about the capital efficiency/benefit of the box here?\n\nWould love to hear how others think about this.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "eaglessoar",
+   "d": "2025-10-09",
+   "s": "1",
+   "t": "whats the total position youre trying to hold? what do you mean the margin drops to 77k? if you ahve 57k margin in the account why not use 40k to close the box and just pay back interest? what does buying sgov do for you?"
+  },
+  {
+   "a": "thisisvv",
+   "d": "2025-10-09",
+   "s": "1",
+   "t": "Total sgov I want to hold is 980k and this box spread. So I want to hold sgov that is expiration value of the spx box."
+  },
+  {
+   "a": "eaglessoar",
+   "d": "2025-10-09",
+   "s": "1",
+   "t": "So you're trying to set up a swap were you borrow fixed and earn variable? Think rates are going up? Or what's the goal of this position? I assume you're short the box spread selling it?"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2025-10-09",
+   "s": "7",
+   "t": "I'm really confused on your thetagang post. Are you using thinkorswim? Are you on portfolio margin? If you're on PM at Schwab liquid boxes on actively traded5,000-6,000 strikes will be $37.50 per leg - $150 margin if marks are good. If you have bad marks then losses add more margin. You need to be using the \"margin\" calculations strategy as if you use buying power instead it's a weird calculation of nlv+margin to track equity so the box obligation remains and you can't borrow more with boxes than you can with regular margin loans. Sgov is 7% Margin because while it's tbills the document allows them to buy commercial paper and there are no options on it so Schwab doesn't want another Lehman event should the fund manager get a hard on for extra basis return. You can buy tbills directly for 1% margin under 12 months and vanguard vgsh is 3% for a 1-3 year maturity. Box spreads are insanely margin efficient at 150/100k vs 1k per 100k of tbills."
+  },
+  {
+   "a": "eaglessoar",
+   "d": "2025-10-10",
+   "s": "0",
+   "t": "You can buy tbills directly for 1% margin under 12 months and vanguard vgsh is 3% for a 1-3 year maturity. so you can insanely leverage yourself for a ton of yield differential?"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2025-10-10",
+   "s": "5",
+   "t": "I'm beyond fucking tired of people trying to figure out how to make free money like a bank here on Reddit. Sure you can leverage yourself to negative yield with tbills returning 4% and short boxes return 4.5%. Sure you can buy corporate bonds instead for 5% but there's something called default risk which showed up in 2008 and again in Covid and 2022 with rising interest rates. Just like 15% margin let's you go 6.6x on stock. I'm sure you're the first person to have brilliantly thought up of that hordes of quants from Harvard, Yale, and MIT haven't thought of. Ooo buy some 1% tbills and let's just lever it to the max. Oh wait they did see long term capital management. I don't know why my comments drives such senseless noise and drivel all the time just pointing out how margin works on various bond ETFs vs box spreads."
+  },
+  {
+   "a": "valorallure01",
+   "d": "2025-10-10",
+   "s": "0",
+   "t": "I see no mention in SGOV prospectus about being able to buy commercial paper. https://www.ishares.com/us/library/stream-document?stream=reg&product=ISHSGOV&shareClass=NA&documentId=1800938%7E2388751%7E926213%7E2359994%7E2297885%7E2359806%7E2297853%7E2270516%7E2326496&iframeUrlOverride=%2Fus%2Fliterature%2Fprospectus%2Fp-ishares-trust-gov-muni-mort-2-28.pdf The most liquid box spreads are the 4000/5000 strike combo per CBOE \"Notably, despite the SPX trading around 6,000 in February 2025, the 4000/5000 strike combination remains the most popular choice, accounting for approximately 80% of trades.\" https://go.cboe.com/download-cboe-spx-box-spread-whitepaper?utm_source=twitter-organic&utm_medium=social&utm_campaign=spx_box_spreads_whitepaper"
+  },
+  {
+   "a": "[deleted]",
+   "d": "2025-10-09",
+   "s": null,
+   "t": "Yes I have question i am trying to understand why will someone just take 940k and be liable for 40k risk free loan for 55k when he can spend 22k more and the sgov will Cover the box liability and earn 4% as well ."
+  },
+  {
+   "a": "thisisvv",
+   "d": "2025-10-09",
+   "s": "1",
+   "t": "Yes I have question i am trying to understand why will someone just take 940k and be liable for 40k risk free loan for 55k when he can spend 22k more and the sgov will Cover the box liability and earn 4% as well ."
+  }
+ ]
+}

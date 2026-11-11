@@ -1,0 +1,93 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/16r326w/future_portfolio_margin_span_changes_for_schwab/",
+ "title": "Future Portfolio Margin & SPAN changes for Schwab?",
+ "created": "2023-09-24",
+ "body": "If we are current TDA customers using TOS, should we expect any major changes as the Schwab integration happens, particularly in terms of Portfolio Margin, SPAN Margin, or stress testing requirements?\n\nIt is my mental model that TDA has some of the most favorable margin treatment of the brokers catering to retail investors; however, are the PM and SPAN rules generally exchange requirements and not expected to change? I maintain a portfolio of both short equity and futures options and run stress tests to meet the current TDA requirements. I guess I am just worried that at some point during the integration there will be a step change in either Margin requirements or stress testing rules and suddenly I find myself in a spot where I have to unfavorably close postions.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "ducatista9",
+   "d": "2023-09-25",
+   "s": "2",
+   "t": "I called Schwab a few weeks ago asking about PM on long spx box spreads. They told me nothing would change from what it currently is at TD when I get migrated as the back end system has already moved over to Schwab (or something to that effect)."
+  },
+  {
+   "a": "dreadnought89",
+   "d": "2023-09-26",
+   "s": "1",
+   "t": "Unrelated question: I am considering opening my first long box spread. My question is exiting the trade. Do you wait and allow the options to expire, or do you close the whole trade at a few DTE? Additionally, do you have a favorite DTE you target? I'm thinking of hitting around 60 DTE so that I can hit the high end of the yield curve, not take too much interest rate risk, and have access to the cash quickly if needed."
+  },
+  {
+   "a": "ducatista9",
+   "d": "2023-09-26",
+   "s": "2",
+   "t": "I let them expire unless I need the cash earlier. The effective rates you can get mirror the treasury yield curve but are slightly higher. So I usually look at what duration has the highest rates and go with that. Lately I’ve been going longer term though to try to lock in a rate for longer. The last one I put on was for a year. That still gives low interest rate risk."
+  },
+  {
+   "a": "greytoc",
+   "d": "2023-09-27",
+   "s": "1",
+   "t": "Note that in the US, there are some unresolved questions regarding tax treatment on long box spreads with regard to section 1258 straddle rules. The IRS has never commented and afaik they have never enforced straddle rules on long box spread. The topic is discussed at length in the discord. As for DTE - I target 90 to 120 days because I do them like a ladder with monthly rungs."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2024-02-25",
+   "s": "1",
+   "t": "long spx box spreads is long spx box spreads essentially you are lending money and then getting interest back? kinda like you deposit money to a savings account? and in terms of margin requirement, is it basically zero because of the 4 legs option cancel each other out?"
+  },
+  {
+   "a": "ducatista9",
+   "d": "2024-02-26",
+   "s": "1",
+   "t": "Yes, more or less. You buy the spread with cash for less than the width of the spread and when the options expire you get cash back equal to the width of the spread. The return on a spread is typically about the same or very slightly higher than the rate you'd get on the same maturity treasury bond. The margin required is about zero, but the trade does tie up cash. So if you want to sell options which require margin but bring cash into your account, a long box can work well in conjunction with that. In terms of being like a savings account, you can't move money in and out of box spreads as easily as you can from a savings account or money market fund. You can sell a box before it expires if you need the cash back, but I typically try to not do that. Also, you don't get interest at regular intervals like you would with a savings account, money market or treasury bond. You only get the cas"
+  },
+  {
+   "a": "Key-Tie2542",
+   "d": "2023-10-22",
+   "s": "2",
+   "t": "I spoke with a PM member at TDA recently, and he basically told me Schwab doesn't want what they perceive to be the high risk PM clients, and they will never give the leniency that TDA presently does. (Of course this is ironic given how poorly Schwab has managed its own assets with long-duration bonds.) In any case, the gentleman I spoke with told me he and his boss at TDA have had daily meetings with Schwab for months, and due to the very high level of clients using PM at TDA, the transfer to Schwab won't be until late 2024 at the soonest, and that greater strictness of PM requirements will likely be placed on TDA clients even before the official move. (I have already experienced this.) He has already seen, and expects to continue to see, mass exodus to IB and other places."
+  },
+  {
+   "a": "dreadnought89",
+   "d": "2023-10-22",
+   "s": "1",
+   "t": "That is extremely unfortunate to hear, as I am VERY happy with TDA/TOS."
+  },
+  {
+   "a": "Sugizoxxx",
+   "d": "2023-10-24",
+   "s": "1",
+   "t": "Sad to hear that. I was expecting Schwab to adopt TDA's rules and requirements. I tried Schwab's PM and was very disappointed. The margin requirments of writing certain stock options are higher than reg-t margin. I will definitely move to IB if they tighten the margin rules and requirements."
+  },
+  {
+   "a": "LoveOfProfit",
+   "d": "2023-09-24",
+   "s": "10",
+   "t": "The short answer is we don't know. I heard that Schwab users recently did get some easing of margin requirements, more in line with TDA, which is optimistic. I wouldn't be surprised if both land somewhere in the middle though, which would be a bit worse from the perspective of existing TDA customers. however, are the PM and SPAN rules generally exchange requirements and not expected to change PM and SPAN both have minimum exchange requirements, but brokers are welcome to add additional more restrictive house rules on top of them, so that doesn't protect us from it getting worse. I would hope we'd get ample warning before such changes for the worse would happen."
+  },
+  {
+   "a": "psyche444",
+   "d": "2023-09-25",
+   "s": "6",
+   "t": "not sure if you saw but TDA recently raised margin requirements for futures, without notice, on 8/22/23. The changes vary but a long or short /ES contract has about a 20% higher margin requirement than it did before... options are affected too, but not linearly I think. /VX got hit hard... went from 8k margin requirement to 22k. No idea if this is a one-time change and now they're satisfied or if it's the first of many changes. They certainly had no reservations about just making the change with zero notice or communication. The trend I see is that Schwab is generally more risk averse than TDA was. There is no limit to how restrictive they can make things, including on SPAN, if they so choose."
+  },
+  {
+   "a": "BrendanSoCal",
+   "d": "2024-11-20",
+   "s": "1",
+   "t": "Schwab informed me of a new stress test that I failed today, in which every position in the account is tested with a 50% increase in IV. May as well be reg T margin now."
+  },
+  {
+   "a": "connectsnk",
+   "d": "2023-10-02",
+   "s": "1",
+   "t": "Dear Senior Traders, I do not have portfolio margin on my account yet. Can someone please look into TOS and let me know what margin will be charged on opening a 1 DTE Iron condor where short options on both sides are at 5 delta and the long wings are 50 wide? On a reg t account the margin is coming out to be 6000 USD for IBKR https://imgur.com/a/xcsUJAN"
+  },
+  {
+   "a": "[deleted]",
+   "d": "2023-12-14",
+   "s": "1",
+   "t": "To give you an idea, selling 1 contract of ESZ23 4720C requires 14k margin with Schwab. I think it’s fairly close to TDA."
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/1l4gp9v/schwab_tos_vs_ibkr_for_pm_accounts/",
+ "title": "Schwab ToS vs IBKR for PM accounts",
+ "created": "2025-06-06",
+ "body": "Looking for some recent experience from others here. I recently set up an LLC to trade through which takes advantage of multiple tax breaks (20% QBI deduction, expense deductions including trading costs & healthcare, SALT workaround via S-Corp, etc.). I have been trading on IBKR TWS for many years now on my PA and Roth IRA. I've got some systematic bots trading futures via TWS API, as well as some discretionary options trading. I've got another bot trading on Tradestation with zero-commission trading and relatively easy API.\n\nI just set up an account on Schwab ThinkorSwim to get higher leverage. ToS allows 50x leverage on offsetting assets (SPX/IVV) based on your net short positions compared to your net liquidation value. IBKR only allows 30x and counts all assets (long and short). Options trading on ToS is much better compared to IBKR, and I'm noticing better fills too.\n\nAnyways, I was in the process of moving over some positions from my IBKR personal account to my new IBKR brokerage (LLC) account. And sticker shock hit me as they want to charge professional market data rates for everything (still only managing personal money). With CME futures and stock/options data that will be multiple hundreds of dollars per month. On Schwab ToS I don't get charged anything. I get that they have different business models. I like that IBKR pays good interest on free cash, not so much that ToS pays nothing. IBKR is also charging ~5.5% on margin, whereas ToS is at +12%. That's an easy workaround with some box-spreads on ToS but still a hassle. I even got my options commissions lowered on ToS, so that helps too.\n\nTLDR; I'm curious to hear what others have found works best for them on Schwab ToS vs IBKR for PM trading? Could people chime in with what they like on one vs the other? Are people running accounts on both for different strategies? Or all loaded up on one broker? Thanks all in advance!",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "greytoc",
+   "d": "2025-06-06",
+   "s": "3",
+   "t": "systematic bots trading futures via TWS API FYI - Schwab's API does not support futures at this time if you plan to use Schwab API for trading futures. ToS allows 50x leverage There was a recent discussion about whether Schwab may reduce that multiplier in discord. You may want and double check that in the discord. Schwab ToS I don't get charged anything. Are you sure about that? I'm under the impression that Schwab doesn't waive the exchange data fees any more for professionals. Afaik - the only broker that waived exchange data fees in the past was Fidelity. But they stopped doing that about 2 years ago."
+  },
+  {
+   "a": "Decent-Influence4920",
+   "d": "2025-06-06",
+   "s": "1",
+   "t": "Thanks for the feedback. Re: API futures, that sucks, good to know now. Re; Schwab 50x leverage, can you point me to the discussion as I couldn't find it on a quick search. If they do cut back then I would certainly have to scale back. But I'm also guessing they wouldn't act in the draconian manner IBKR does. Re: Market Data, I have not been charged anything. I re-checked my statements and there are no charge. I'm not managing any external money, both Schwab & IBKR know this. But IBKR insists they have to charge pro rates. I confirmed with Schwab rep when I opened the account there are no data charges for personal or company acct. Tradestation charges me monthly but I'm only grabbing equity data on that account so not very much to pay."
+  },
+  {
+   "a": "greytoc",
+   "d": "2025-06-06",
+   "s": "1",
+   "t": "point me to the discussion as I couldn't find it on a quick search. It was in the pmt discord iirc - you can ask in the broker-specific channel if you plan to exceed 30x on Schwab. I don't recall who was discussing it and I couldn't find the thread."
+  },
+  {
+   "a": "LoveOfProfit",
+   "d": "2025-06-08",
+   "s": "1",
+   "t": "Fwiw im pro at Schwab and still don't appear to be getting charged any extra fees."
+  },
+  {
+   "a": "greytoc",
+   "d": "2025-06-08",
+   "s": "2",
+   "t": "That's awesome to know. I assume you are referring to the rule 390 rule that I recently learned about on the discord. I was referring to mostly to the exchange rules on professionals. I've had issues in the past where access to real-time data was disabled because of old 407 letters."
+  },
+  {
+   "a": "InternetEqualToReddi",
+   "d": "2025-07-25",
+   "s": "1",
+   "t": "Could you explain how \"SALT workground via S-Corp\" works along with trading. Do you buy real estate as well as trade under an LLC? If so, how is it tax efficient? Looking to understand your strategy a bit better."
+  },
+  {
+   "a": "Decent-Influence4920",
+   "d": "2025-07-25",
+   "s": "1",
+   "t": "SALT (State And Local Taxes) was a regular deduction from Fed taxable income until 2017 TCJA capped it at $10k. Our property tax each year is $20k, and CA income taxes much more over that. In order to keep Blue State people happy, California and ~25 other states set up a tax vehicle for people to pay their state taxes. But it only applies to Partnerships and S-corps. You pay into this vehicle, and it counts towards your state taxes, and you can deduct this vehicle from Fed income. Google SALT workaround for your state."
+  },
+  {
+   "a": "nestedbrackets",
+   "d": "2025-12-03",
+   "s": "1",
+   "t": "Thanks for mentioning this, I did indeed look it up but found this: \"Generally, the workaround is available to operating businesses. Unfortunately, the extent to which a pure investment partnership can use it is less certain. There is limited precedent on this point, and current IRS guidance does not clearly distinguish between PTE taxes paid on different types of income (i.e., trade or business income versus investment income). Without more clarity on this issue, investment partnerships or family offices organized as PTEs may be reluctant to take an approach that could attract scrutiny from the IRS. PTEs that are considering a PTE election should consult with their tax advisors for advice specific to their facts and circumstances.\" https://privatebank.jpmorgan.com/nam/en/insights/wealth-planning/can-you-benefit-from-the-salt-cap-workaround"
+  }
+ ]
+}

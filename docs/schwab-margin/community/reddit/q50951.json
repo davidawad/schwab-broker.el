@@ -1,0 +1,105 @@
+{
+ "url": "https://www.reddit.com/r/thetagang/comments/q50951/how_to_calculate_margin_maintenance_requirement/",
+ "title": "How to calculate margin maintenance requirement?",
+ "created": "2021-10-10",
+ "body": "This has always been confusing to me\n\nExample. If put in 10k cash into XYZ, then purchase an additional 5k with margin. Assuming a 25% maintenance requirement, how much does XYZ need to drop before I get margin called?\n\nThanks",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "MichaelBurryScott",
+   "d": "2021-10-10",
+   "s": "11",
+   "t": "You need to keep your equity in the position to be larger than 25% of the current value of the position. Suppose you buy $X worth of these shares (in your example x = 15K). In your example, you're borrowing 0.333 * X (or $5K). Your equity at any point equals the value of the position - your loan = Value - 0.33*X. Hence you need to keep Value - 0.33X > 0.25*Value (LHS = equity, RHS = 25% of the current value of the position). A little shuffling around, you get 0.75*Value > 0.33*X --> or Value > 0.44X. So you want the current value of the position to be larger than 44% of its initial value. Your investment can drop around 56% before you get margin called. In your example, if XYZ drops 56%, your $15K will be worth $6.67K. Of these $6.67K, your loan is $5K and your equity is the rest (or $1.67K). Equity/total value at that point = $1.67K/$6.67K= 25% (you're right before getting margin called"
+  },
+  {
+   "a": "pokeRaids2721",
+   "d": "2021-10-10",
+   "s": "1",
+   "t": "Thank you!!"
+  },
+  {
+   "a": "dealsatm",
+   "d": "2021-10-10",
+   "s": "5",
+   "t": "This is a good but quite complicated explanation. Your equity (total holding minus loan) must be at least 25% of total holding. Or loan must be smaller that 75% of total holding. So if your total holding goes below $5k/75*100=$6.67k you will get margin call for failing MMR."
+  },
+  {
+   "a": "MichaelBurryScott",
+   "d": "2021-10-10",
+   "s": "2",
+   "t": "Thank you. Much simpler, more straightforward."
+  },
+  {
+   "a": "Leave_em_leakin",
+   "d": "2021-10-10",
+   "s": "1",
+   "t": "Thanks :)"
+  },
+  {
+   "a": "dealsatm",
+   "d": "2021-10-10",
+   "s": "1",
+   "t": "$5k loan, with MMR at 25% total minimum holding is $5k * 1.25 = $6250. So you shares have to drop like 58% to have MMR lower than 25%. Note that you can get margin call for other reasons, not only fail to MMR. Edit for accurate calculation: total minimum holding $5k/0.75 and then, why do you ask this in r/thetagang?"
+  },
+  {
+   "a": "pokeRaids2721",
+   "d": "2021-10-10",
+   "s": "1",
+   "t": "Ahh thanks! Sorry I should have phrased it in a more theta gang way. A lot of people here seem to sell CSPs on margin. So I guess the question would be more like “If I get assigned on a $150 stock with only 10k cash in my account, how long am I good for if the stock keeps dropping?”"
+  },
+  {
+   "a": "gabugabuchan",
+   "d": "2021-10-10",
+   "s": "1",
+   "t": "At worst case scenario, think of it as already owning the share at that cost basis. In your example, if you sold a put on an underlying at 150p, your total cost would be 15k while you're only having 10k cash, so you're borrowing 5k on margin, the assumption is if you're assigned, then the poster above answered your question regarding how long are you good for if the stock keeps dropping. On an unrelated note, roll that shit out or close at a loss/deleverage if you're at risk of being assigned more than you can handle. If you're selling naked puts on portfolio margin, there's no reason to take assignment on such a huge chunk of capital being used."
+  },
+  {
+   "a": "MichaelBurryScott",
+   "d": "2021-10-10",
+   "s": "1",
+   "t": "$5k * 1.25 = $6250. This is a little inaccurate. It implies that your equity needs to be larger than 25% of the loan value. Which is not the case, your equity needs to be larger than 25% of the total position value at any time. So, In OP's case, they'll getting margin called if the position drops below $6.67K ($1.67K equity), not $6.25K ($1.25K equity). Just slightly different."
+  },
+  {
+   "a": "dealsatm",
+   "d": "2021-10-10",
+   "s": "2",
+   "t": "Correct. I was just giving a quit estimate. Accurate number should be $5k/(1-MMR) that would give you $6.67k."
+  },
+  {
+   "a": "eternalfrost",
+   "d": "2021-10-10",
+   "s": "2",
+   "t": "This is a messy question. Defined risk is easy, it is just the width of the strikes minus the credit collected. Undefined risks like a naked put/call or a strangle do have a minimum equation set by the government, but each brokerage tends to put their little spin on top of that. At the account level, a standard equation is SUM(strike - 0.8*ul_price + premium_collected) = equity with loan value If the left side is bigger than the right, you get margin called. If you do not understand this, drop everythigng and call your fucking broker instead of posting on reddit you fool. They control your purse, not random idiots like me online."
+  },
+  {
+   "a": "gabugabuchan",
+   "d": "2021-10-10",
+   "s": "1",
+   "t": "Naked puts does not have undefined risk, the risk is defined as the width of the strike which is strike minus 0. That said, to answer OP, typically margin requirement is something around the ballpark of 20% of the strike price, it depends on your broker and the ticker, check with your brokerage for the most accurate information."
+  },
+  {
+   "a": "eternalfrost",
+   "d": "2021-10-10",
+   "s": "-2",
+   "t": "Naked puts does not have undefined risk, Except they absolutely do. Your BPR on a naked put is not the CSP value. And more importantly, you are just throwing up another straw man that has zero to do with the original question. That is all you seem to do because you can not answer the core question posed in the OP, you shart out distractions hoping folks will forget what a joke you are."
+  },
+  {
+   "a": "snip3r77",
+   "d": "2021-10-10",
+   "s": "1",
+   "t": "Say if you have net liquid of 100k, would be safe to use your maintenance margin up to a balance of 30%."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2021-10-10",
+   "s": null,
+   "t": "As little as 1 percent, What the fork brokerage allows your 100-1 margin. This is a damn lie that flies in the face of US law."
+  },
+  {
+   "a": "eternalfrost",
+   "d": "2021-10-10",
+   "s": "2",
+   "t": "As little as 1 percent, What the fork brokerage allows your 100-1 margin. This is a damn lie that flies in the face of US law."
+  }
+ ]
+}

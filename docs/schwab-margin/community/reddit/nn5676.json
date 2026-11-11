@@ -1,0 +1,51 @@
+{
+ "url": "https://www.reddit.com/r/thetagang/comments/nn5676/csp_buying_power_reduction_question_schwab/",
+ "title": "CSP Buying Power Reduction question (Schwab)",
+ "created": "2021-05-28",
+ "body": "Hello,\n\nI had a question about BP reduction from selling CSPs in Schwab.\n\nTLDR Q: Does cash held for collateral also reduce an equal amount of available margin?\n\nFor example, let's say the account has $100k in cash and $100k in margin from the cash for a total of $200k BP, and I sold an ATM CSP for a $50/share company (Strike & Underlying = $50; max loss of $5k).\n\nDoes that mean that my buying power will go down from $200k to $190k due to the (a) $5k in collateral and (b) $5k reduction in margin from not \"having\" the cash because now it's tied up as collateral? Or would my buying power reduction only be $5k (i.e., total BP of $195k)?\n\nAlso, does the collateral calculation work on a per-contract basis or a per-order basis?\n\nThanks in advance.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "aint_no_lie",
+   "d": "2021-05-28",
+   "s": "8",
+   "t": "When people try to explain margin, they usually explain it as a loan and this works fine for stock in most cases, but it's not accurate and doesn't apply in other cases. It's better to think of margin as collateral required for a position. For most stocks the collateral required is 50% (but not all stocks are 50%). For long options and CSP, the requirement is 100%. So when you open your option position, $5k of your cash is now used and if you only deal with 50% margin stocks, then your remaining would be $190k."
+  },
+  {
+   "a": "UF93",
+   "d": "2021-05-28",
+   "s": "3",
+   "t": "I see. I've heard people say that you can use your margin as collateral for CSP. How does that work if your margin also decreases w/ the collateral? Would that be for when you don't have any more cash left? e.g., in a case when you have 100k in securities (e.g., spy) and 100k in margin, you'd be able to utilize the 100k margin as collateral?"
+  },
+  {
+   "a": "aint_no_lie",
+   "d": "2021-05-28",
+   "s": "2",
+   "t": "It's more like this. The stock has to be paid 100% and your broker only requires you to put up 50% (and they will put up the other 50%, but they will charge you interest on the loan), so it makes sense to use your cash before borrowing from them. This is why when you buy stock, your cash balance decreases by 100% of the purchase. Similarly when you sell CSP, you receive cash and it increases your cash balance. So that your cash goes up but your margin goes down is an example of how margin = loan breaks down."
+  },
+  {
+   "a": "MichaelBurryScott",
+   "d": "2021-05-28",
+   "s": "4",
+   "t": "Your new “stock” or “margin” buying power will be $190K. Note that this “margin” buying power is only useful if you’re trading shares with 50% initial margin requirements."
+  },
+  {
+   "a": "shepherd00000",
+   "d": "2021-05-28",
+   "s": "2",
+   "t": "Some people recommend using X% of your buying power to sell options, but I have difficulty understanding what that means on Schwab. If I have $100k cash and $200k buying power, do I sell options until my buying power is reduced to X% of $200k or $100k?"
+  },
+  {
+   "a": "Mangy-Panda",
+   "d": "2021-05-29",
+   "s": "1",
+   "t": "It isn't so much a % of your BP as it is a % of your net liq."
+  },
+  {
+   "a": "shepherd00000",
+   "d": "2021-05-28",
+   "s": "1",
+   "t": "I do not know. If you check the balance tab, there is also a spread requirement. I am not sure what they calculate the buying power but I have noticed that it fluctuates a lot as the delta changes."
+  }
+ ]
+}

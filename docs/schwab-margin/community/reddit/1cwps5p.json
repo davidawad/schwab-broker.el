@@ -1,0 +1,51 @@
+{
+ "url": "https://www.reddit.com/r/thinkorswim/comments/1cwps5p/thinkorswim_increased_margin_requirement/",
+ "title": "ThinkorSwim increased margin requirement ",
+ "created": "2024-05-20",
+ "body": "On ThinkOrSwim selling /ES 5000 put will take $11,360 in Margin/ Buying Power?! That is double what it was in my Margin acct! Anyone see that or is it just me? When did they raise Margin- in the Transition? Thank you in advance.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "[deleted]",
+   "d": "2024-05-20",
+   "s": "5",
+   "t": "Yes , margins were raised in April / May, I believe for index products. I believe RTY did not change, not sure "
+  },
+  {
+   "a": "zatrades",
+   "d": "2024-05-20",
+   "s": "2",
+   "t": "Thanks!"
+  },
+  {
+   "a": "BentonD_Struckcheon",
+   "d": "2024-05-20",
+   "s": "3",
+   "t": "I noticed on VIX options the margin requirement tripled after the move, and this when volatility on VIX has been way low and so is the VIX. I have changed my strategies accordingly."
+  },
+  {
+   "a": "zatrades",
+   "d": "2024-05-20",
+   "s": "2",
+   "t": "Yeah, timing of margin hike seems odd. Looking at skew and think we may get an opportunity in the next few weeks. You think?"
+  },
+  {
+   "a": "Ultimus_Omegus",
+   "d": "2024-05-20",
+   "s": "3",
+   "t": "You’re welcome, this is updated daily and shows all the margins and when they changed and up or down (red is changed) https://ww2.rjobrien.com/documents/shared/margins/margins.pdf"
+  },
+  {
+   "a": "Ultimus_Omegus",
+   "d": "2024-05-20",
+   "s": "2",
+   "t": "Rj o brien is a clearing house for a lot of brokers"
+  },
+  {
+   "a": "Not-a-Cat_69",
+   "d": "2024-05-20",
+   "s": "2",
+   "t": "use tradovate, you only need 500$ for /ES and 50$ for /mes"
+  }
+ ]
+}

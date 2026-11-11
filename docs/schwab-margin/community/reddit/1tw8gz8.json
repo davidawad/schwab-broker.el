@@ -1,0 +1,51 @@
+{
+ "title": "How much 'better' is PM vs Reg-t for shorting puts using margin as collateral?",
+ "created": "2026-06-04",
+ "body": "I've just recently learned about PM and want to learn how beneficial it would be for my use case.\n\nI'm essentially trying to use BOXX (an ultra low risk synthetic T-bill) as collateral for shorting puts. Brokerages don't allow me to use BOXX as collateral directly since it's technically not a 'cash equivalent', though it behaves similarly to one, so my strategy is to use margin cash secured by BOXX to use as collateral for shorting the puts instead. I don't pay interest on the margin cash until the contract gets assigned, meaning I can close the position before expiration or roll the option forward to avoid paying margin interest.\n\nI'm currently approved for Reg-t margin on Vanguard at 50% LTV (If I have $100,000 in securities, they give me $50,000 in margin cash). A risk I see with this strategy is Vanguard changing margin requirements while I have open contracts. Let's assume I'm getting 50% LTV for margin cash, and 90% of my available margin cash is tied up as collateral, if Vanguard reduces the LTV amount to 35% during a market downturn, that would not be a fun situation. Ironically, the moment where I want the most access to margin (during a market downturn) is the most likely moment they will reduce my margin access.\n\nIt's also annoying how the maximum margin cash they'll give me is at 50% of the value of my BOXX. Like if I buy a strike on XSP at $700, I'd need to put up $70,000 of margin cash as collateral, but the chance I 'need' all of that $70,000 as collateral is basically negligent, XSP would have to drop to $0.\n\nDoes PM solve these issues? I never want to trade over the value I have in equity in BOXX to 'over-leverage' myself. Like if I have $100,000 in BOXX, I would never borrow more than $100,000 in margin, even if I technically could.\n\nFor examples sake, let's assume I have $300,000 in BOXX in my account. 50% LTV on reg-t margin gives me $150,000 I can use as collateral. At a $700 strike on XSP, I can trade 2 contracts max ($140,000 collateral requirement). How would this look different on PM?\n\nLet me know you'd like me to clarify anything in the comments. Thanks for the help.",
+ "cs": [
+  {
+   "a": "greytoc",
+   "d": "2026-06-04",
+   "s": "5",
+   "t": "I think I had discussed this topic with you in r/investing. Yes - PM is hugely different than reg-t. Especially with cash management for traders that write puts. Not all brokers have the same house rules however. Schwab and Ibkr are some of the more popular and better brokers offering PM based accounts. For example instead of 50% available using box in reg-t, in a pm account, minimum requirement for a long box spread can be as low as $150 per box spread."
+  },
+  {
+   "a": "Critical-Reply-7580",
+   "d": "2026-06-04",
+   "s": "3",
+   "t": "Yes! You're part of the reason I made this post lol.. I wanted to dig deeper to understand if there's a strong use case given my goals. Mind helping me out with this? Let's assume I have $300,000 in BOXX in my account. 50% LTV on reg-t margin gives me $150,000 I can use as collateral. At a $700 strike on XSP, I can trade 2 contracts max ($140,000 collateral requirement). How would this look different on PM? (Feel free to pick whichever broker's rules you want)"
+  },
+  {
+   "a": "greytoc",
+   "d": "2026-06-04",
+   "s": "4",
+   "t": "So if you have 300k in BOXX - and the margin requirement is 50%. In a Schwab PM account - BOXX requirement is only 15%. That gives you $255,000 instead of only $150,000. Regarding your other question about holding VTI - margin requirement on broad ETFs at Schwab is about 15% - and VTI currently has a 15% requirement - same as BOXX. However, most traders are likely to hold different instruments as cash equivalents instead of BOXX for better margin efficiency. In my earlier example - box spreads usually can be filled in 100k spreads. So if you hold 3 SPX box spreads of $300,000 - the margin requirement at Schwab is about $450. That leaves you with $299,550 to trade. Similarly - better options "
+  },
+  {
+   "a": "TheOpeningBell",
+   "d": "2026-06-04",
+   "s": "2",
+   "t": "You'll run into concentration stress testing with PM if you only have a few underlying so it will be a little better. PM is best for large accounts running multiple sleeves on multiple asset classes with large long positions hedged to get margin relief and deploy even more capital. For instance, in my account, I have broad market us equities, dev intl, emerging, usd hedged intl govt bonds, us treasuries both mid and long, gold, commodities, and some single stock positions. Search up PM and concentration stress testing and margin relief."
+  },
+  {
+   "a": "Slight_Seaweed_9278",
+   "d": "2026-06-05",
+   "s": "1",
+   "t": "I hope you’ll forgive me for asking a seemingly stupid question. BOXX is an ETF, and it seems to me that you’re buying 300k worth, putting up 150k of your own money and borrowing 150k from your broker (assuming reg T margin to make simpler). You then have 150k in buying power that you can use to sell puts. Are you saying in your original post that you’re not paying interest on this 150k, or am I misunderstanding? If not, how?"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2026-06-04",
+   "s": "4",
+   "t": "Portfolio margin is amazing for shorting tail options that are at least 7.5% out of the money. That halves the margin vs reg-t for reasonable IV stocks. PM also doesn't lock up the original premium until you close it which is a huge difference. If you're shorting at the money options not a huge difference. You'll be 6.6x leverage on 15% margin vs 5x leverage on reg-t's 20% of premium minimum. At the money gives a huge discount to selling straddles on pm and strangles as the risk reduction is incredible. A stock can't go both up and down."
+  },
+  {
+   "a": "gabrintx",
+   "d": "2026-06-29",
+   "s": "1",
+   "t": "Earlier, I used to carry over 100% of Net Liq in shares of BOXX in my TastyTrade PM account, and usually 95% of my short put trades capital risk on margin. I am careful to maintain a positive cash balance usually around 3% to avoid margin fees. Short puts add cash but have no effect on margin."
+  }
+ ],
+ "url": "https://www.reddit.com/r/PMTraders/comments/1tw8gz8/how_much_better_is_pm_vs_regt_for_shorting_puts/",
+ "imgs": []
+}

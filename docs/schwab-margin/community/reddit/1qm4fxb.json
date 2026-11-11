@@ -1,0 +1,33 @@
+{
+ "url": "https://www.reddit.com/r/Schwab/comments/1qm4fxb/naked_puts_and_collateral/",
+ "title": "Naked Puts and Collateral",
+ "created": "2026-01-25",
+ "body": "I am still on level 2 but I’m trying to understand level 3 and see if I’m motivated enough to try and make my case to Schwab to move up to level 3 over the next year.\n\nI’ve been selling cash secured puts and vertical puts and have a pretty good grasp on how those work in relation to my buying power, ie a $5 cash secured puts requires $500, a $5/6 vertical requires $100.\n\nCan someone explain like I’m 5 how it works with a naked put on level 3? Is it a lower percentage of the amount risk, is it calculated involving the delta?",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "papakong88",
+   "d": "2026-01-25",
+   "s": "3",
+   "t": "I wrote the following about a month ago\" One can use margin with the Wheel to be more efficient in utilizing capital. It can also be used to lower the risk. Let’s say SPY is at 685 and we want to use the Wheel to sell a Jan 16 SPY 675 cash-secured put for 4.30. The collateral needed is 67,500. Delta is 0.30. If we use margin and sell a naked put instead, the collateral required is only 9,300. Assuming we put aside an equal amount for a possible increase in collateral, the capital required is 18,600 which is much less than that required for a CSP. (The margin can increase to 10 K if the put becomes ITM.) If we sell 2 naked 659 puts for 2.14 each, we can get 4.28. Now the collateral is different at 7,700 each. So the total is 30,800 if we put aside money. The delta of the put is 0.15. We have produced the same income as a CSP with less capital and a lower delta. You can have your cake and "
+  },
+  {
+   "a": "funonthebeach85",
+   "d": "2026-01-25",
+   "s": "1",
+   "t": "Right. I remember this. But how are you calculating 9300 from 67,500?"
+  },
+  {
+   "a": "papakong88",
+   "d": "2026-01-25",
+   "s": "1",
+   "t": "I got the MR from Think or swim on the order review page. You may not be able to get it since you do not have Level 3 approval, but you can calculate it from the MR formula. The minimum maintenance margin requirement is prescribed by the exchange. It is calculated by using two formulas and using the higher value. Schwab uses the following formulas for naked equity puts. MR=100% of option value + 20% of underlying value - OTM amount, or MR =100% of option value + 10% of option exercise price. And the following formulas for index puts: MR=100% of option value + 15% of underlying value - OTM amount, or MR =100% of option value + 10% of option exercise price."
+  },
+  {
+   "a": "LaconicB",
+   "d": "2026-01-25",
+   "s": "1",
+   "t": "The collateral on a $5 naked put is $50, it’s 10% of the $500 due to margin requirements that can be found on the Schwab page. Each type of put requires different amounts that are explained on the website. Google “Schwab margin requirements” and go to the page, scroll down to the three selections that have an open up menu, selecting “options” and the list for each type is there. I would put the link but out of security reasons, I don’t recommend clicking on any links someone puts on the internet. Also, when you have a margin account with level 3, you can click on the option to sell, hit confirm and send, then a window pops up before you send the order and shows how much is required for that option in collateral under “buying power effect”. The $675 SPY put mentioned in another comment goes by a different structure than the 10%, so it’s collateral without a Portfolio Margin account is $90"
+  }
+ ]
+}

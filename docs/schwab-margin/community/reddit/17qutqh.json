@@ -1,0 +1,93 @@
+{
+ "url": "https://www.reddit.com/r/thetagang/comments/17qutqh/buying_power_change_from_td_to_schwab/",
+ "title": "Buying power change from TD to Schwab",
+ "created": "2023-11-08",
+ "body": "Hey all, I encountered what seems to be a change in buying (really selling) power from TD to Schwab, but the Schwab guy I talked to today (he too was with TD until the merger) insists it is not a change. I had level 4 permissions at TD, and I was approved for margin, beyond that I'm not sure if there was more to it.\n\nI was always able to get the buying power from an ACH transfer into my brokerage account fronted by TD so I could sell calls before the funds settled. I assumed that was because of my margin approval but not sure. Schwab guy tells me no way I can get the buying power fronted, have to use settled funds to buy or sell any non-marginable securities.\n\nAm I misunderstanding what was happening at TD, or is there some margin I'm not approved for at Schwab?",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "BudahBoB",
+   "d": "2023-11-08",
+   "s": "8",
+   "t": "I’ve been with Schwab the whole time and currently I’m experiencing issues with my most recent deposit. It’s been infuriating waiting for funds to settle as the trade passes you by."
+  },
+  {
+   "a": "controllerbeagle",
+   "d": "2023-11-09",
+   "s": "1",
+   "t": "For sure. I’ve experienced, though, that sometimes a missed trade opportunity can be a blessing in disguise!"
+  },
+  {
+   "a": "w562d67Z",
+   "d": "2023-11-09",
+   "s": "12",
+   "t": "I could provide some context here. I was a trader at a RIA and had our client accounts custodied at both Schwab/TDA. When we raised cash at TDA, we noticed that our clients can withdraw the cash that day while Schwab always required the cash to settle first from the sells, which was in 2 days. What you are experiencing sounds the same, just with contributions. What's funny is that Schwab denies TDA ever working that way, but I saw it with my own eyes. With Fidelity, they can make exceptions, but by default it's also T+2 days. If I had to speculate, it's because Schwab acts as a bank and the longer they can lock up your cash, the more they can make money lending it out overnight."
+  },
+  {
+   "a": "kylestoned",
+   "d": "2023-11-09",
+   "s": "4",
+   "t": "TDA was the outlier. If I initiated a transfer with TDA in the morning, before market opened, next business day I was able to use it for options. All other brokerages I have used, there is at least a 1 full business day wait before available for options."
+  },
+  {
+   "a": "controllerbeagle",
+   "d": "2023-11-09",
+   "s": "10",
+   "t": "Add me to the “Miss TDA/Schwab sucks” crowd"
+  },
+  {
+   "a": "Humble_Increase7503",
+   "d": "2023-11-09",
+   "s": "5",
+   "t": "I absolutely hate Schwab The charts are terrible. It’s embarrassing that they buy TD, who had a fantastic mobile app, and they just throw that out to give me this amateur hour bs I need to find a new brokerage"
+  },
+  {
+   "a": "controllerbeagle",
+   "d": "2023-11-09",
+   "s": "2",
+   "t": "Amen. I did find that a lot of the things I’m frustrated are missing from the app, ARE available on the website from a computer."
+  },
+  {
+   "a": "Humble_Increase7503",
+   "d": "2023-11-09",
+   "s": "2",
+   "t": "It’s some old man BS. It pisses me off. It’s this assumption that nobody would buy stocks or options on their phone, they’d sit down at a laptop with a fuckin prune juice and make their trades from there. WHY!? Why would I do that when TD had ostensibly the same charting on phone or on their desktop Unless you use TOS, which was dope… I’m honestly annoyed AF. I’m usually very lazy, but I’m actually going to move all my accounts out of Schwab. Just need to find another broker that has a decent phone app. It’s crazy bc Hood is garbage, but even that has better charts than Schwab"
+  },
+  {
+   "a": "Briggity_Brak",
+   "d": "2023-11-10",
+   "s": "1",
+   "t": "I don't have the same options level as you, but on both TDA and Schwab, i was unable to sell a cash secured put right after depositing money, which made no sense because i'm free to BUY stocks with that money, but promising to buy stocks at a later date with that same money is not allowed?"
+  },
+  {
+   "a": "controllerbeagle",
+   "d": "2023-11-11",
+   "s": "1",
+   "t": "It is a strange policy. There are other similar unintended consequences I figure, too. Like if I’ve sold a naked call (unlimited risk and substantial margin requirement), I can’t use unsettled funds to buy a higher call and make it a spread (defined risk, much lower maintenance). 🤷🏼‍♂️"
+  },
+  {
+   "a": "Calm_Assistant8372",
+   "d": "2023-11-08",
+   "s": "3",
+   "t": "Likely a bug of some sort in the TD backend. It should work the way they described. Even somewhat recently I've seen some issues with TD where a deposit will be counted in option buying power the day after the ACH starts (but not the day of), and then it will not be counted until the funds settle in the account."
+  },
+  {
+   "a": "gls2220",
+   "d": "2023-11-08",
+   "s": "3",
+   "t": "I'm not sure if this is what you mean, but when you do an ACH transfer into your Schwab account you can use that money right away (or maybe within a day, but fairly quickly) to purchase stocks, but they won't apply those funds to options buying power until they are fully settled in your account, which is 5 days I believe. This happened to me recently when I did a large transfer."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2023-11-09",
+   "s": "2",
+   "t": "I’ve never been able to use unsettled funds to trade options at TDA, and I got all the approvals on my account too… that doesn’t seem right to me."
+  },
+  {
+   "a": "GangstaVillian420",
+   "d": "2023-11-09",
+   "s": "2",
+   "t": "Some brokers do give \"instant\" buying power for ach deposits, usually limited to $1000 (Tasty, RH and Webull do), but that's just a marketing point to bring in new traders. The legacy brokers are more profitable off their existing clients, and less reluctant to add those incentives when not needed for their business model. No brokers are required to do this, and depending on their business model, it can be an incentive to attract more traders. If it's that important to you, switch to a broker more tailored to active traders. Not a dig at you or your choice, just saying check the different options available and find the one that suits your actual needs best."
+  }
+ ]
+}

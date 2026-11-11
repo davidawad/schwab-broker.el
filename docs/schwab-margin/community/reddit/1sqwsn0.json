@@ -1,0 +1,159 @@
+{
+ "url": "https://www.reddit.com/r/thetagang/comments/1sqwsn0/buy_sgov_and_use_margin_to_sell_csp_which/",
+ "title": "Buy SGOV and use margin to sell CSP, which brokerage gives the maximum margins?",
+ "created": "2026-04-20",
+ "body": "I use Robinhood. Robinhood has margin maintenance ratio 25% for SGOV but I can only use approx 50% of values of my SGOV portfolio as collateral. I expect that to be at least 1-25%=75% but maybe I’m wrong.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "Binders-Full",
+   "d": "2026-04-20",
+   "s": "41",
+   "t": "You need a broker which will do portfolio margin. Schwab and Interactive Brokers will"
+  },
+  {
+   "a": "the_humeister",
+   "d": "2026-04-20",
+   "s": "18",
+   "t": "Look at Mr. Moneybags here with portfolio margin"
+  },
+  {
+   "a": "YoshimuraPipe",
+   "d": "2026-04-20",
+   "s": "4",
+   "t": "So will Fidelity"
+  },
+  {
+   "a": "sport912x",
+   "d": "2026-04-20",
+   "s": "11",
+   "t": "Get real , Fidelity cannot even figure out correct BP on your trades. As an example if you Sell one option and Later buy a further out option in the same DTE , the software cannot cannot figure out that it is a defined risked trade. What a bunch of losers."
+  },
+  {
+   "a": "sport912x",
+   "d": "2026-04-20",
+   "s": "3",
+   "t": "PM requires in the 150k range, and if you are not trading a lot why bother. Also they want quite a bit of information to approve you for it, so do not do it unless you already report EVERYTHING on your taxes."
+  },
+  {
+   "a": "HopandBrew",
+   "d": "2026-04-21",
+   "s": "3",
+   "t": "Put cash into SWVXX and sell the CSP. No margin is used until you get assigned."
+  },
+  {
+   "a": "CapriKitzinger",
+   "d": "2026-04-20",
+   "s": "38",
+   "t": "You know that Robinhood is paying interest on options collateral right? You don’t have to buy SGOV……"
+  },
+  {
+   "a": "WolverineHelpful9775",
+   "d": "2026-04-20",
+   "s": "12",
+   "t": "They never use too. When did that become a thing bc I’ve never received interest? Maybe you’re referring to being a Gold member…"
+  },
+  {
+   "a": "InevitableMetal8914",
+   "d": "2026-04-20",
+   "s": "14",
+   "t": "It's pretty new, less than a month maybe?"
+  },
+  {
+   "a": "Dazzling_Marzipan474",
+   "d": "2026-04-20",
+   "s": "7",
+   "t": "They just started like 2 weeks ago or so. Gold will easily pay for itself many times over though."
+  },
+  {
+   "a": "AlaskanSnowDragon",
+   "d": "2026-04-20",
+   "s": "3",
+   "t": "Question is is it more or less than SGOV? I imagine less"
+  },
+  {
+   "a": "sport912x",
+   "d": "2026-04-20",
+   "s": "14",
+   "t": "The max you can get in Buying Power (Sgov types) is 75%, which Tasty and IB offer. Schwab offers 70%, so if you have 100k of Sgov that is either 70k BP or 75lk BP. Your terms are off a little, since this is for Margin Accounts, and it is not a Csp. The difference is that for a Csp (in either a Cash Account, or Margin Acct if you are NOT APPROVED FOR SELLING OPTIONS) , is this. A 200 strike Put as a Csp needs 20k in cash, while as BP in an approved Margin account is under 4k BP. BP is NOT MARGIN, Margin is used to buy stocks, BP is Option Buying Power for selling options. To buy options with no cash , you use Margin based on your BP but you are charge interest. Using BP to SELL options never has interest. On treasuries most real brokers give you over 98% BP. Let the founders of Tos and Tasty explain it in these vids. They are very big proponents of Selling Options. Many people on Reddit w"
+  },
+  {
+   "a": "Costheparacetemol",
+   "d": "2026-04-20",
+   "s": "9",
+   "t": "FWIW, Tastytrade allows you to buy T-bills and use 99% of that value towards margin. I know that’s not the exact same but in essence…"
+  },
+  {
+   "a": "redflavore",
+   "d": "2026-04-20",
+   "s": "5",
+   "t": "This is true it’s like 98% or 99%, I buy bonds and sell options."
+  },
+  {
+   "a": "YoshimuraPipe",
+   "d": "2026-04-20",
+   "s": "3",
+   "t": "Fidelity lets you use 97% on US treasury"
+  },
+  {
+   "a": "Dr_VanTasstik",
+   "d": "2026-04-20",
+   "s": "5",
+   "t": "Robinhood now allows your CSP cash collateral to earn interest in the cash sweep (as of March 2026), so you really don’t need to keep your cash in SGOV anymore. The only benefit is possibly some savings on your state taxes, but the SGOV margin maintenance tying up 25% of collateral available and reduced capital to trade completely negates those savings I would think."
+  },
+  {
+   "a": "AKmoose15",
+   "d": "2026-04-20",
+   "s": "3",
+   "t": "Looking into it further it looks like 25% maintenance ratio is as low as it goes for any broker. It’s actually a FINRA regulation relating to all ETFs. So unless you buy actual t-bills the 25% is the best you can do."
+  },
+  {
+   "a": "Defiant-Salt3925",
+   "d": "2026-04-20",
+   "s": "3",
+   "t": "IBKR allows you to do this."
+  },
+  {
+   "a": "BilboBagonuts",
+   "d": "2026-04-20",
+   "s": "2",
+   "t": "Initial margin and margin requirement are not the same thing. Initial margin is a compliance requirement and set to 50%. That is the max margin you can take on to open a position. Margin requirement is what a broker will let a position fall to before initiating a margin call. Google Regulation T if you want to get more information."
+  },
+  {
+   "a": "partypantsdiscorock",
+   "d": "2026-04-20",
+   "s": "2",
+   "t": "You should be able to see your maintenance requirement within your buying power. That's the value you need to stay above. If Robinhood is restricting your margin buying power, it's likely due to a newer margin account or account history. Moving to a different broker isn't necessarily going to help that, since you would be a new account with them. Additionally, Robinhood has some of the best margin rates and lowest options fees, so you'll likely be paying more (although there are other benefits to other brokers)."
+  },
+  {
+   "a": "I_HopeThat_WasFart",
+   "d": "2026-04-20",
+   "s": "2",
+   "t": "most will be at 25% maintenance margin you can apply for portfolio margin pretty easily with schwab though which is what I did"
+  },
+  {
+   "a": "epicjii",
+   "d": "2026-04-20",
+   "s": "2",
+   "t": "You can use one of schwabs money market funds as collateral for cseps and get 100% of the balance for those."
+  },
+  {
+   "a": "papakong88",
+   "d": "2026-04-20",
+   "s": "2",
+   "t": "Assuming you are approved to sell CSP only - not naked put. Fidelity and Schwab will allow cash equivalents as collateral for CSP. SGOV is not a cash equivalent. Money market funds and Treasury bills are cash equivalents."
+  },
+  {
+   "a": "brainrotbro",
+   "d": "2026-04-21",
+   "s": "1",
+   "t": "Why do this though? Just curious"
+  },
+  {
+   "a": "OptionsProOfficial",
+   "d": "2026-04-21",
+   "s": "1",
+   "t": "This is where broker choice and margin rules matter more than the trick itself. Some shops with portfolio margin and friendlier treatment of short-duration Treasuries or SGOV-type ETFs will give closer to 70–75% buying power against that collateral, while others cap it lower or charge margin interest that eats most of the yield anyway. The real edge tends to come from matching low margin rates and high collateral value, not just finding “max leverage,” because once the interest you pay gets near or above SGOV’s yield the whole CSP-on-SGOV stack stops making sense economically."
+  }
+ ]
+}

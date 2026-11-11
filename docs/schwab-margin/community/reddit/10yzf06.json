@@ -1,0 +1,105 @@
+{
+ "url": "https://www.reddit.com/r/options/comments/10yzf06/margin_requirements_on_naked_put_sells/",
+ "title": "Margin Requirements on Naked Put Sells",
+ "created": "2023-02-10",
+ "body": "So far, I've been unable to find the answer to the following question. I am interested in occasionally selling an SPX put or call. I've not been able to figure how much much available margin is required to do that on Fidelity? I do have Level 3 approved on my trading account. Also, I am well aware of the rip-your-head off dangers of that strategy.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "RTiger",
+   "d": "2023-02-10",
+   "s": "4",
+   "t": "Ask your broker. Margin requirements vary. There is a minimum but many brokers require more than that. On SPY one month out, 10 percent otm, collateral might be 20 percent of the strike for a put."
+  },
+  {
+   "a": "TCB47",
+   "d": "2023-02-10",
+   "s": "1",
+   "t": "In random reading some time back, I seem to recall that to short sell an SPX put required about 125K. I can tell based on a test today that it's more than 90K."
+  },
+  {
+   "a": "PapaCharlie9",
+   "d": "2023-02-10",
+   "s": "2",
+   "t": "As noted, there are minimums required by regs, but brokers are free to charge more. Reference: https://www.cboe.com/us/options/strategy_based_margin/ You want the rows marked \"broad based index\" for SPX."
+  },
+  {
+   "a": "OptionCo",
+   "d": "2023-02-11",
+   "s": "1",
+   "t": "I short these all the time, and ballpark its around $50k BP to sell SPX Put. You can add a short Call at no cost to make a strangle."
+  },
+  {
+   "a": "PapaCharlie9",
+   "d": "2023-02-10",
+   "s": "1",
+   "t": "And to demonstrate your point, Etrade wants me to pay 35% for the same position."
+  },
+  {
+   "a": "fidelityinvestments",
+   "d": "2023-02-10",
+   "s": "22",
+   "t": "Hey there, u/TCB47. This is u/FidelityJenny from r/fidelityinvestments. I saw your question over here and though I'd pop in and provide some information. For determining margin requirements associated with securities you currently own or are considering buying, you can use our margin calculator. That tool can be accessed by following these simple steps on our website: Choose \"Accounts & Trade\" then select \"Portfolio\" Select the \"Balances\" tab and click the applicable account on the left Scroll down to click the \"Margin Calculator\" link As to margin requirements for naked options trading, Fidelity follows these calculations: Equity calls - The higher of these requirements: 25% of the underlying stock value, minus the out-of-the-money amount, plus the premium 15% of the underlying stock value, plus the premium Equity puts - The higher of these requirements: 25% of the underlying stock valu"
+  },
+  {
+   "a": "PapaCharlie9",
+   "d": "2023-02-10",
+   "s": "8",
+   "t": "Thanks for dropping in and sharing some details on our sub, FidelityJenny!"
+  },
+  {
+   "a": "dlwowns",
+   "d": "2023-02-11",
+   "s": "1",
+   "t": "Happy birthday"
+  },
+  {
+   "a": "siryolk",
+   "d": "2023-02-11",
+   "s": "1",
+   "t": "Happy cake day!"
+  },
+  {
+   "a": "KnowledgeGod",
+   "d": "2023-02-11",
+   "s": "1",
+   "t": "No chance you’d ever get approved for Naked puts without having 1M+ in your account lol.. the dipshits at fidelity(I use fid also) don’t approve people for upper level options without going through a massive headache.."
+  },
+  {
+   "a": "Conscious-Fruit-1199",
+   "d": "2023-10-29",
+   "s": "1",
+   "t": "I have just over 30K in my account and Tradestation gave me level 4 approval without my even asking for it."
+  },
+  {
+   "a": "OptionCo",
+   "d": "2023-02-11",
+   "s": "1",
+   "t": "Ballpark its around $50k BP to sell SPX Put. You can add a short Call at no cost to make a strangle."
+  },
+  {
+   "a": "OptionCo",
+   "d": "2023-02-11",
+   "s": "1",
+   "t": "Ballpark its around $50k BP to sell SPX Put. You can add a short Call at no cost to make a strangle."
+  },
+  {
+   "a": "OptionCo",
+   "d": "2023-02-11",
+   "s": "1",
+   "t": "Ballpark its around $50k BP to sell SPX Put. You can add a short Call at no cost to make a strangle."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2023-02-10",
+   "s": null,
+   "t": "I do credit spreads but wanted the naked shorting of options in my tool box. I tend to do same day spreads on SPX. We had a fairly volatile up day last week where puts were highly priced. I found an OTM put about 25 strikes away priced at 7.40. I watch the market going up & with time decay, that price eroded to about 1.50 In 2 hrs ultimately expiring worthless. I wanted to take advantage of opportunities like that when they present."
+  },
+  {
+   "a": "TCB47",
+   "d": "2023-02-12",
+   "s": "2",
+   "t": "I do credit spreads but wanted the naked shorting of options in my tool box. I tend to do same day spreads on SPX. We had a fairly volatile up day last week where puts were highly priced. I found an OTM put about 25 strikes away priced at 7.40. I watch the market going up & with time decay, that price eroded to about 1.50 In 2 hrs ultimately expiring worthless. I wanted to take advantage of opportunities like that when they present."
+  }
+ ]
+}

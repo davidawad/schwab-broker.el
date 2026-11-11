@@ -1,0 +1,81 @@
+{
+ "url": "https://www.reddit.com/r/thinkorswim/comments/nyaol2/options_buying_power_less_than_stock_buying_power/",
+ "title": "Options Buying Power Less than Stock Buying Power",
+ "created": "2021-06-12",
+ "body": "Yesterday I sold 3 iron condors and received the credit which, after including all the cash I already had in my account, should equal up to $1700. The ICs were index options that I let expire overnight, and after looking at my account today, my stock buying power is at $1700, but my options buying power is only at $700. Any reason why this would be?",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "tonyo8187",
+   "d": "2021-06-12",
+   "s": "4",
+   "t": "I think it takes a day or so for the platform to process the expiration closing your position."
+  },
+  {
+   "a": "SmokyTyrz",
+   "d": "2021-06-12",
+   "s": "1",
+   "t": "This."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2021-06-12",
+   "s": "1",
+   "t": "If your using a cash account, then i belive the cash has to settle from the last sale before you can use it for options."
+  },
+  {
+   "a": "gman10132",
+   "d": "2021-06-12",
+   "s": "1",
+   "t": "I get that but I'm still confused. For more context, I had $1100 in my account before the trade, and with the condors the MP was 600 and the ML was like 860 or so. So when I put the trade through I only had like $200-some dollars remaining in my account. Since the best-case scenario happened, only $500 of my own cash (not including the other $360) has settled back in for options buying power. So there's still an outstanding $1000 not there. I know this is still very fresh plus it's now the weekend, so should by Monday the remaining $1000 be settled?"
+  },
+  {
+   "a": "[deleted]",
+   "d": "2021-06-12",
+   "s": "1",
+   "t": "If you bought them and they expired then you lost money, that could explain it."
+  },
+  {
+   "a": "gman10132",
+   "d": "2021-06-12",
+   "s": "1",
+   "t": "I’m sorry, sold them. That’s my fault"
+  },
+  {
+   "a": "Trueslyforaniceguy",
+   "d": "2021-06-12",
+   "s": "1",
+   "t": "Marginiability"
+  },
+  {
+   "a": "gman10132",
+   "d": "2021-06-12",
+   "s": "2",
+   "t": "care to ellaborate?"
+  },
+  {
+   "a": "Trueslyforaniceguy",
+   "d": "2021-06-12",
+   "s": "2",
+   "t": "Sure. The shares you could buy would be marginiable to a greater degree than the options(if the options would be at all). Say $1000 cash with nothing else. Buying $1000 of stock means you can borrow, say $400 on those. So they’ll let you buy $1400 of stock(stock that their risk dept evaluates to be marginiable to that level). Buying $1000 of options means you can’t buy anything else. Stock buying power of $1400, option buy power of $1000. If you are buying some shares more volatile or risky, it could be less"
+  },
+  {
+   "a": "[deleted]",
+   "d": "2021-06-13",
+   "s": "1",
+   "t": "T +2 for funds to settle. It weirded me out the first few times I saw it too, but no biggie."
+  },
+  {
+   "a": "gman10132",
+   "d": "2021-06-13",
+   "s": "1",
+   "t": "Alright good to know!"
+  },
+  {
+   "a": "Realistic_Plantain_6",
+   "d": "2021-06-12",
+   "s": "3",
+   "t": "Unsettled funds"
+  }
+ ]
+}

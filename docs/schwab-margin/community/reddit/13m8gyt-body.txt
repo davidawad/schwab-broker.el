@@ -1,0 +1,408 @@
+URL https://www.reddit.com/r/PMTraders/comments/13m8gyt/portfolio_margin_guide/
+What is portfolio margin? It is a risked based method of giving you margin based on the expected worst case one day move.
+
+Max out your BP unwisely all long SPY at 15% margin (6.66x leverage) then if you lose exactly one dollar on the position = $1 dollar margin call. Spy gaps down 15% overnight = lose entire account. Spy gaps down 20% overnight = owe your broker.
+
+You need $110k - $125k - $175k - $250k of equity to enable it with various brokerages.
+
+Reg-T vs Portfolio Margin
+
+Reg-T margin is strategy based. It's based on over time that roughly a 100% spy position happens to lose 50% of it's value before recovering, long individual stocks likewise don't drop more than 50% before a broker can reasonably react in a few days, and short options probably introduce 20% losses of the underlying's stock price.
+
+Reg-T breaks margin into initial and maintenance margin. Most brokerages offer 2x initial margin for stocks, and 25%-30% maintenance margin.
+
+If you have a 100k account you can buy 200k of SPY and your stock buying power is $0 and options buying power is $0. You have a negative 100k cash balance - your margin loan.
+
+Then you currently have $100k equity as a millisecond later you can probably close your trade for the same exact price and pay off your margin loan.
+
+Now let's say spy dips down to where you have $25k equity. This would be a 125k spy position on 100k margin loan. Spy would have to drop 37.5%. At this point you are at 5x leverage and you're putting your brokers money at risk. With a 25% maintenance margin broker you will now send you a margin call. Most brokers use 30% maintenance margin.
+
+Portfolio Margin is Different:
+
+Portfolio Margin is risk based. It is based on the realistic risk how various stocks and indexes move in one day. Portfolio margin stress tests your individual positions based on a "risk array" testing down moves at -3%, -6%, -9%, -12%, and -15% for most stocks and indexes. It also tests up moves in the same percentages. Whatever is the maximum loss becomes the margin required.
+
+Portfolio Margin your initial margin = maintenance margin. You get immediate margin relief. Unlike Reg-T margin where you only get extra leverage if it goes against you, PM gives it to you right away.
+
+Then at TD Ameritrade, it is displayed differently. Everyone is used to options BP = cash and stock BP = 2x cash, and if you spend all of your money on long spy unlevered you only have .5x option BP.
+
+For a $100k Reg-T account buying $100k of spy you will have $50k option BP remaining and $100k stock BP remaining.
+
+On a $100k PM account you'll see $100k option BP and $100k stock BP. I've seen some people get really upset and turn off PM thinking they didn't get any leverage. However if you try to buy $100k of spy that will cost $15k option and stock BP (from here on it's going to be just BP.) Leaving you with $85k BP left to deploy capital more efficiently or do other trades with leverage!
+
+On PM having $0 BP = instant margin call if you close or open the next day $0 or negative for roughly the amount of BP needed to bring it back up.
+
+I like to keep a healthy buffer.
+
+Options Trading Reg-T vs Portfolio Margin
+
+So you might be thinking - well what's great about PM if Reg-T gives me 100-50k options BP and PM gives me 100k-85k?
+
+The answer is BP calculations are different. Read over The Margin Investor's Reg-T Calculation Guide and how various Option Strategies Perform under PM.
+
+Most of us have found that selling naked calls and naked puts tend to bring in the most money profitably. The Reg-T calculations work by:
+
+Uncovered Call (i.e. Naked Call)
+A short in-the-money (or at-the-money) call: 100% of the option market value plus 15% of the underlying price for Broad Based Indexes or 20% for Equities and Narrow Based Indexes.
+A short out-of-the-money call must have an amount posted into the account equal to the maximum of: 1) 100% of the option market value plus 10% of the underlying price or 2) 100% of the option market value plus 20% (or 15% for Broad Based Indexes) of the underlying price minus 100% the out-of-the-money amount.
+
+Uncovered Puts (i.e. Naked Puts)
+A short in-the-money (or at-the-money) put must have 100% of the option market value plus 15% of the underlying price for Broad Based Indexes or 20% for Equities and Narrow Based Indexes.
+A short out-of-the-money put must have an amount posted into the account equal to the maximum of: 1) 100% of the option market value plus 10% of the underlying price or 2) 100% of the received premium plus 20% (or 15% for Broad Based Indexes) of the underlying price minus 100% the out-of-the-money amount.
+
+Portfolio margin is different. It takes the risk array I wrote above and likewise stresses your positions. That means - any short options that are statically 15% out of the money or more have very little buying power requirements. The buying power for OTM options becomes what theoretical option pricing formulas say the option should be priced if the stock dropped 15%. Portfolio applies a $0.375 per share ($37.50) minimum margin requirement for any short options regardless of how far out of the money they are too.
+
+(many brokers use 30% maintenance and 20% of underlying)
+
+On Reg-T no matter how far out of the money you sell options you are still getting that 10-20% of the underlying price reserved minus OTM amount. Ouch. You may as well have sold the ATM straddle!
+
+Reg-T doesn't allow your premium from your short calls to offset your short puts. Portfolio margin does! Portfolio margin gives you 15% instead of 20% bp on a short straddle, and lets you add the premium from the put or call sold, then figures out your maximum risk for your whole position. So in effect if the expected move on a straddle is 5% each way, the stock can't both go up or down, and so your margin on PM works out to be about 10% of the underlying stock for the ATM straddle!
+
+Portfolio Margin is steroids for option selling strategies
+
+The popular lottos strategy sold $5 puts and calls so far out of the money (50%) that they had the minimum $37.50 margin even if the stock shot up 15% and put you 35% out of the money. A simple math calculation would show your return on buying power is $5 / $37.50 = 13.3%. Imagine selling this once a week, every week. Insane profit right? It was!
+
+The same trade on Reg-T would be $5 + 20% of the underlying stock... on a $100 stock that'd be $2,000 margin please. $4k on a $200 stock, and so on. Crazy right - you can't scale this strategy and sell it on a massive number of stocks. With Portfolio Margin - you can. On my $225k account I currently have short option positions on 259 active positions.
+
+Now, lots of people claim selling these options were picking up pennies in front of a steam roller. Let's be realistic here, how many stocks suddenly just shoot up 50%? Very few - maybe a few outstanding earnings reports (easy to dodge), and buyouts - which are unpredictable. Is it realistic that all 259 of my positions will jump 50% all at once? No.
+
+Ok, let's do the math on what if I just had $5 on 259 positions, well that is $1,295 a week. Lets say we stick to $100 stocks or under. How much loss would it be if one of those stocks had a buyout? Well, worst case if it is a $100 stock, we sold the $150 call, and lets say they got a juicy $200 per share offer (really really rare - most buyouts are 20% to 30% above market.) Well, that is a $5,000 loss. So, with this strategy in order to have enough income to overcome that, its $5,000 / $1,295 = 3.8 weeks before we are up $5 grand.
+
+Portfolio Margin encourages spreading the risk wide and far.
+
+No Early Assignment Fears
+
+As you can see above Reg-T requires 20% + market price of the option, while PM measures your combined risk on a +- 15% move (most stocks, excluding house margin), regardless if it was options or long stock. Remember - reg T requires 50% initial margin on any assignment - leading to you know what - high BP utilization or possibly margin calls on assignment!
+
+On Portfolio Margin your BP does not significantly change because of an assignment! (Assuming the stock price is the same when you're assigned.)
+
+We have a potential trade going long 100 shares of TSLA. Notice it is $5,016 BP. Now assume we short the long at the money 0.50 delta TSLA put, notice its $4,640 BP, giving you lower bp because you took in some premium ($400.)
+
+Adding $400 back gives you 5040.03 BP requirements, basically the same risk! The raw short put is slightly higher risk as vol expansion can make the buyback premiums higher than the same movement risk loss on the underlying stock.
+
+There are no early assignment fears trading on portfolio margin for most trades! If you started out shorting a straddle you want that early assignment as it meant the buyer blew up their remaining theta!
+
+Now remember to still trade responsibly. You don't want to oversize any short option trade where if it touches the money it severely puts your account at risk. I personally don't risk more than 1% to 2% of my account for if a position goes at the money. That's a $1k-$2k loss per $100k NLV.
+
+You also don't want to get too used to Portfolio Margin that you start getting really sloppy on your trade management practices that you let positions ride the second they touch the money because you have a lot more margin and breathing room than Reg-T. I come up with % out of the money targets I close all my trades at. Imagine having a $4k loss with SIVB being $267/share, then next thing you get whacked with a $267 per share loss or $26.7k per contract loss.
+
+Always keep notional risk and concentration risk in mind on trading on portfolio margin!
+
+Concentration Rules
+
+PNR vs EPR
+
+What stops one from opening a $125k PM account and buying $825k of TSLA, and owing the broker money if TSLA opened 30% down? Concentration rules!
+
+Each brokerage has concentration rules that make such tactics hard or impossible.
+
+I'm only familiar with TD Ameritrade's concentration rules so I'll briefly cover them here:
+
+In addition to the -15% /+15% risk array stress test, TD Ameritrade tests your portfolio by testing its Point of No Return (PNR) compared to the Expected Price Range (EPR). For TSLA, the EPR is 50%, which means TDA can conceivably see TSLA gapping open 50% down overnight.
+
+So why is TDA allowing me to go 6.6x on TSLA but they think they'd really open 50% down? Only if I bet really small will they allow me the full buying power reduction.
+
+If they see I'd lose my entire account if TSLA dropped 50%, they move the risk array to test -50% / +50% instead. This greatly inflates the buying power and now your account is locked as your buying power is well past your net liquidation value!
+
+If the PNR is outside of EPR, then the risk array will generally default to the TIMS (Theoretical Intermarket Margining system) minimum margin percentage. This applies to both up and down movement; for example, if upside PNR is 60% and EPR is 50%, then margin will generally default to TIMS. Similarly, if downside PNR is -50% and downside EPR is -30%, then margin will generally default to TIMS.
+
+Under the TIMS methodology, equity positions are generally stressed at plus or minus 15%.
+
+If PNRs are outside of the EPR, then the house risk array is used, generally with TIMS percentages. Now, if the converse occurs, that is, when the PNR is inside the EPR range, then a risk concentration exists, and action is taken in real time to increase the portfolio margin requirement. When concentration exists, the margin requirement will be set to the EPR. For example, if upside PNR is 30% and upside EPR is 40%, then the margin requirement will use 40% EPR to calculate the risk array even if the TIMS minimum may be 15%, for example.
+
+https://tickertape.tdameritrade.com/trading/how-does-portfolio-margin-work--15553
+
+Short Unit Test
+
+Ok ok, I know, what if I sell a bunch of options with insane leverage on many tickers and use up all my BP? Well TDA has another concentration rule called the Short Unit Test. You can only have your NLV / 200 in net short counts of call options and put options. It kind of makes the minimum BP be $200. A $100k account can only be short 500 naked call options and 500 naked put options. So the maximum growth you'd get on $5 per contract lottos would be $5k/week on a $100k account. Hey - 5% a week is incredible.
+
+SPX Beta Test
+All portfolio margin brokers require you to not lose X% of your account if SPX moves.
+
+Spread the love on PM!
+
+Amazing Portfolio Margin Trades you just can't do well in Reg-T
+
+Portfolio Margin is amazing not just for adding risk - but also for hedging. Here are some of my favorite trades that I like to do in Portfolio Margin that is prohibitively expensive margin wise in reg-t:
+
+Married put trades - for instance instead of buying a long call option, you can buy a long stock position + long put position and get significant margin relief. You still get the same risk payoff but it is significantly more tax efficient if it goes your way. Imagine buying TSLA in February 2016 for $10.84 a share. If you were on Reg-T and bought leaps you'd have to either sell them or exercise them, resetting your cost basis holding period, or incurring capital gains taxes. Doing a married put + long stock combo trade for a +1 year put doesn't freeze your holding period for long term capital gains, and for your winners when the put expires - well you already have the stock so you don't have to exercise it. You can hang onto TSLA indefinitely, or sell it later for capital gains, or so on.
+
+Backratio trades. They are a popular hedging strategy because at times they are a "free" hedge. For instance you can sell a 0.25 delta put to fund buying two 10 delta puts for a net credit. Reg-T margins this strategy terribly - you have the full credit spread margin + separate margin of buying the long put raw. Backratio trades are very interesting on PM - the margin is the one day move of the position. If you put on a 30 dte backspread ratio and the next day your long put is $0.01 away from being ITM, are you at max loss? NO - you're wildly profitable. Most the time these trades are zero buying power!
+
+Short Calendar Trades. The typical calendar trade is a long calendar trade - you short the nearer month option to buy a longer dated option for a net debit. The long calendar trade is +theta, +vega, -gamma. Selling the calendar is -theta, -vega, +gamma. Reg-T margins the inverse short calendar trades terribly - it thinks you're going to be dumb as rocks and not close the trade when your long expires, leaving the naked option alone, so you get the naked short margin. Portfolio Margin calculates your theoretical loss, which these guys can be tiny as heck. For instance for earnings trades I did a few short ATM calendar trades on NFLX, TSLA, and the like. Guess what the margin was on an ATM TSLA short calendar ER play? $75 per contract for a short calendar. I made about $200 per contract off that trade being -vega, +gamma. Talk about a really nice earnings play strategy - benefit from IV crush, or benefit from huge moves being +gamma? Very little theta burn because I opened before close and closed first thing in the morning? Sign me up to do more of these! (Most retail traders will be placing long calendar trades on these stocks looking at the expiration graph - not at the actual greeks!)
+
+Long and Short Box Spreads with European style options. Reg-T's margin of 25% of the underlying + market price makes long/short box spreads prohibitive. Not so on Portfolio Margin - since the box is fully hedged, it's one day move is going to be the interest rate loss for a short box, and the interest rate gain for a long box. That means... drumroll... your BP for a long box is a big fat zero, and your BP cost for a short box is the interest you "pay" that day. You get better rates than t-bills lending money, and you get better borrow rates than even IBKR's margin. Go to the website https://www.boxtrades.com/ to see current interest rates and see how to place a long (lender) or short (borrower) box trade. Thanks to box spread trades passive investors can do so much better on PM. You get PAL like levels of leverage borrowing with short boxes + PM margin relief, or if you're into levered portfolios such as Hedgefundie's Excellent Adventure you get better results managing it yourself than going with UPRO/TMF. I averaged 2.5% per year gains doing SPY+TLT over UPRO/TMF thanks to saving the 0.75% management fee and coming up with a leverage reset strategy that reduced volatility drag, ignoring the fact I was able to sell options ontop of that thanks to PM's generous margin leverage.
+
+Delta Hedging/Gamma Scalping - Portfolio Margin gives you the same margin relief as market makers get. Given these days of $0 commission trades and $0 take fees from liquidity for retail, and odd-lots getting price improvement from payment for order flow, I'd argue retail traders with a good delta hedging script can delta hedge/gamma scalp more cost effectively than market makers can. You still have to be right about your volatility predictions of course!
+
+Correlation Offsets
+
+Portfolio Margin allows P&L offsets across various class groups, product groups, and portfolio group offsets. For instance if you buy SPY puts but have a long VOO position you get the full margin relief! Go buy the much more liquid SPY puts and sell SPY covered calls, and hang onto the VOO position. This is the one reason why VOO has illiquid options - only reg-t traders are trading these. Everyone else gets full margin relief by buying VOO and trading SPY options.
+
+You can also get a 90% offset by being long VTI and buying SPY puts. This still greatly reduces margin.
+
+The Margin Investor's website has a great breakdown showing the various offsets: http://www.themargininvestor.com/pl-offsets.html
+
+My post on using Using Portfolio Margin to Legally Convert Realized STCG into LTCG Via Offsetting Pairs Trades makes use of these product group offsets to get crazy reduction of margin to do long-short trades getting a lot more margin relief than your typical 6.6x leverage!
+
+I like to use the OCC's Portfolio Margin Calculator to look up the current various offsets: https://www.theocc.com/risk-management/portfolio-margin-calculator
+
+Portfolio Margin vs SPAN
+
+So, there is another risk based margin system - portfolio margin for futures, known as SPAN. SPAN offers two huge advantages over portfolio margin:
+
+SPAN's minimum account size is simply the buying power needed. You can start doing PM-like strategies well before needing $110k/$125k to enable it with various brokers!
+
+SPAN margin allows for correlation offsets among many more products/classes/and so on. Portfolio Margin limits it to "similar products." - think SPY and VTI.
+
+On SPAN margin let's say you think live cattle futures are overbought so you decide to sell short them. However, you also know corn futures and cattle futures are highly correlated. Higher corn prices = higher cattle prices as cattle eats corn.
+
+So on SPAN margin you can hedge and get significant correlation buying power reductions by going short cattle, and going long corn. You've just hedged the corn price risk from cattle and now you're really trading cattle. You've also hedged the USD risk out too - as both futures are denominated in USD:
+
+Short Cattle is short cows and short USD
+Long Grain is long grain and long USD
+
+Therefore:
+
+USD cancels out, you don't care how the dollar moves to other currencies (yay infinite money printer), and your two trades are a lot more pure.
+
+SPAN works by scanning your portfolio and applying various ever-changing offsets they base on current correlations.
+
+You can't do this on TIMS outside say VTI vs VOO... SPY vs TLT is a NO. which brings me to...
+
+A Confession
+
+So - when I joined in Discord over a year ago I let everyone know that my margin blowup posts was fake, it never happened. I left a ton of clues which only TWO people ever picked up on and PMed me about:
+
+First Post
+
+Second Post
+
+Blowup Post
+
+The clues were:
+
+TDA Live PM never had -8% +6% risk array rules for SPX/TMF/UPRO at the time
+
+TDA PM had PNR at the time, I would have been PNR locked even with the correlation offsets! LOL!
+
+Portfolio Margin USED to have the same correlation offsets as SPAN did! It was in the PM Pilot Program. For good reasons they took it out. Yes, you USED to be able to offset UPRO and TMF (or SPY/TLT, etc) via correlations, how it used to work was it beta weighted any two ETFs or stocks and gave you insane leverage if they were uncorrelated or inversely correlated (or insane leverage for long/short portfolios for correlated products - ie long NVDA and short AMD). People blew up hard in the pilot program and the SEC took it out in 2006.
+
+PM margin calls are never 5 days - they are three business days AT MOST, and you REALLY should meet them same business day! (It's really helpful to be on the good side of risk management btw - I get a lot of leeway because I take my IRL trading seriously. They are your friends, not your enemy!)
+
+Which risk manager in the world would let ANY client turn a $454k debt/loss to keep invested until it was a $1m loss?!? (Well I might if my client was Buffet!)
+
+Ironically TOS's Paper Trading Portfolio Margin still uses the pilot program rules! They never updated it!
+
+Leveraged ETFs and PM
+
+I originally wrote the blowup post out of anger as at the time TDA decided to make UPRO & TMF have a house margin of 90% on portfolio margin which is ridiculous. How LETFs are supposed to work is they multiply the risk array by the leverage factor. If SPY is 15% up and down, UPRO should be 45% up and down tests, basically instead of 15% BPu, it will be 45% BPu. Some reason TDA decided "LETFs were not suitable to hold for long terms" and ramp up house margin - on something that moves exactly like 3x spy in one day. Sure a year from now you could have a wasteland of a portfolio due to volatility decay - but I debate holding 3x leverage raw without resetting the leverage is going to do more to destroy a portfolio than holding UPRO.
+
+Fortunately IBKR does the correct BPu calculations for UPRO and TMF.
+
+So for PM outside of TD Ameritrade - BPu is the leverage factor times the underlying index the LETF tracks. Go crazy investing in LETFs outside of TD Ameritrade!
+
+Day-Trading with PM
+
+You can daytrade on PM at most brokers that offer realtime monitoring (TDA, Lightspeed,etc) up to 6.66x. Lime offers 8x intraday margin for $5m+ for daytrading on PM. Lightspeed offers up to 12x.
+
+That is taking on a $60m position intraday with $5m. If you're amazing at day-trading - portfolio margin unlocks some serious leverage.
+
+Gotchas with Portfolio Margin
+
+The first thing to realize with portfolio margin is your BP usage is not static. It is real time, dynamically calculated every second stress testing all your positions. That means your $0 bp backratio trade on 30 dte might not be BP free at 20 dte! Likewise if you forget about your short calendar spread and the nearer month long expires off - hello naked short margin.
+
+Also remember that you can easily oversize your account on PM. You can have too many beta-weighted deltas to SPY. In my most recent margin call I didn't realize I had 4x deltas to SPY in put options... that were still far out of the money and could easily explode to 5x more delta thanks to their repricing effects! If you're going to be trading short naked options on PM you must know how to beta weight your portfolio for delta, vega, and gamma, and realize what that means to SPY's movements, and not only know how to do it - but keep up with it every day. Same goes for beta testing your portfolio and obeying all other house margin rules (SUT, etc.)
+
+Here are other oddities I've noticed with Thinkorswim Portfolio Margin:
+
+Confirm and Send and analyze tab doesn't always match the resulting buying power reduction on the backend. At times the backend will make it think it uses a lot more BP than what TOS says it should have. Other times I get surprise BP reductions.
+
+If you want any correlation offset relief you have to leg in both sides in small increments.
+
+TOS's BP calculations seem to include 1 day's of theta/IV prediction into their calculations, so very negative theta positions might have more BP than Reg-T.
+
+Remember your final BP is a result of your entire portfolio. Most the time we are position focused, but realize there are tremendous trading opportunities with ETF products that give correlation offsets - like playing regional banks vs all bank ETFs. You can get some tremendous long-short leverage haircuts doing this well past 6.6x raw notional leverage.
+
+Remember, at the end of the day portfolio margin really rewards well hedged positions. Adding on risk will quickly punt you back to reg-t effective levels if it starts moving against you.
+
+Asset Protection Strategies With PM
+
+I'm not a lawyer, and neither is Robert Green of Green Trader Tax, but Green has an asset protection suggestion:
+
+If you want asset protection, consider a single-member LLC (SMLLC) taxed as a “disregarded entity.” That’s a “tax nothing” in the eyes of the IRS. You still file as a TTS sole proprietor on Schedule C.
+
+A TTS trader might hire employees, lease an office, co-locate automated trading equipment with a broker, and use massive leverage. These traders should consider liability protection using an SMLLC. Consult an attorney.
+
+In other articles on his website Green suggests to form your LLC in your home state to maximize asset protection strategies. Brokers tend to not require a require a personal guarantee for Portfolio Margin.
+
+History of Portfolio Margin
+
+Portfolio Margin has existed since 1986 - for self clearing member firms that had at least $5 million. This is why Lightspeed gives you raw TIMS margin at $5 million+:
+
+No additional 20% of exchange mandated portfolio margin requirement (TIMS plus House add-ons).
+
+Then in 1993 TIMS margin (Portfolio Margin) became available to Floor Brokers and Floor Traders under the 1993 SEC Net Capital Rules Admendment for floor brokers/traders that had at least $100k. That's right, if you have a time machine, print off my guide and go make some serious money getting insane margin relief from options trading.
+
+2005 - Customer Portfolio Margin began as a pilot program.
+
+2006 - SEC approved Portfolio Margin for retail
+
+2007 - Thinkorswim started offering Portfolio Margin
+
+Mini-Prime Brokerage Services
+
+I wanted to talk a bit more about why there are are limited retail brokers offering customer-retail portfolio margin. I've finally got the right nomenclature down to search for better portfolio margin offerings. The OG Prime Brokerages - Goldman Sachs, JPM, etc., require huge minimums well past $1m/$10m if you want to directly prime with them, making getting a prime brokerage account unfeasible for most of us, and the previous list of prime brokers really small.
+
+What you want to look for is known as mini-primes. These people are introducing brokers that carry smaller prime accounts ($500k-$1m), and combine several accounts to meet the much larger than legal requirements to prime with Goldman, JPM, etc. There are so many more people offering mini-prime services than I could ever imagine.
+
+I want to expand on the legal requirements on how you can get a prime account with PM margin relief:
+
+https://www.sec.gov/divisions/marketreg/mr-noaction/pbroker012594-out.pdf
+
+$500k+ trading your own account, mini-primes still want to see $1m+ so you don't bust a $500k account, but they are likely much more accepting of letting you run at $600k than an OG prime broker would ever let you do.
+
+$100k+ if you have an advisor open your own account. Accounts managed by an investment adviser registered under Section 203 of the Investment Advisers Act of 1940 only require $100k to prime
+
+You can also prime if you have at least $100k if another customer provides a cross-guarantee.
+
+$100k+ Investment Adviser
+
+Here is a potential loophole I found. Some people told me I should get a financial advisor. I felt so insulted by it as my trading has been averaging well above market for years now. Turns out the man running best performing hedge fund in the world (Renaissance Technologies) - Jim Simons has a financial advisor.
+
+That’s right. The man whose hedge fund generated 66% average annual returns, the man whose fund took $100 billion out of the market, asked if it was a good idea to be shorting stocks at the absolute bottom. Just unbelievable.
+
+So, while it's amazing that Simons had a financial advisor stop him from emotionally trading - I wonder if Simons had a financial advisor for another reason: To get prime services originally at $100k!
+
+Previously RenTech has gotten in trouble for banks creating basket-option accounts and handing over the username-passwords to RenTech traders to trade in. It's possible Simons found an advisor to prime for $100k instead of $500k. :)
+
+So you might be able to find a financial advisor that will "manage" your account but still let you do the manual trading inside the account!
+
+Cross-guarantee
+
+A Cross-Guarantee is the only other way to be able to have a prime brokerage account for less than $500k (still $100k minimum.) You can pool your money with others in a partnership-like entity structure to access a prime broker. You can all pool it in one giant account, or have a 500k+ master account cross-guarantee $100k+ sub accounts. See a good prime-brokerage securities lawyer!
+
+Mini-Prime Requirements
+
+Then mini-primes have a lot more flexibility. Large banks might require $200k+ of commissioned revenue/clearing fees/etc to be interested in priming with you directly. A mini prime like StoneX only requires $40k per year. A bank can take 1 month to 6 months to get set up with an account. StoneX - 2 weeks.
+
+Minimum PB revenue of 40k per year
+
+$40k/year in commissions isn't much - its $3,330/month. My annualized commissions on $175k NLV doing the "lottos" options trading strategy was $30k! I'm now 230k and I'm close to meeting their minimum revenue per year well below most prime's minimum sizes!
+
+Prime-Broker Short Selling
+
+With a prime broker account you can sign custom lending agreements where you can get partial to full use of the short sale proceeds! That's right, you can find lenders that will allow you to NOT segregate short-sale proceeds and you can then use it to buy stocks!
+
+Networking is a huge edge
+
+Finally, I really love that StoneX is open and transparent about their requirements and benefits. The last thing they offer is this:
+
+Industry event invites Yes
+
+Networking, networking is huge. Do you think TDA would invite you to an industry event? Naw, they're happy to pocket my $39k/year commissions I'm currently generating for them.
+
+My biggest edge in trading isn't strategy specific (lottos, etc), it's networking. Every trading edge I've discovered it's died in 6 months or so. Being able to talk with my network of trading friends, venture capital contacts, etc., has allowed me to have more trading ideas than I have capital for, so when one edge dies I can jump to the next edge immediately if it still exists.
+
+I wouldn't have made back all my HFEA losses if it wasn't for networking with this subreddit and discord, which is why I continue to write extensive detailed guides to give back to the community. <3
+
+At the end of the day the various edges I've found are a result of market participants, and being flexible and knowing what the market is doing helps identify possible new fundamental advantages/edges.
+
+Broker-Dealer (BD) Risk-Based Haircuts (PM for BDs, $100k+)
+
+BD margin is known as Risk Based Haircuts, link below.
+
+Broker-Dealers who are not clearing/market makers:
+Raw TIMS: +/- 15% for equities, narrow-based indexes, non-high cap indexes. +- 10% for high cap index, +-6% for major forex, +-20% for all other currencies.
+
+Non-Clearing Specialists/Market Makers:
++6/-8% for high cap indexes, +/-10% for non-high cap indexes, +-4.5% for major forex.
+
+For any BD:
+$0.25 per share min margin ($25 per contract) (remember retail is 0.375!)
+95% high-cap-diverse-index correlation offset instead of the 90% retail gets for indexes, and 92.5% for non-high-cap-diverse index (retail only gets ~70%).
+
+Then like the above prime-broker accounts, you can pool money to meet various broker-dealer net-capital requirements! It is known as a Joint Back Office Arrangement. Every partner in a JBO needs to be a registered and licensed broker-dealer with different securities licenses depending on your home state. (Series 23/24, Series 7, Series 56, and so on!) JBOs these days have became less popular with the proliferation of customer portfolio margin, so for most people these days forming a JBO is limited to Prop Firms that want to mark up commissions or trade against their traders (modern legal-bucket shops) and legit prop firms that want to act as Market-Makers/High Frequency Traders that need to directly connect to an equities or equities-option exchange, as exchange rules require you to be licensed.
+
+Option Market Makers don't require a locate to hedge bonafide option trades. Since 2008 the SEC removed their close-out exemption in Reg-SHO, so they HAVE to deliver by settlement.
+
+Various Customer-Portfolio Margin Brokerages ($100k+ requirement)
+
+TD Ameritrade/Thinkorswim [125k] - I consider TOS to be one of the best brokerages offering portfolio margin (unless you trade LETFs). They seem to have the most relaxed margin rules for short options/etc. https://tlc.thinkorswim.com/center/faq/Portfolio-Margin
+
+Interactive Brokers [110k] - IBKR offers Portfolio Margin. They have terrible margin relief though due to a house rule that applies a 5 standard deviation stress test based on 30 days of high, low, open, and close data from Bloomberg In Covid - this house rule prevented SPY leverage of more than 2.7x. Outside of extreme moves LETFs are margined very favorably. This house rule prevents good BP reduction on "lottos." Remember they have auto liquidation for margin calls!
+
+Lightspeed Trading [175k (110k if you use Sterling Vol Trader)] - https://lightspeed.com/risk-and-margin
+
+Tastyworks [175k] - https://support.tastyworks.com/support/solutions/articles/43000595351-portfolio-margin-house-rules-requirements
+
+Dash Prime [250k] - https://dashprime.com/
+
+Fidelity [150k] - https://www.fidelity.com/products/atp/help_10.3/ActiveTraderTools_Balances_Help.html#portfoliomargin
+
+Charles Schwab - they have it really hidden and not advertised. Youtube on how to enable it: https://www.youtube.com/watch?v=DLsuZNy1t4g
+
+E-Trade [100k] - https://us.etrade.com/knowledge/library/margin/portfolio-margin-rules-behind-leverage
+
+Lime [$1m+] - https://lime.co/trading/screen-trader-solutions/lime-pro/ What's really interesting about Lime: $5m+ gives 8x intraday BP.
+
+[100k-500k-1m+] If you have $500k-$1m+ you can get portfolio margin through any "Prime Brokerage" agreement. All prime brokers support PM. Read my post on What's next after Portfolio Margin to learn more about prime brokerage accounts, floor trading, and so on.
+
+If you have $5m+ you get raw TIMS margin or can self clear for STANS margin.
+
+If you know of any brokerages that offer customer-PM let me know and I'll add it to the list here!
+
+Prime / Mini-Prime Brokers List ($500k+, or $100k+ w/ advisor/cross-guarantee)
+
+Lightspeed (also has Customer-PM) - https://lightspeed.com/institutional-services/prime-brokerage
+
+Dash Prime (also has Customer-PM) - https://dashprime.com/
+
+Lime Prime (also has Customer-PM) - https://lime-prime.com/
+
+Triad Securities - https://triadsecurities.com/prime-brokerage/
+
+BTIG - https://www.btig.com/products-services/prime-brokerage-fund-services/prime-brokerage/
+
+M.S Howells & Co. - https://www.mshowells.com/prime-brokerage/
+
+TD Cowen - https://www.cowen.com/capabilities/markets/prime-brokerage/
+
+Jefferies Prime Brokerage - https://www.jprime.com/
+
+StoneX Prime - https://primeservices.stonex.com/prime-brokerage/
+
+Bank of America Merrill Lynch - ML Prime - https://markets.ml.com/login/mlprime
+
+Goldman Sachs - https://www.goldmansachs.com/what-we-do/FICC-and-equities/prime-services/index.html
+
+Interactive Brokers - https://www.interactivebrokers.com/en/trading/prime-broker-services.php
+
+Morgan Stanley Matrix (might also offer PM) - https://www.morganstanley.com/matrixvision/
+
+If you have any more prime/mini-prime offerings, please let me know!
+
+Sources
+
+FINRA Portfolio Margin FAQ
+
+FINRA Net Capital Rules
+
+Risk Based Haircuts
+
+The Margin Investor
+
+SEC 1994 Prime Broker Regulations
+
+Joint Back Office Arrangements
+
+TL;DR
+
+Portfolio Margin is a risk based margin system that greatly juices leveraged margin strategies to 6.6x raw delta 1.0 leverage, and insane levels for options.
+
+Portfolio Margin allows you to sell naked far OTM options that only take $37.50 per contract on margin, while Reg-T would require $2005 margin for a $100 stock.
+
+$5 / $37.50 bp = 13.333% return on capital.
+
+Any option that is 15% out the money or more gets maximum buying power compared to Reg-T.
+
+Spread the love on as many positions as possible on PM! Use innovative hedges that don't margin well with Reg-T accounts. Try new strategies that are only realistically executed in a portfolio margined account!

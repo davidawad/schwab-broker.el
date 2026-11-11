@@ -1,0 +1,27 @@
+{
+ "url": "https://www.reddit.com/r/thinkorswim/comments/lw0fgy/options_buying_power_in_the_negative_stock_buying/",
+ "title": "Options Buying Power in the negative, stock buying power ok?",
+ "created": "2021-03-02",
+ "body": "Hey everyone,\n\nNot sure why this is, but ThinkorSwim is telling me that I have negative options buying power, though when I hit the dollar-amount in the upper-left, it shows my Stock Buying power as positive. Anyone know why this is? The amounts are both different.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "Septime",
+   "d": "2021-03-02",
+   "s": "6",
+   "t": "Stock buying power includes your margin and unsettled funds. Options can only be bought with settled cash"
+  },
+  {
+   "a": "Tingul",
+   "d": "2021-03-02",
+   "s": "0",
+   "t": "I haven't traded any options, and it is saying I have positive stock buying power, yet it's telling me I can't purchase stock because recently deposited funds are on hold? Even though I currently have positive stock buying power?"
+  },
+  {
+   "a": "Septime",
+   "d": "2021-03-02",
+   "s": "2",
+   "t": "No I'm telling you that you can buy stock but not options. That's why options buying power is negative and stock buying power isn't"
+  }
+ ]
+}

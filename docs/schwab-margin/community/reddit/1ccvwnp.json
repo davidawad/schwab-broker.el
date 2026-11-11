@@ -1,0 +1,33 @@
+{
+ "url": "https://www.reddit.com/r/Schwab/comments/1ccvwnp/need_help_understanding_naked_put/",
+ "title": "Need help understanding naked put",
+ "created": "2024-04-25",
+ "body": "Can someone explain how a naked put works in relation to being charged interest?\n\nI'll provide what my understanding is and hopefully someone can correct what I'm getting wrong:\n\nMy understanding of margin is that if I don't pay it off by the end of the month, I'll be charged interest the next month based on how long I'd held onto the margin before the new month began.\n\nFrom what I've read, selling a naked put doesn't result in being charged interest while holding the naked put through one month to the next. If I were to get assigned, is that when the interest starts growing in the background then is charged when the next month comes? Or is this a case where things are different and you are charged daily to make you pay off the margin sooner?",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "SirGlass",
+   "d": "2024-04-25",
+   "s": "5",
+   "t": "Lets say you sell a put with a $95 strike on stock ABC that is currently trading at $100 You will collect a premium for this, say $5 per contract so an option is for 100 contracts so you will collect $50 Now if you get assigned you will have to buy 100 shares at $95 or $9,500 Until you are assigned you are not charged any margin or interet. Lets say you only have 5k cash in your account (but you have other holdings that are marginable) , if ABC stays above $95 and you never get assigned you pay zero margin If you get assigned and do not have $9,500 you will get a margin loan , you should have time to sell other holdings before settlement and not pay iterest if you sell the day you get assigned"
+  },
+  {
+   "a": "SloidVoid",
+   "d": "2024-04-25",
+   "s": "1",
+   "t": "Do you have to pay down the margin within the day or would it be viable to pay it off later so long as it's in the same month you were assigned?"
+  },
+  {
+   "a": "psmdigital",
+   "d": "2024-04-25",
+   "s": "1",
+   "t": "You get charged interest on margin daily. So the longer you take to pay it off, the more interest you will pay. This happens to me all the time. I will sell a put that expires on Friday. And it gets assigned on Friday evening. So I have to carry the margin until Monday when I can sell some assets to pay for the shortfall. So I end up paying about 3 days of interest. Which ends up being like less than $3."
+  },
+  {
+   "a": "SirGlass",
+   "d": "2024-04-25",
+   "s": "1",
+   "t": "Interest is accrued daily so if you do not pay it off you will start paying margin interest , as long as you keep up your margin requirements you do not have to sell anything to cover the margin loan but you will get charged interest daily"
+  }
+ ]
+}

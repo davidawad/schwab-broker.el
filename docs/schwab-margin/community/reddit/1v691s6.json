@@ -1,0 +1,75 @@
+{
+ "url": "https://www.reddit.com/r/thinkorswim/comments/1v691s6/buying_power_for_leveraged_etfs/",
+ "title": "Buying power for leveraged ETFs.",
+ "created": "2026-07-25",
+ "body": "Is there somewhere in TOS to see what the buying power is for a particular asset? Specifically, leveraged ETFs like TQQQ and SQQQ. I don't want to have to guess before placing a trade.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "LaconicB",
+   "d": "2026-07-25",
+   "s": "4",
+   "t": "Maintenance requirement on 3x leverage ETF’s are higher(75%), you’re not getting leverage on top of leverage. "
+  },
+  {
+   "a": "I_was_green_today",
+   "d": "2026-07-26",
+   "s": "1",
+   "t": "I am absolutely brand new to day trading 3x ETFs. I don't hold anything overnight. Is there some inherent danger that I should be concerned about? Because TQQQ and SQQQ seem like the best thing since sliced bread."
+  },
+  {
+   "a": "LaconicB",
+   "d": "2026-07-26",
+   "s": "2",
+   "t": "If your account holds zero positions overnight and only used for day trading 3x ETF’s, there’s not any additional risk than the known risk of trading 3x leverage. Here’s some other 3x leverage tickers you might like to use, as well: URTY, SRTY, SPYU(4x), SPXU, SOXL, SOXS"
+  },
+  {
+   "a": "mrcaldwin",
+   "d": "2026-07-25",
+   "s": "3",
+   "t": "The only way I know of is to place a simulated order. On the review screen there should be a number for buying power effect or something similar."
+  },
+  {
+   "a": "I_was_green_today",
+   "d": "2026-07-25",
+   "s": "0",
+   "t": "So my supposed intraday buying power is $15k, but it looks like the maximum BP that I can use for SQQQ is $5200. It only gives a warning that it could result in a margin loan. When I try to buy more than that, it gives a warning that execution of this order may result in a concentrated position and a higher margin requirement and to contact them by phone."
+  },
+  {
+   "a": "PhoenixWK2",
+   "d": "2026-07-26",
+   "s": "2",
+   "t": "You can easily check the margin maintenance on Schwab’s site but for a 3x short it’s probably something like 75-100%. Even if you feel this is a high conviction trade I would size down because it seems like you’re getting a few signals that this could be putting your account at risk"
+  },
+  {
+   "a": "sport912x",
+   "d": "2026-07-25",
+   "s": "3",
+   "t": "Not sure we are talking the same thing, but when I sell Options , I just scope it out in the analyze page and it is to the penny the BP required. https://app.screencast.com/7J6tVpRjH39hP If you flip settings to Margin Setup/Application Settings/Positions/Position margin/BP https://app.screencast.com/vpKfR9MDTyDNl"
+  },
+  {
+   "a": "I_was_green_today",
+   "d": "2026-07-26",
+   "s": "1",
+   "t": "I'll have to look at that when I get back to my computer. Thanks for the info!"
+  },
+  {
+   "a": "Limp_Judge_5936",
+   "d": "2026-07-26",
+   "s": "2",
+   "t": "This requires math on your own, but here is how to calculate it if your account is maintenance driven. Add Margin Equity to the account info(where you see your BP). Take your margin equity and subtract the total margin requirements for your positions. (You may have BP effect showing on your positions and may need to switch it to margin requirement). Once you have margin equity minus margin requirement(this is maintenance excess), you divide maintenance excess by the requirement of the security you are trying to buy. Exp: you have $10k margin equity in your account. Your positions have $2500 maintenance requirement. Take $7500 and divide by the requirement. QQQ=25% requirement $7500/.25=$30,000 you can buy of QQQ T/SQQQ=75% requirement $7500/.75=$10,000.00 you can buy of those funds"
+  },
+  {
+   "a": "I_was_green_today",
+   "d": "2026-07-26",
+   "s": "2",
+   "t": "Thank you for the detailed explanation. I came from Robinhood, and they lay it all out on the info page. TOS is definitely a learning curve."
+  },
+  {
+   "a": "tawnin850",
+   "d": "2026-07-30",
+   "s": "2",
+   "t": "You can’t leverage a leveraged instrument. Basically your buying power on these will be equal to your cash even if you have a margin account."
+  }
+ ]
+}

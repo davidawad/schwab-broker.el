@@ -1,0 +1,15 @@
+{
+ "url": "https://www.reddit.com/r/thinkorswim/comments/1i2ksu4/confused_between_buying_power_effect_and_margin/",
+ "title": "Confused between buying power effect and margin requirement",
+ "created": "2025-01-16",
+ "body": "For example I created a short strangle LEU - 21st Feb 25 - 45 Put and 85 call - before actually submitting the order ..it shows BP effect - $ 1071.3 but after placing order when I check next day on schwab.com positions tab the same trade shows margin requirement $ $3,062.74\n\nI guess to open position you need about 1k in buying power but to maintain it you need about 3k in margin?\n\nCan someone explain why BP effect is way less than margin requirement ? is not it misleading?",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "Ok-Guarantee3237",
+   "d": "2025-01-16",
+   "s": "8",
+   "t": "Per Schwab margin handbook for a straddle: Uncovered requirement for the leg with the higher naked requirement, plus the premium of the other leg But really I’d recommend calling and talking to licensed pros rather than just asking randoms on a forum who probably haven’t heard of a series 7"
+  }
+ ]
+}

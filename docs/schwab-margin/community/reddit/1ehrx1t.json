@@ -1,0 +1,93 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/1ehrx1t/portfolio_margin_is_not_as_scary_as_you_might/",
+ "title": "Portfolio Margin is not as scary as you might think",
+ "created": "2024-08-01",
+ "body": "Today I woke up to having all my buying power evaporated. I run a short put options portfolio and the VIX shot up from 15.8% to 19.26% as I write this post.\n\nI was at -10,000 buying power. Sounds scary right? Either take off 10k of margin trades or wire in $10k cash?\n\nWell, guess what, ThinkorSwim estimated my actual margin call to be $600!\n\nWhy is that the case?\n\nWell in the case of the Thinkorswim software, the buying power calculations are an estimate. It is a marked based calculation that uses the mid point price of the options. Some of my tickers are illiquid with a $0 bid, and 2.40 ask and the true value of the option might be only $0.20, not the $2.40 hopeful ask. Most my other tickers are liquid.\n\nYour actual account value margin is determined by the options clearing corporation. They use a complex Cox-Ross-Rubinstein binomial options pricing model where they estimate the true price and throws out options with excessive IV past what they feel is reasonable for the skew of the current market.\n\nThis is one of the benefits afforded to option sellers. It's also intentional as we're the liquidty providers of the market and the last thing the OCC wants to do is have reasonable option sellers buying back their contracts in a market price dump - imagine the downwards volatiltiy if every seller had to buy back and lay off their positions.\n\nSo in my experience TOS over estimates buying power by 5-10% BPU.\n\nStrategies to mitigate risk\n\nThe best thing you can do is trade small, trade often, look at your total notional value per trade, and total account-wide leverage. I don't like to put all my money into any one strategy and I deploy my BPU on different strategies.\n\nFor instance I had positions on futures that I was down $2k loss on but was using $40k buying power. That was an easy cut - 5% loss on 40k bpu across 12+ positions? Easy no brain cut. I was able to rebalance my portfolio to make sure I have enough liquidity to not have to actually make any margin calls.\n\nI also have a 100% allocation to long VTI, at 15% margin. At times I gasp buy puts and get the risk array down to 3% or less. It's a nice temporary bridge loan. Most of us are wired to think buying an option is 100% loss. No, not really, .50 delta has a 50% chance to expire ITM. The short seller on average is only expected to earn 50% of the premium. In backtests selling ATM puts cash secured only returns 7% or so unlevered annualizeed, its a pretty cheap hedge in the aggregate to buy here or there once in a while. TBH you probably have increased odds of winning this trade too if you're buying it BPU stressed/market going down, vs the option seller having to sell every week to earn that 7% without leverage.\n\nI like to buy SPX puts as it cash settles, sadly if its reducing margin and you're neg BPu you can't sell it and take profits until you're +BPu. Letting it exercise out as cash and letting me roll it helps tremendously in having the strategy not cost so much.\n\nFor portfolio margin you",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "TheDiamondProfessor",
+   "d": "2024-08-01",
+   "s": "4",
+   "t": "Thanks so much for the post! When you write that you limit your NLV to 15% for a single position, do you mean notional of the underlying (e.g. if the stock goes to zero, you lose <15%)? If I have that right, how do you handle positions with undefined risk? Or do you simply not trade those? Thanks as always for your insight!"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2024-08-01",
+   "s": "4",
+   "t": "You're welcome! Thanks so much for the post! When you write that you limit your NLV to 15% for a single position, do you mean notional of the underlying (e.g. if the stock goes to zero, you lose <15%)? Yes, and that is a max-risk. I trade many tickers at say 1/2 risk. So if my NLV is $100k I'm losing less than 15k on the trade on it going to $0. So that would be one short put contract of $150 strike price for instance. Or 10x put contracts with a $15 strike price. If I have that right, how do you handle positions with undefined risk? Or do you simply not trade those? I trade short calls with a +100% test, like I do puts with a -100% test. If it's good enough for Tasty Trade in an IRA its good enough for me. :D So I'd risk no more than 15% nlv on a stock doubling in price, and same 5% risk for a +50% increase in stock price. Then to elaborate more I go by TOS's pnr stress test as well. If"
+  },
+  {
+   "a": "Few_Speaker_9537",
+   "d": "2024-09-20",
+   "s": "1",
+   "t": "This is all pretty interesting. I have a few quick questions. How do you decide when to close a winning trade? How about losing ones? And finally, what tickers are you trading this on? Are you waiting for specific market conditions to actively set trades?"
+  },
+  {
+   "a": "aManPerson",
+   "d": "2024-08-01",
+   "s": "8",
+   "t": "oh ass. we did hit VIX 19 today. really glad i did close out those few badly placed 130 DTE trades i started a few weeks ago. i closed them out yesterday for +$600 total. i thought \"i should not have started these. anytime VIX spikes up, these are gonna go way negative again. and my BP is gonna go through the roof again. lets just close these out now, for a small profit\". really glad i did. downside, i still have 2 more of those that were not yet profitable. when my account calms down, i really need to start adding Volatility counterbalances. because THIS has been spicy....."
+  },
+  {
+   "a": "thetaFAANG",
+   "d": "2024-08-01",
+   "s": "1",
+   "t": "Your options on futures were using SPAN margin though right?"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2024-08-01",
+   "s": "4",
+   "t": "Yes my options on futures use SPAN margin. My sizing rules only applies to individual equities and not indexes or various future products. Like it'd be really hard to \"bankrupt\" copper or gold, but those are also really volatile. Those products also will likely trade through the majority of their price, it'd be rare for copper to gap open -90% while that happens frequently in the equities world. For /ES strategies I don't like going past 2-3x notional value in leverage. For other future strategies I don't like trading more than 2-3% bpu per trade. I feel on the span world their estimated BPU = actual risk of the position in 1 day as well. I also dont go too crazy on SPAN margin, it can double really quickly. SPAN increases risk arrays real quick in times of high volatility automatically. Pretty much current straddle price = current risk array price. This also brings up a good point, opti"
+  },
+  {
+   "a": "laoen666",
+   "d": "2024-09-24",
+   "s": "1",
+   "t": "Thanks for the tips. Have you considered using IB's PM? or you don't want to use IB due to real time liquidation? Thanks in advance."
+  },
+  {
+   "a": "Adderalin",
+   "d": "2024-09-25",
+   "s": "2",
+   "t": "No I don't like their real time liquidation and the buying power relief is terrible."
+  },
+  {
+   "a": "laoen666",
+   "d": "2024-12-30",
+   "s": "1",
+   "t": "make sense. do you use TOS instead or other platform? Thanks"
+  },
+  {
+   "a": "cometocalifornia",
+   "d": "2025-09-02",
+   "s": "1",
+   "t": "\"I've had times back in the lotto days where I went negative 50k+ bpu due to bad mark fixes on a $150k account and didn't get an OCC margin call as the OCC margin was based a lot closer to my sold price.\" - Where and how can you see the OCC margin in ToS at any given time?"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2025-09-02",
+   "s": "1",
+   "t": "Where and how can you see the OCC margin in ToS at any given time? You can't. I help wrote a python program called the PMT Lotto Tracker along with a few other developers to track your positions. It calculated your actual OCC margin etc. You could also call the PM Margin team as they get drop files from OCC every two hours with your OCC margin."
+  },
+  {
+   "a": "cometocalifornia",
+   "d": "2025-09-02",
+   "s": "1",
+   "t": "Is it true that at Interactive Brokers this entire discussion would be obsolete, as the auto liquidation based on house margin would occur before any OCC margin requirement is tested? Or is there and indication that IBKR uses theoretical option values other the mid prices, for purposes of auto liquidation in case of bad mark prices of individual options?"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2025-09-02",
+   "s": "1",
+   "t": "I don't know. I've only traded delta one equities algorithmically at IBKR. I've not done any options trading with them. I've only traded options at TDA/Schwab."
+  },
+  {
+   "a": "FirefighterNice6534",
+   "d": "2025-09-09",
+   "s": "0",
+   "t": "Thinking of going 2.5x on a portfolio consisting of 33% AiPi, 33% QQQ and 33% Spyi on IBK with about $375k of NLV. This will give me roughly $12k of monthly P&L before taxes and after margin interest. I also have a $50k VIXY hedge position. How risky is this portfolio?"
+  }
+ ]
+}

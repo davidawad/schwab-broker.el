@@ -1,0 +1,135 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/15oe1a9/new_tail_risk_rule_at_td_ameritrade/",
+ "title": "New (?) Tail Risk Rule at TD Ameritrade",
+ "created": "2023-08-11",
+ "body": "If you have an account over 1M at TDA and take on a *LOT* of tail risk, this margin rule is relevant. If not, you can probably ignore.\n\n------\n\nLast week I got a margin call for a rule I didn't know about at TD Ameritrade.\n\nThey called it the \"portfolio stress test\" or \"portfolio stress test with vol adjustment.\"\n\nYou start by setting up the SPX Beta Test in Analyze. But then, on each individual underlying, you greatly increase the IV. This increase fluctuates, but it is currently 30%.\n\nThe loss minus your NLV at a -20% market move, with the IV increase, can be no more than $5 Million -- regardless of account size.\n\nExample: If you have a $1M NLV, the max loss must be below $6M. If you have a $500k NLV, the max loss must be below $5.5M, etc.\n\nOne rep I spoke with said the test had been in place since 2021, another said it was newly added to TDA because of the merger with Schwab. [Edit: Only the first one was correct; the rule is not new.] They also said they'd be creating better tools to help clients view and understand this risk... especially since currently, there is no way to know what number they are increasing IV by, except by contacting TD Ameritrade and asking or by getting a margin call. They said the adjustment has so far ranged between +25% and +35%. It was +32% on Thursday 8/3 when I got the call, and it was +30% yesterday 8/10. My positions were futures but they said the rule is not futures-specific.\n\nMy account wasn't set to closing only though, and I had two days to reduce the risk, so I think they are just running the test manually. They really wanted compliance by Friday close.\n\nI have/had a lot of short /ES puts that are 2-15 delta and 45-120 DTE, which can set this test off hard. Risk that is closer to the money won't set it off as much. Also, I imagine accounts below 500-750k can pretty much ignore this rule unless they are *really* levered.\n\nBonus: other random TDA rules\n\nFutures positions need to stay within 3x EPR. To check, use Analyze with the relevant underlying (not SPX) and set the price slices to \"+3\" and \"-3\" EPR. P/L Day should be less than 2x NLV.\n\nBy default, you can have no more than 1000 futures/FOPS contracts. This isn't net risk... every contract long or short counts. They can lift the limit if they subjectively decide to.\n\nIn IRAs, the SPX Beta Test max loss is 1x NLV (not 2x like in normal accounts). Also, margin requirements are 25% higher in IRAs.\n\nAwesome Resources\n\nAdderalin's Portfolio Margin Guide\n\nPortfolio Margin House Rules",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "Key-Tie2542",
+   "d": "2023-08-12",
+   "s": "6",
+   "t": "How new do you think this rule is? For instance, could I be surprised by some new margin call in the next couple weeks as they apply this rule slowly to all accounts? I'm presently leveraged about 10x with OTM puts on SHY and VGSH (2 year bond ETFs)."
+  },
+  {
+   "a": "psyche444",
+   "d": "2023-08-12",
+   "s": "3",
+   "t": "As u/LoveOfProfit said above, it is not actually a new rule -- and sorry for the mistaken title. Since posting, I have learned that this is at least a couple years old. Apparently I can't change the title of the post... one rep at TDA told me it was new, but I've since spoken with others who previously encountered the rule... that rep was just wrong. Wow, that is a lot of leverage on the 2 year! I don't think you need to worry about any new rules coming out, just all the existing ones. And the portfolio stress test shouldn't apply to those positions unless you have more than $3M (I used the March 53P for VGSH to check)."
+  },
+  {
+   "a": "Key-Tie2542",
+   "d": "2023-08-12",
+   "s": "3",
+   "t": "Thanks! When you say $3M, can you clarify what threshold is that $3M (NLV?, Max loss?, ??)."
+  },
+  {
+   "a": "dave_ss",
+   "d": "2023-08-19",
+   "s": "4",
+   "t": "As a SCHWAB PM trader, I am seeing the real time PM requirements going crazy, since Aug 15. Significantly more stress than the prior stress test that was applied to volatility at the options strike price. Apprarently they have combined the worst parts of Schwab and Ameritrade into a realtime stress computation. I trade SPX options exclusively."
+  },
+  {
+   "a": "psyche444",
+   "d": "2023-08-19",
+   "s": "2",
+   "t": "that sucks. To be clear, the difference is that positions that used to require less margin now require more? A lot more? if you are able to share an SPX option position and the margin it uses (or would use) right now, it could be useful or at least interesting."
+  },
+  {
+   "a": "dave_ss",
+   "d": "2023-08-19",
+   "s": "3",
+   "t": "Schwab would run a stress test on an option position (short and out of the money) that would increase the IV (Implied Volatility) depending the amount of the stress. Thus 15 percent stress would also include a 30 percent IV increase. Now it appears to be over one hundred percent in IV or Beta as some folks reference here."
+  },
+  {
+   "a": "OurNewestMember",
+   "d": "2023-12-23",
+   "s": "1",
+   "t": "u/psyche444 -- do you happen to recall if your margin requirement expanded before you got the margin call? I think brokers can expand requirements beyond regulatory/exchange minima arbitrarily, so examples of when and even how much arbitrary expansion has occurred can help avoid traps (and maybe?) get some foresight on future conditions under which they might decide to expand requirements. I'm making the assumption that there may be a relationship between general risk management (eg, the broker's standing portfolio stress test rules) and acute risk (arbitrary expansion of margin requirement)."
+  },
+  {
+   "a": "ilovebat",
+   "d": "2024-03-07",
+   "s": "2",
+   "t": "This is the email I got yesterday from TOS. The 8X NLV at -40% test is brutal This is a tail risk liquidity test to prevent over leveraging of accounts in a “Black Swan” event. Accounts will be restricted to liquidating transactions only, 1x Net Liquidation Value at +10% 3x Net Liquidation Value at +20% 1x Net Liquidation Value at -12% 2x Net Liquidation Value at -20% 3x Net Liquidation Value at -25% 4x Net Liquidation Value at -30% 8x Net Liquidation Value at -40%"
+  },
+  {
+   "a": "psyche444",
+   "d": "2024-03-08",
+   "s": "1",
+   "t": "Thanks a lot for bringing this up! Yeah, I first heard talk about it on 2/21 on the PMT discord, don't know why I didn't think to post it to the PMT reddit. Since this is a comment on an old thread that most ppl won't notice, would you be interested in sharing this info on the weekly thread or creating a post about it? No pressure if you don't want to, but I thought maybe since you had info/experience directly from TDA (I don't) it might make sense for you to share it. Sadly, all the margin changes since Schwab bought TDA have been sharply stricter... I hope this is the end of the tightening but I can't say I'm optimistic."
+  },
+  {
+   "a": "Dapper_Yak_1517",
+   "d": "2024-03-28",
+   "s": "2",
+   "t": "I’m getting absolutely blasted by the newer 8x NLV rule to the downside @ 40%. My strategy basically has just been selling naked puts and managing them if things go awry. I’m assuming the way to fix my issue would be to just turn them into credit spreads but then if things get tested then defensive strategies get trickier. Any advice? Should we make a new thread?"
+  },
+  {
+   "a": "BrendanSoCal",
+   "d": "2024-11-20",
+   "s": "2",
+   "t": "Schwab’s new SPX beta test is 50% increase in IV across all options in the portfolio on just a 5% SPX drop. Got hit with it today. Lovely. 30% increase in IV on a 20% drop referenced in this thread sounded much more reasonable. One rep I spoke to today said this test has existed for about 9 months. I may as well be on Reg-T margin now. Note: when the IV increases by 50% on an underlying, the IV increase for my options is FAR less than 50%, but they are stressing every single option to 50% regardless."
+  },
+  {
+   "a": "psyche444",
+   "d": "2024-11-28",
+   "s": "1",
+   "t": "Thank you for bringing up this new-ish test. Between this unrealistic test, other SPXBT test restrictions, and the repeated margin increases for some products like futures, it can seem that Schwab only wants our assets on their books, and sees trading as something bothersome that should be minimized. It makes some short option strategies basically unworkable. It does seem that, unofficially, they aren't applying this test to futures at the moment, but it's not that they are exempt from the rule, just that they haven't set up the right systems to track it. So in theory they might still hit you with it on futures if they decide to take a hard look at your positions."
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-08-11",
+   "s": "15",
+   "t": "Example: If you have a $1M NLV, the max loss must be below $6M. If you have a $500k NLV, the max loss must be below $5.5M, etc. Sadly it's a old SEC rule that TDA SHOULD have written on their website by now - but they haven't yet. :( TDA is trying to enforce 12+ different regulatory provisions such as FINRA net capital rules and rules from various exchange rulebooks like CBOE's C1, etc. Ultimately they have to meet BOTH SEC, FINRA, AND all the option exchanges rules, and if anyone of them are more restrictive they have to go with the most restrictive of all the rules. (Unless they don't want to trade on CBOE anymore - which would really suck for us!) At the end of the day your broker is responsible for all their client trades to the exchange as if THEY had placed all the trades for their own account/firm. When you have a small account you can get away with so much more stuff that once yo"
+  },
+  {
+   "a": "no_simpsons",
+   "d": "2023-08-12",
+   "s": "5",
+   "t": "If VIX spikes that hard, I’m buying a ton of teenies or backratios for a couple days anyway."
+  },
+  {
+   "a": "dreadnought89",
+   "d": "2023-08-24",
+   "s": "2",
+   "t": "For your-25% shortcut, are you saying to run the SPX beta test down to -25% and see if the P/L DAY would take you to <$0 NLV?"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2023-08-24",
+   "s": "2",
+   "t": "Yup! You got it!"
+  },
+  {
+   "a": "srslyomgwtf",
+   "d": "2023-08-12",
+   "s": "7",
+   "t": "accounts below 500-750k can pretty much ignore this rule unless they are really levered. Challenge accepted."
+  },
+  {
+   "a": "LoveOfProfit",
+   "d": "2023-08-11",
+   "s": "6",
+   "t": "Good post. This was once briefly discussed in the lotto-learning channel on the discord at the start of this year in January, so the rule is at least that old. One way to \"get around\" that rule is to find a way to split your account, ex a second account for a spouse."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2023-09-12",
+   "s": null,
+   "t": "There are some older threads in this subreddit. You can find one on Lottos pinned in the wiki: https://www.reddit.com/r/pmtraders/wiki/index Lottos as a strategy primarily worked on TDA due to their favorable BPR for far OTM options, and to a lesser extent on IBKR. That said, Lottos mostly died at the beginning of this year, at least as a full strategy. These days with the low VIX there are just scraps out there."
+  },
+  {
+   "a": "LoveOfProfit",
+   "d": "2023-09-12",
+   "s": "1",
+   "t": "There are some older threads in this subreddit. You can find one on Lottos pinned in the wiki: https://www.reddit.com/r/pmtraders/wiki/index Lottos as a strategy primarily worked on TDA due to their favorable BPR for far OTM options, and to a lesser extent on IBKR. That said, Lottos mostly died at the beginning of this year, at least as a full strategy. These days with the low VIX there are just scraps out there."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2023-08-11",
+   "s": "5",
+   "t": "Seems Schwab decided that lotto commissions were not worth the risk lol"
+  }
+ ]
+}

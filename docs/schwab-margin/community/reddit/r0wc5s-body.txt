@@ -1,0 +1,32 @@
+URL https://www.reddit.com/r/PMTraders/comments/r0wc5s/pm_broker_comparison/
+Here is comparison of PM brokers as far as I know. The goal here is to collect relevant information in one place to make broker choice easier.
+
+OPTION COMMISSIONS:
+
+Fidelity, Schwab, TDA, E-trade: .65 cents/contract. Buying to close under .05 is free (.10 for E-trade)
+
+Fidelity is special in that commissions max out at 5% of premium (it is in the fine print, I don't think anyone reads that, though them having lower commissions on cheap options is known), so for example options that costs .06 will have 30c commission. Buy to close under .65 is rumored to be free (can anyone verify that?)
+
+E-trade 30+ trades/month is .50 per contract.
+
+At Schwab, TDA, E-trade one can negotiate for lower commissions once recent option volume (and secondarily account size) is large enough. I am uncertain about others.
+
+IBKR: Commissions tend to be higher than most if volume is low, but very low if volume is high (as low as ~.15 plus exchange costs/rebates for monthly volume > 100K options; exchange rebates can result in net negative commissions under some circumstances).
+
+TastyTrade: $1 per contract to open, but max. of $10 per leg. Free to close.
+
+OTHER NOTABLE COSTS:
+
+Schwab: $6.95 for OTC stock trade (starting December 6th or so). $~20 for warrant exercise, but waived if account size > 500K (might have to ask them to waive it, not sure if they would by default).
+
+TastyTrade: $5 option assignment/exercise fee. Free at other PM brokers I know.
+
+IBKR: Low margin interest rates. Other brokers have high margin interest (might be negotiable with large enough account size), though with correct use of box spreads that should not be a big issue.
+
+My info is likely incomplete, please add if you know something.
+
+NOTABLE PORTFOLIO MARGIN REQUIREMENT PECULIARITIES:
+
+TDA: By far the most liberal margin requirements. Should not matter for buy and hold type investment, but matters for some strategies such as lottos. Has short unit test (details at https://tlc.thinkorswim.com/center/faq/Portfolio-Margin).
+
+IBKR: Has automatic liquidation that can liquidate positions fairly quickly if margin requirements are exceeded. Had some cases where it would trigger off bad mark, am not certain if that is fixed. From what I know other brokers are not going to liquidate quickly if requirements are moderately exceeded but the account is not in danger. Otherwise probably second most liberal margin requirements.

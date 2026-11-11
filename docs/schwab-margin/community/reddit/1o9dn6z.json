@@ -1,0 +1,105 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/1o9dn6z/any_lower_spread_alternatives_to_sgov/",
+ "title": "Any lower spread alternatives to SGOV?",
+ "created": "2025-10-17",
+ "body": "Since ETrade offers no cash sweep. Cash must be constantly moved in and out of sgov or a similiar instrument as necessary. I'm finding the loss to spread a real drag on returns though more often than not there's a full cent between ask and bid especially after hours. Since SGOV is only about $100 a share this amounts to a .01% drag every time you buy and sell. This really eats away at returns especially if sgov position is only being held for a few days. If it is only needed overnight , there is little to nothing gained by moving it to sgov regardless of position size. When moving in and out almost every day it starts adding up.\n\nAre there any alternatives that are still marginable but have tighter spreads, either less than 1 cent or a more expensive underlying share price which can be used to mitigate this?",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "Ravendorr",
+   "d": "2025-10-18",
+   "s": "5",
+   "t": "The simplest answer to this is that you should just be buying or selling SGOV at the opening/closing auction, since you don’t pay a spread. You pay exactly the same price as every other person, institutional or retail, is paying at that time to trade the instrument. Every broker under the sun should allow you to place an order for the open or close. However, there are lots of way to beat the best bid/ask even during continuous trading. Accessing it depends a lot on how good your broker is at executing your orders. To give a few examples: Many exchanges allow you to submit hidden “midpoint” orders. Your execution price is pegged at the midpoint between the best bid and ask but you need someone who is also willing to take a midpoint execution on the other side of the trade. You can likely find liquidity for this trade pretty easily on heavily traded penny-wide instruments. Many exchanges also have entirely separate liquidity only for retail orders, with prices inside the BBO. Sometimes this liquidity exists on the primary exchange where the instrument is listed but often it’s on secondary exchanges. Your broker would need to be subscribed to the retail-specific feeds for all the exch"
+  },
+  {
+   "a": "Nyet2L8",
+   "d": "2025-10-18",
+   "s": "1",
+   "t": "Unfortunately for me, Etrade uses PFOF and has horrible fills on any kind of market orders. True to form, Etrade does not offer midpoint limit orders. Etrade is closer to the robinhood model of almost no fees at all for platinum members but many hidden ways of getting their full cut. PFOF, no cash sweep, no interest given on short reserves or CSPs. If I'm switching to IBKR for example the problem never begins because I can just use the default sweep."
+  },
+  {
+   "a": "InterestingFee885",
+   "d": "2025-10-20",
+   "s": "1",
+   "t": "You can, but they don’t pay interest on the first $10k which is annoying. Hence why I do midpoint orders on SGOV."
+  },
+  {
+   "a": "greytoc",
+   "d": "2025-10-21",
+   "s": "1",
+   "t": "Interesting - I would have expected PFOF to result is a slightly better fill on things like SGOV. Schwab uses PFOF as well - and my fills on these kinds of securities have been between the spread."
+  },
+  {
+   "a": "fridaynighttrader",
+   "d": "2025-10-17",
+   "s": "2",
+   "t": "do they offer direct purchasing of treasuries? those have a much higher capital requirement than SGOV and a lower fee in that regard."
+  },
+  {
+   "a": "Nyet2L8",
+   "d": "2025-10-17",
+   "s": "1",
+   "t": "Are treasuries as liquid and instantly marginable?"
+  },
+  {
+   "a": "LonleyBoy",
+   "d": "2025-10-17",
+   "s": "2",
+   "t": "Treasuries are highly liquid but they do will have a spread that is probably as wide as SGOV at scale."
+  },
+  {
+   "a": "keineskeines123",
+   "d": "2025-10-21",
+   "s": "1",
+   "t": "I use ticker BIL with a bot that submits sell orders at ask after market open and if not filled changers the offer price to bid around 11:00am. It gets filled at ask about 40% of the time and otherwise mostly at mid price. The bot buys it back at 3:58pm at ask price which mostly gets filled just above mid. This is with Schwab and a custom built python bot"
+  },
+  {
+   "a": "Nyet2L8",
+   "d": "2025-10-21",
+   "s": "1",
+   "t": "Thanks for info one day I might get around to setting up something like that. I'm assuming Schwab works with APIs. Etrade unfortunately doesn't. What I don't understand about your arrangment is why you would need liquidity at open, I only buy and sell at close based on what happened that day."
+  },
+  {
+   "a": "Adderalin",
+   "d": "2025-11-03",
+   "s": "1",
+   "t": "I'd keep whatever daily volatility you have on your strategies in cash cash, and sweep earned profits weekly from SGOV. Like if you're +10k/-10k in a week - keep 20k cash. If you go up to 40k cash, sweep 20k to sgov. Sure 20k cash is going to cost $66/mo in opportunity cost, but paying one week day's of margin interest on 20k at say 12% rate = $46, so you're pretty much breaking even. You're not buying and selling your entire nlv every day in sgov, correct? You're trading on margin ontop of sgov?"
+  },
+  {
+   "a": "Nyet2L8",
+   "d": "2025-11-03",
+   "s": "1",
+   "t": "Very often much more than 10K-20k in a day though. Depending on whether I mostly opened/closed short or long positions that day. I don't understand what the benefit of holding any cash whatsoever is though. Why is the opportunity cost of 20k only 66/month. Can you dumb it down for me abit?"
+  },
+  {
+   "a": "Adderalin",
+   "d": "2025-11-03",
+   "s": "1",
+   "t": "Why is the opportunity cost of 20k only 66/month. Can you dumb it down for me abit? sgov is 4% rates right now, 20k * 4% = $800 a year of interest. 800/12 = $66.66/mo With sgov's penny spread you're basically earning zero interest anyways worst case on your fills if you're having to buy or sell it every day. You just want to be a net buyer of sgov."
+  },
+  {
+   "a": "OurNewestMember",
+   "d": "2025-10-18",
+   "s": "2",
+   "t": "If SGOV is at 100.50 x 100.51, I'm not sure if you can submit a buy order anywhere for, say, 100.5033, but there should be a way to get access to liquidity where you show interest for 1 round lot buy for 10050.33, for example. So I'm wondering if this question can/should be reframed as something like \"submitting retail interest to a dark pool\" or similar. I wish I had specifics because I'd really like to have a retail-friendly answer to this, too."
+  },
+  {
+   "a": "bsdfish",
+   "d": "2025-10-17",
+   "s": "1",
+   "t": "Use purchased money market funds that are marginable after 30 days. They tend to have even better margin requirements once 'aged' and since you're using them for cash management, the vast majority of your holdings will be more than 30 days held."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2025-10-18",
+   "s": "2",
+   "t": "Not since MS bought them. They sweep to a MS account that literally keeps all the interest for itself."
+  },
+  {
+   "a": "Nyet2L8",
+   "d": "2025-10-18",
+   "s": "1",
+   "t": "Not since MS bought them. They sweep to a MS account that literally keeps all the interest for itself."
+  }
+ ]
+}

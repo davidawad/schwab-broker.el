@@ -1,0 +1,99 @@
+{
+ "url": "https://www.reddit.com/r/PMTraders/comments/1n4y0v4/help_with_pm_approval_application_rejected/",
+ "title": "Help with PM approval. Application rejected.",
+ "created": "2025-08-31",
+ "body": "I'm at the brokerage(Etrade) for about 8 months with a large account (Over 500k). Several large long term positions and several thousand option trades covering the full gamut of strategies. No gambling like trades or large sudden losses of any kind. Almost no futures trading with this brokerage and honestly not too much futures experience overall. Applied for PM so my delta hedges on my otherwise naked short calls would be recognized and greatly reduce my margin requirment.\n\nMy initial application was rejected without explanation.\n\n1.I did check Capital apprecation and not specualtion which might've been a mistake.\n\n2.Account open less than a year\n\n3.Little futures training experience, I checked 2 years with 0-9 per year.\n\nAre any of these cause for the rejection, or is it something I haven't yet picked up on?",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "tinmanjuggernaut",
+   "d": "2025-08-31",
+   "s": "12",
+   "t": "Futures trading is not relevant. Assuming you have years of experience at options level 4, and permission at your broker to sell naked, and passed the PM test correctly, call your broker and speak with your PM desk for guidance on what they're looking for and why they rejected. They're there to support you. If they are not supportive, tell them you will need to move to a different broker, and then do so."
+  },
+  {
+   "a": "Nyet2L8",
+   "d": "2025-08-31",
+   "s": "3",
+   "t": "Thank you"
+  },
+  {
+   "a": "arbitrageME",
+   "d": "2025-08-31",
+   "s": "5",
+   "t": "Yeah, when they call you, they might ask a couple of pretty basic questions about things like Delta and correlation and like like p&l and stuff. And then they'll approve you correctly"
+  },
+  {
+   "a": "InterestingFee885",
+   "d": "2025-08-31",
+   "s": "6",
+   "t": "The vast majority of us are either at IBKR or SCHW (because they bought TDA where most started). I’d probably opt for one of those."
+  },
+  {
+   "a": "Nyet2L8",
+   "d": "2025-08-31",
+   "s": "3",
+   "t": "Thanks"
+  },
+  {
+   "a": "greytoc",
+   "d": "2025-08-31",
+   "s": "6",
+   "t": "It's probably that you selected capital appreciation. You need to just call Etrade and go over it and if you really want PM - then tell them you will move your account. I think that most of us use Schwab/TDA or Ibkr."
+  },
+  {
+   "a": "Nyet2L8",
+   "d": "2025-09-09",
+   "s": "2",
+   "t": "That seems to have been it. Thank you."
+  },
+  {
+   "a": "Nyet2L8",
+   "d": "2025-08-31",
+   "s": "3",
+   "t": "Thanks for feedback. They actually had me call to review the application before they rejected it. They told me at the end of the call that I was denied but refused to divulge why that might be as a matter of policy. Rep bascially told me I can just reapply but dilpomatically refused to tell me what I could change to get accepted. I'm going to reapply and check \"Specualtion\", I'll keep you posted. <As far as changing brokerages, I've only had a few relatively minor issues with Etrade so far and would honestly rather not switch if I can avoid it. Platinum status holders pay no fees and get decent service. I aslo have some additional accounts at MS and some connections there, which makes Etrade a convenient choice. I would definitely be open to opening an additional account at IBKR but am a bit wary of having to manage margin at two accounts simultaneously. I do have a Fidelity account but their platform seems impossible to use for active trading. Main issues I've had with Etrade so far Inability to use market orders for options even as a last resort as they invariably get filled at the bid/ask which I am assuming is because of PFOF. With IBKR pro or fidelity I'm assuming I might some"
+  },
+  {
+   "a": "greytoc",
+   "d": "2025-09-01",
+   "s": "3",
+   "t": "It's pretty normal for a brokerage to decline to share their criteria for approvals - so that's not unexpected. And if you like MS/Etrade - there's probably little reason to switch. I used to have an ETrade account a long time ago - and their service was good back then. Re: Fidelity - PM at Fidelity is more like glorified Reg-T. If you plan to trade in a way that takes advantage of portfolio margin - Fidelity isn't a good choice. I also have a pm account at Fidelity. Re: (1) - if you aren't getting filled - have you checked that your account is not tagged as a CBOE Rule 390 professional? Both Schwab and Fidelity use pfof for options. Fidelity has pretty good price improvements for options despite their lack of real pm. It seems like Fidelity may internalize. Schwab's option routing is decent and while they don't seem to price improve, you can usually walk limits and you may have finer control of fills vs Fidelity. Re: (2) - that's normal in a Reg-T account - initial margin is supposed to be 50%. Re: (3) - that's interesting. Re: (4) - Etrade was actually one of the first brokers to classify certain ETF option contracts as section 1256. This is hopefully starting to be the norm. It "
+  },
+  {
+   "a": "Nyet2L8",
+   "d": "2025-09-01",
+   "s": "1",
+   "t": "Thank you. At the risk of overexplaining I'll spell out exactly what my problem are at length: Re: (1) - This really manifests itself when trading large volumes of spreads. I'll often have no problem getting filled if I place an order for 1 contract but 1000 contracts just won't fill. Not partially and notwithstanding high volume in the order book. In practice I find spread orders are basically fill or kill or at least IOC. When they don't immiediately get filled they just sit even if underlying moves in that direction. Spread orders around the correct market price end up being very iffy. I can spam a dozen and get 5 fills. If my goal is to trade 1000 contracts, I might be spamming 100 contract orders until 10 of them fill. Power Etrade allows me to spam orders quite effectively.( Fidelity is not workable. Though for all I know other platforms might be as good as etrade or better). This problem is resticted to spreads, singles get filled no problem. I tested Fidelity for spread orders and found no noticeable improvement over Etrade. Sometimes this still isn't enough to get filled especially when closing. When this happens there's always the ability to leg out and trade each leg sep"
+  },
+  {
+   "a": "No_Bed8348",
+   "d": "2025-09-01",
+   "s": "3",
+   "t": "im with schwab from legacy TDA. At Etrade now with MS, they do not have the same appetite for risk with retail traders, you definitely need to mark speculation, and have options level 4 approval. Futures exp couldnt hurt but isnt going to be the determining factor, theyre going to look at your investment experience and history. Then going to look at your portfolio if there is any large concentrated positions. I would try at Schwab but i hear since post meger with TD they are extremely strict with who they grant PM approval too now"
+  },
+  {
+   "a": "Nyet2L8",
+   "d": "2025-09-09",
+   "s": "1",
+   "t": "Looks like all that was needed was to mark speculation. Thank you."
+  },
+  {
+   "a": "options13",
+   "d": "2025-08-31",
+   "s": "6",
+   "t": "It has to do wirh ho2 much experience you reported on options trading and futures. You have to report max experience. They are too strict."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2025-08-31",
+   "s": "2",
+   "t": "I prefer IBKR over Schwab... But agree with u/drdrew450 overall. IB is only 110k to qualify for PM. 125k at Schwab. But from what I experienced BOTH brokers are less finicky than Etrade."
+  },
+  {
+   "a": "DeepLogicNinja",
+   "d": "2025-08-31",
+   "s": "2",
+   "t": "I prefer IBKR over Schwab... But agree with u/drdrew450 overall. IB is only 110k to qualify for PM. 125k at Schwab. But from what I experienced BOTH brokers are less finicky than Etrade."
+  }
+ ]
+}

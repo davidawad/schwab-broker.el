@@ -1,0 +1,159 @@
+{
+ "url": "https://www.reddit.com/r/thetagang/comments/1rju4bk/what_actually_happens_when_buying_power_goes/",
+ "title": "What actually happens when Buying Power goes negative?",
+ "created": "2026-03-03",
+ "body": "I've been selling options on futures, and I try to keep a good amount of Buying Power free. But with the war starting the other day, my Buying Power went to (~$2,000). I thought there would be a margin call, but nothing happened. I closed a position that was in the red in any case, and now the BP is positive again. I have been advised to keep BP free, but now I realize I don't really know why it is good to do that. I wonder if there would be a margin call at some point if it got too low? I use Schwab/thinkorswim.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "emdaye",
+   "d": "2026-03-03",
+   "s": "25",
+   "t": "Its the excess liquidity you need to be keeping an eye on. if that goes negative you're gona get marge calling"
+  },
+  {
+   "a": "DorjePhurba",
+   "d": "2026-03-04",
+   "s": "1",
+   "t": "I see, thanks! What precisely is \"excess liquidity\"?"
+  },
+  {
+   "a": "No-Bat6834",
+   "d": "2026-03-03",
+   "s": "4",
+   "t": "Exactly! This is the correct answer."
+  },
+  {
+   "a": "halfwit2025",
+   "d": "2026-03-03",
+   "s": "3",
+   "t": "So I have been here plenty. On RH, you will first b notified of account deficit. It will tell you that you can't open new positions (but you can roll options/sell cc's). After that is margin call. This can last days with no activity, then with shares being sold (I think they go after positions with gains first, but I can't confirm. Plenty of margin calls, half the time they fizzle out, half the time they shake me down. What to worry about is this: you own shares and the maintenance ratio is 30%. You have good buying power. Stock goes down, and maybe is near earnings or other event. That maintenance can change immediately to 60%, changing your buying power and putting you negative a lot."
+  },
+  {
+   "a": "DorjePhurba",
+   "d": "2026-03-04",
+   "s": "1",
+   "t": "Yes, I have experienced that reduction in buying power due to a change in the value of my positions. Interesting about your experience with RH. Thanks!"
+  },
+  {
+   "a": "Lynx2154",
+   "d": "2026-03-03",
+   "s": "3",
+   "t": "Look from a web browser on your balances page, toward the bottom, and it will report your equity %. For common stocks it will be 30% maintenance, point of margin call. Risky things may be 50% maintenance. It depends exactly what you did and the combination of positions you have. Buying power is not exactly the same as the equity / maintenance requirement but it kinda tracks in that direction. The other comment about excess liquidity is true but I think Schwab will show it as a %. If buying power is negative, you are very near if not across the limit. Tread lightly. Also if you don’t understand this I’d be suspect of how much you’ve bought on margin…"
+  },
+  {
+   "a": "DorjePhurba",
+   "d": "2026-03-04",
+   "s": "1",
+   "t": "Balance Subject to Interest $0.00 Month to Date Interest Owed $0.00 Margin Equity $51,556.36 Equity Percent 100% Margin Rate 11.825% Thanks! This is the \"Margin Details and Buying Power\" on my \"Balances\" page. I guess I now have an equity percent of 100. So this is actually the factor that determines whether or not a margin call is made?"
+  },
+  {
+   "a": "the_humeister",
+   "d": "2026-03-03",
+   "s": "19",
+   "t": "Believe it or not, jail"
+  },
+  {
+   "a": "MostlyH2O",
+   "d": "2026-03-04",
+   "s": "11",
+   "t": "Buying power too low? Jail. Buying power too high? Believe it or not, jail."
+  },
+  {
+   "a": "BatCountryVoyager",
+   "d": "2026-03-04",
+   "s": "2",
+   "t": "😂"
+  },
+  {
+   "a": "papakong88",
+   "d": "2026-03-03",
+   "s": "4",
+   "t": "When your BP is negative, you cannot do transactions that require BP. For example, buy stocks or options. Sell options because it requires BP as collateral. When you sell stocks or BTC the options, BP is restored. Whether you will get a margin call or not depends on your equity. If it is below minimum, then you will get a call."
+  },
+  {
+   "a": "yoktok_sisa",
+   "d": "2026-03-03",
+   "s": "1",
+   "t": "be careful with the wording. for different brokers they label net.liq/bpr/buying power/... differently. so if people answer in this thread, make sure you talk about the same thing - preferably the same broker, so you don't misunderstand the advice. 🖖"
+  },
+  {
+   "a": "DorjePhurba",
+   "d": "2026-03-04",
+   "s": "1",
+   "t": "Right, thanks. I'm still trying to sort out all the terminology . . ."
+  },
+  {
+   "a": "Menu-Quirky",
+   "d": "2026-03-03",
+   "s": "1",
+   "t": "Liquidation. Forced selling. Notice to deposit cash"
+  },
+  {
+   "a": "Tight_Specific_3342",
+   "d": "2026-03-04",
+   "s": "1",
+   "t": "Yep, that's basically it. When BP goes negative you're in a margin violation - your broker will hit you with a maintenance call requiring deposit. If you don't top up within their timeframe (varies by broker, could be hours or a day), they start liquidating positions to get you back within limits. The fun part is they don't care which positions - they'll start closing whatever gets you compliant fastest, often at the worst possible moment. Learned that one the hard way during a volatility spike. You'll also get restricted from opening new trades until you're back in the green. Best move is to monitor your BP closely and size positions so a few against-you moves don't put you in this situation. Most brokers show BP in real-time - if you see it dropping, either add buffer or close/sroll positions before it goes negative."
+  },
+  {
+   "a": "DorjePhurba",
+   "d": "2026-03-04",
+   "s": "1",
+   "t": "Interesting, thanks!"
+  },
+  {
+   "a": "Junior-Appointment93",
+   "d": "2026-03-03",
+   "s": "1",
+   "t": "It’s about how much liquid cash you have. CSP, and Credit spreads require collateral. As soon as you either close that trade, get assigned shares or let it expire worthless you will either get all the collateral back. Or get shares. Only way you’d be in the negatives your on the wrong side of a buy call/put option. Iron condor or credit spreads."
+  },
+  {
+   "a": "IWantoBeliev",
+   "d": "2026-03-03",
+   "s": "1",
+   "t": "they will tack on margin fees, trust me bro!"
+  },
+  {
+   "a": "Brostradamus-2",
+   "d": "2026-03-03",
+   "s": "1",
+   "t": "Margin call, dawg."
+  },
+  {
+   "a": "Then-Wealth-1481",
+   "d": "2026-03-05",
+   "s": "1",
+   "t": "You get a margin call"
+  },
+  {
+   "a": "McKinleyZonker",
+   "d": "2026-03-03",
+   "s": "1",
+   "t": "Sounds like a quirk of your broker’s front-end platform. Buying power should never fall below zero, so when it does get to the zero-bound on your screen, check for a margin call on your balance page, or ping the service reps to see what’s going on."
+  },
+  {
+   "a": "[deleted]",
+   "d": "2026-03-03",
+   "s": null,
+   "t": "lol"
+  },
+  {
+   "a": "DorjePhurba",
+   "d": "2026-03-04",
+   "s": "1",
+   "t": "lol"
+  },
+  {
+   "a": "[deleted]",
+   "d": "2026-03-03",
+   "s": "4",
+   "t": "I see. That must be what happened with me. It went negative, but only by about $2,000, and only for an hour or two. What others are saying is that the actual criterion for a margin call is in fact \"excess liquidity\" or \"equity percent\" and not BP. So during that time I guess my excess liquidity had not gone below the minimum."
+  },
+  {
+   "a": "DorjePhurba",
+   "d": "2026-03-04",
+   "s": "1",
+   "t": "I see. That must be what happened with me. It went negative, but only by about $2,000, and only for an hour or two. What others are saying is that the actual criterion for a margin call is in fact \"excess liquidity\" or \"equity percent\" and not BP. So during that time I guess my excess liquidity had not gone below the minimum."
+  }
+ ]
+}

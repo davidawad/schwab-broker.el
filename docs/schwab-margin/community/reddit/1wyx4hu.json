@@ -1,0 +1,147 @@
+{
+ "url": "https://www.reddit.com/r/options/comments/1wyx4hu/margin_requirements_for_selling_premium_right_now/",
+ "title": "Margin requirements for selling premium right now are a joke",
+ "created": "2026-10-06",
+ "body": "Trying to run 45 dte credit spreads on spx lately and the buying power reduction is just absurd for the pennies we are collecting in this low VIX environment.\n\nMy broker wants to lock up $1k in margin just to collect like $60 on a 10-wide spread. The math ain't mathing if you have a smaller account. the capital inefficiency of selling options right now is literally forcing retail into degenerate 0dte lotto tickets just to see any ROI\n\nI kinda gave up on my main cash account and just grabbed a FundedFast eval yesterday mostly just to have raw buying power without holding my own liquidity hostage for weeks while theta does its thing\n\nBut seriously, how are you guys trading delta neutral right now? iron condors on qqq are paying absolutely nothing. Thinking of just pivoting to calendar spreads or long diagonals until iv actually pops again. What tickers are you actually getting decent premium on this week without risking blown up tail risk?",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "Dealer_Existing",
+   "d": "2026-10-06",
+   "s": "5",
+   "t": "Selling puts on stocks > SPX that’s cash settled"
+  },
+  {
+   "a": "sthlmtrdr",
+   "d": "2026-10-06",
+   "s": "8",
+   "t": "Yes more premium but IV is risk. A single stock can drop with -50% in a single day. SPX wont gap down more than let say -4% at open"
+  },
+  {
+   "a": "Dealer_Existing",
+   "d": "2026-10-06",
+   "s": "5",
+   "t": "Yeah you don’t pick stocks that have that in them lmao. You pick stocks with actual earnings and growth. Not the IONQ and ASTS bullshit"
+  },
+  {
+   "a": "ThetaEdgeHQ",
+   "d": "2026-10-06",
+   "s": "41",
+   "t": "Worth separating two things that are getting blended here. The buying power hit on an SPX 10 wide is not the broker being stingy, it is just max loss minus credit, so 940 against your 60. That number is structural to a defined risk spread and no broker can shrink it. The efficiency you are chasing with /MES strangles or naked puts comes from a different margin regime, SPAN or portfolio margin, and the only reason it frees up capital is that you swapped a capped loss for an undefined tail. That is not a better deal, it is getting paid to carry more risk. Inside defined risk the lever that actually moves your return on risk is the width to credit ratio at a given delta, not the vol level. 60 on 940 is about 6 percent over 45 days at whatever delta you chose. Going wider makes that worse, going closer to the money makes it better but loads up gamma. If that number does not clear your hurdle"
+  },
+  {
+   "a": "Sideways-Sid",
+   "d": "2026-10-06",
+   "s": "52",
+   "t": "If only there was a way to profit from a low-vol environment in a way other than using a strategy for a high-vol environment! 🤔😂"
+  },
+  {
+   "a": "zeked2004",
+   "d": "2026-10-06",
+   "s": "9",
+   "t": "Well what do you suggest?"
+  },
+  {
+   "a": "DangerousLiberal",
+   "d": "2026-10-07",
+   "s": "10",
+   "t": "Buy options"
+  },
+  {
+   "a": "SwordfishLopsided",
+   "d": "2026-10-06",
+   "s": "5",
+   "t": "Do ES instead"
+  },
+  {
+   "a": "sport912x",
+   "d": "2026-10-06",
+   "s": "7",
+   "t": "You are lost. 10-pt spread is $1000 minus premium. Period, you don't go to Kalshi and pay their exorbitant spreads."
+  },
+  {
+   "a": "Worry-Mountain",
+   "d": "2026-10-06",
+   "s": "3",
+   "t": "Low VIX just means the market's paying you less to take the same tail, so the buying power hit isn't really the broker being unfair, it's the max loss on a 10-wide. When premium's this thin I'd rather shrink size or sit out than reach for 0DTE to make the numbers feel worth it. Calendars and diagonals make sense when you think IV's cheap, just remember you're long vega and the term structure can move against you too."
+  },
+  {
+   "a": "Possible-Cup-9876",
+   "d": "2026-10-06",
+   "s": "2",
+   "t": "I’m sorry are you suggesting that 6% is a poor return?"
+  },
+  {
+   "a": "Wild_Cheesecake_6630",
+   "d": "2026-10-06",
+   "s": "2",
+   "t": "I understand, I was doing awesome even with this low IV selling spreads like crazy , only slight otm or atm 0dte and closing for small profits but consistently, I made a mistake, I tried to make it safe.. seelling far otm and wider spreads, sooo I was picking Pennie’s the last week, in order to make something more similar to sell atm, I sold a lot and the 3.2% move in qqq wipe my account entirely in less than a day.. what I thought was safer make me lost all my money.. because I thought, qqq has move 5% in less than 2 no way it goes up another 1%.. it was squeezed and up another 2% all the far otm calls I sold for 70-100 bucks.. went to 3000-5000.. I lost all my money and 45k in a day"
+  },
+  {
+   "a": "The_Glass_Book",
+   "d": "2026-10-07",
+   "s": "2",
+   "t": "If SPX spreads are too big for you, just go SPY, it's 10x smaller. Keep in mind it's not an index though, so it's physically settled, and you can get assigned shares. I'd stay away from XSP, the liquidity there is pretty rough. I don't have anything on the S&P right now myself (I do like selling 0DTE there though). Right now the interesting opportunities are mostly in energy and tech (for such a low vol regime). I've had trade chains going on CRM, INTC and URA for a while (strangles now, since they were actively managed). Closed a credit spread on TSLA two days ago (it used to be a calendar, but I had to roll it). If you've got no ideas on what to get into in such a low vol regime, I'd go with calendars and long vega strategies. For calendars right now, as of today check SLV (IVR 6, price ~$55), but also NVDA (IVR around zero, price ~$240), and take a look at IBIT and URA too. As for sel"
+  },
+  {
+   "a": "Positivedrift",
+   "d": "2026-10-06",
+   "s": "4",
+   "t": "15 is low VIX? Tell me you've never traded in an actual low vol environment without telling me."
+  },
+  {
+   "a": "djs383",
+   "d": "2026-10-06",
+   "s": "5",
+   "t": "VIX at 15 today isn’t VIX at 15 even just a few years ago. Short dated options have skewed it a bit. Buying and selling short term vol has muted it a bit. I get what you’re saying though"
+  },
+  {
+   "a": "Tim_Tebow_15",
+   "d": "2026-10-06",
+   "s": "1",
+   "t": "You shouldn't be selling options if 1K is a problem"
+  },
+  {
+   "a": "Defiant-Salt3925",
+   "d": "2026-10-06",
+   "s": "1",
+   "t": "On which platform? Margin requirements vary trememendoulsy from one broker to another."
+  },
+  {
+   "a": "Then-Praline2892",
+   "d": "2026-10-07",
+   "s": "1",
+   "t": "Amazing how many folks are using leverage even though only months ago young man blew up his hedge fund because of it. Leverage is great until it is not then it crushes everything from before. Limit use of leverage and find trades away from the crowds - also pay attention to history -- Long-Term Capital Management was supposed to be a unique way to manage funds - then many others joined the concept when every one went to exist at once there was no market - remember the value of item is only what other will pay for it when you need to cash out - not the number on a screen"
+  },
+  {
+   "a": "NorthOfTheStrike",
+   "d": "2026-10-07",
+   "s": "1",
+   "t": "In a tape this dead I stop messing with tight SPX spreads entirely. I'd rather sell cash-secured puts on stuff I'd be fine owning. If vol is low the premium stinks either way, but at least with a CSP the worst case is buying a stock I wanted at a discount instead of paying full width for $60. And skip the funded eval, it doesn't change the margin math, it just adds a drawdown rule on top of it."
+  },
+  {
+   "a": "Organic-Conclusion-9",
+   "d": "2026-10-09",
+   "s": "1",
+   "t": "If you want to run a high-vol strategy like selling 45 dte credit spreads, simply switch to selling options on one of the higher volatility equities. SPX is tame right now. You sell naked if you have enough capital, risk appetite, and are proactively managing your positions with a predefined roll strategy if the market turns against you, but I've seen that go awry when an unexpected event happens (which it will eventually)."
+  },
+  {
+   "a": "YouFknDummy",
+   "d": "2026-10-10",
+   "s": "1",
+   "t": "Have you tried trading with 500k or more? You'll collect much more premium."
+  },
+  {
+   "a": "phinancial-freedom",
+   "d": "2026-10-12",
+   "s": "1",
+   "t": "You have to know when to pivot strategies. Perfect time to buy LEAPS when IV is low across the board. Lots of stocks to choose from and you only need a small move to generate a decent profit %. The trickiest part is committing to taking profit at X level and not being greedy."
+  },
+  {
+   "a": "r_brockmaniv",
+   "d": "2026-10-06",
+   "s": "1",
+   "t": "Why not on /ES instead?"
+  }
+ ]
+}

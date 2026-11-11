@@ -1,0 +1,39 @@
+{
+ "url": "https://www.reddit.com/r/thinkorswim/comments/1lavpy2/fyi_how_to_break_concentration_policy/",
+ "title": "FYI: How to break Concentration Policy",
+ "created": "2025-06-14",
+ "body": "I was able to successful crack the concentration policy for Schwab.\n\nFor Schwab the algorithm is:\n\n(Net Liquidity / (EPR * (.01) )) / Stock Price = Number of shares Currently Held\n\nThe goal was to stay concentrated in position(s) that provide a consistent HIGH yield. Avoid Diversifying to a lower yielding position(s) into diworsification, avoiding the concentration penalty of higher margin maintenance requirements. The higher requirements cut the available buying power from Regulation T Margin 2x and Portfolio Margin 6x which takes 125k to qualify for at Schwab.\n\nAcronyms in Equation:\n\nPNR - Point of No Return\n\nEPR - Expected Price Range - They say it’s 70% fluctuation? over what time period? (If you find out please let me know)\n\nSelect BP Effect to get EPR (Only available in TOS)\n\n- 30% Requirement for most initial margin\n\n- Can initial maintenance.\n\nHopefully this is useful to others. Maybe we can get the rest of the details on EPR and keep the equation up-to-date if/when Schwab decides to change it.\n\nAs a side note, I am looking for help to do the same on Interactive Brokers. That concentration policy is about 80% reversed engineered at this point. Feel free to reach out.",
+ "imgs": [],
+ "cs": [
+  {
+   "a": "John_Tapesback",
+   "d": "2025-06-15",
+   "s": "1",
+   "t": "You don’t have to guess or reverse engineer it. Just call them and they will tell you. All it’s meant to do is potentially prevent margin users from losing Schwab’s money (losing your money is fine) they don’t want an account to go negative equity."
+  },
+  {
+   "a": "DeepLogicNinja",
+   "d": "2025-06-15",
+   "s": "2",
+   "t": "Unfortunately it isn’t that simple as your alluding too. Losing Money is a non-issue here. Lost opportunity is the issue. It took a few calls into their support, and they had to call back after doing some research on their end. Schwab support is great, however there is the typical Principle Agent conflict of interest. Given you are a responsible model driven investor, these issues become more apparent and the cost are clear. Schwab main objective is to generate fees, hence the concentration policy. It’s important to be able to calculate this yourself. It helps you to avoid diworsification (originally coined by Peter Lynch). For larger accounts /w portfolio margin enabled (125k + /w 6x BP), these fees adds up quickly."
+  },
+  {
+   "a": "CHL9",
+   "d": "2025-09-08",
+   "s": "1",
+   "t": "For MSTR, it's giving me an EPR of -/+80%, which seems extremely high to me, and on the downside my PNR is close to that. Why is MSTR EPR so high, is it because i'm considered to have a concentrated position or is it always like that? (for short strangles)"
+  },
+  {
+   "a": "DeepLogicNinja",
+   "d": "2025-09-08",
+   "s": "1",
+   "t": "This is correct for MSTR and MSTR derivatives like MSTY. In short, brokers (not just Schwab, IB, and others) are extending very little to no margin to MSTR positions. Brokers may reconsider if/when MSTR is accepted into the S&P 500."
+  },
+  {
+   "a": "CHL9",
+   "d": "2025-09-08",
+   "s": "1",
+   "t": "Thanks for the reply and information, appreciate it. Severely limits the short option income strategy account percentage that can be put towards MSTR, and significantly ups the amount you have to keep a daily eye on it. 80% daily EPR is a bit crazy. Well, I guess I have to note that if I remember it did in fact drop 62% one-day in 2000 in the dot com burst, as the first bubble to pop. Maybe next time around SP500 inclusion, (obviously can come off too), for now they went with HOOD, APP, and one more."
+  }
+ ]
+}
