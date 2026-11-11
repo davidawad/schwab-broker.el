@@ -1,0 +1,1047 @@
+{
+  "_comment": "Shared with schwab-broker.el (test/golden/tos-ticket-golden.json). Keep byte-identical.",
+  "symbols": [
+    {
+      "occ": "NVDA  261113P00165000",
+      "compact": "NVDA261113P00165000",
+      "tos": ".NVDA261113P165"
+    },
+    {
+      "occ": "SPY   261113C00450500",
+      "compact": "SPY261113C00450500",
+      "tos": ".SPY261113C450.5"
+    },
+    {
+      "occ": "F     261113C00000500",
+      "compact": "F261113C00000500",
+      "tos": ".F261113C0.5"
+    },
+    {
+      "occ": "AAPL  280229C00200000",
+      "compact": "AAPL280229C00200000",
+      "tos": ".AAPL280229C200"
+    },
+    {
+      "occ": "ABCDEF261113P00012250",
+      "compact": "ABCDEF261113P00012250",
+      "tos": ".ABCDEF261113P12.25"
+    },
+    {
+      "occ": "SPXW  261113C06000000",
+      "compact": "SPXW261113C06000000",
+      "tos": ".SPXW261113C6000"
+    },
+    {
+      "occ": "X     261113P99999999",
+      "compact": "X261113P99999999",
+      "tos": ".X261113P99999.999"
+    },
+    {
+      "occ": "SPY1  261113C00001125",
+      "compact": "SPY1261113C00001125",
+      "tos": ".SPY1261113C1.125"
+    }
+  ],
+  "invalid_symbols": [
+    "NVDA  261313P00165000",
+    "NVDA  260230P00165000",
+    "NVDA  270229P00165000",
+    "NVDA  261113X00165000",
+    "NVDA  261113P0016500",
+    "NVDA  261113P00000000",
+    ".NVDA261113P165.1234",
+    ".NVDA261113P",
+    ".261113P165",
+    ".NVDA261113165",
+    "TOOLONGROOT261113P00165000"
+  ],
+  "closing": [
+    {
+      "position_qty": -1,
+      "instrument": ".NVDA261113P165",
+      "leg_qty": 1
+    },
+    {
+      "position_qty": 3,
+      "instrument": "NVDA  261113P00165000",
+      "leg_qty": -3
+    },
+    {
+      "position_qty": 100,
+      "instrument": "NVDA",
+      "leg_qty": -100
+    }
+  ],
+  "orders": [
+    {
+      "name": "buy_1_nvda_165p_limit_005_gtc",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "GTC"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=GTC",
+      "summary": "BUY 1 NVDA 13 Nov 26 165 PUT, LIMIT 0.05, GTC"
+    },
+    {
+      "name": "occ_input_normalizes_to_tos",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA  261113P00165000"
+          }
+        ],
+        "order_type": "limit",
+        "limit": 0.05,
+        "tif": "gtc"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=GTC",
+      "summary": "BUY 1 NVDA 13 Nov 26 165 PUT, LIMIT 0.05, GTC"
+    },
+    {
+      "name": "compact_occ_input_normalizes_to_tos",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA261113P00165000"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "GTC"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=GTC"
+    },
+    {
+      "name": "sell_2_fractional_strike_call_market_day",
+      "order": {
+        "legs": [
+          {
+            "qty": -2,
+            "instrument": ".SPY261113C450.5"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=SPY&leg1=-2,.SPY261113C450.5&orderType=MARKET&orderTif=DAY",
+      "summary": "SELL 2 SPY 13 Nov 26 450.5 CALL, MARKET, DAY"
+    },
+    {
+      "name": "stock_only_limit",
+      "order": {
+        "legs": [
+          {
+            "qty": 100,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 123.45,
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=100,NVDA&orderType=LIMIT&limitPrice=123.45&orderTif=DAY",
+      "summary": "BUY 100 NVDA, LIMIT 123.45, DAY"
+    },
+    {
+      "name": "put_credit_spread",
+      "order": {
+        "legs": [
+          {
+            "qty": -1,
+            "instrument": ".NVDA261113P165"
+          },
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P160"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.5,
+        "tif": "GTC"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=-1,.NVDA261113P165&leg2=1,.NVDA261113P160&orderType=LIMIT&limitPrice=0.5&orderTif=GTC",
+      "summary": "SELL 1 NVDA 13 Nov 26 165 PUT / BUY 1 NVDA 13 Nov 26 160 PUT, LIMIT 0.5, GTC"
+    },
+    {
+      "name": "covered_call_stock_plus_option",
+      "order": {
+        "legs": [
+          {
+            "qty": 100,
+            "instrument": "NVDA"
+          },
+          {
+            "qty": -1,
+            "instrument": ".NVDA261113C200"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 180,
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=100,NVDA&leg2=-1,.NVDA261113C200&orderType=LIMIT&limitPrice=180&orderTif=DAY",
+      "summary": "BUY 100 NVDA / SELL 1 NVDA 13 Nov 26 200 CALL, LIMIT 180, DAY"
+    },
+    {
+      "name": "iron_condor_four_legs",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".SPY261113P430"
+          },
+          {
+            "qty": -1,
+            "instrument": ".SPY261113P435"
+          },
+          {
+            "qty": -1,
+            "instrument": ".SPY261113C465"
+          },
+          {
+            "qty": 1,
+            "instrument": ".SPY261113C470"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 1.2,
+        "tif": "GTC"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=SPY&leg1=1,.SPY261113P430&leg2=-1,.SPY261113P435&leg3=-1,.SPY261113C465&leg4=1,.SPY261113C470&orderType=LIMIT&limitPrice=1.2&orderTif=GTC",
+      "summary": "BUY 1 SPY 13 Nov 26 430 PUT / SELL 1 SPY 13 Nov 26 435 PUT / SELL 1 SPY 13 Nov 26 465 CALL / BUY 1 SPY 13 Nov 26 470 CALL, LIMIT 1.2, GTC"
+    },
+    {
+      "name": "stop_limit_with_both_prices",
+      "order": {
+        "legs": [
+          {
+            "qty": -100,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "STOPLIMIT",
+        "limit": 99.5,
+        "stop": 100,
+        "tif": "GTC"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=-100,NVDA&orderType=STOPLIMIT&limitPrice=99.5&stopPrice=100&orderTif=GTC",
+      "summary": "SELL 100 NVDA, STOPLIMIT stop 100 limit 99.5, GTC"
+    },
+    {
+      "name": "stop_uses_stop_price_only",
+      "order": {
+        "legs": [
+          {
+            "qty": -100,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "STOP",
+        "stop": 100,
+        "tif": "GTC_EXT"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=-100,NVDA&orderType=STOP&stopPrice=100&orderTif=GTC_EXT",
+      "summary": "SELL 100 NVDA, STOP stop 100, GTC_EXT"
+    },
+    {
+      "name": "single_option_symbol_is_the_option",
+      "order": {
+        "symbol": ".NVDA261113P165",
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "GTC"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=.NVDA261113P165&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=GTC"
+    },
+    {
+      "name": "slash_is_percent_encoded",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "BRK/B"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=BRK%2FB&leg1=1,BRK%2FB&orderType=MARKET&orderTif=DAY",
+      "summary": "BUY 1 BRK/B, MARKET, DAY"
+    },
+    {
+      "name": "loc_order",
+      "order": {
+        "legs": [
+          {
+            "qty": -100,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "LOC",
+        "limit": 120.5,
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=-100,NVDA&orderType=LOC&limitPrice=120.5&orderTif=DAY",
+      "summary": "SELL 100 NVDA, LOC 120.5, DAY"
+    },
+    {
+      "name": "moc_order",
+      "order": {
+        "legs": [
+          {
+            "qty": 100,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "MOC",
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=100,NVDA&orderType=MOC&orderTif=DAY",
+      "summary": "BUY 100 NVDA, MOC, DAY"
+    },
+    {
+      "name": "stock_sub_dollar_four_decimals",
+      "order": {
+        "legs": [
+          {
+            "qty": 1000,
+            "instrument": "SIRI"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.4125,
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=SIRI&leg1=1000,SIRI&orderType=LIMIT&limitPrice=0.4125&orderTif=DAY"
+    },
+    {
+      "name": "explicit_tick_nickel",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113C200"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 3.15,
+        "tick": 0.05,
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113C200&orderType=LIMIT&limitPrice=3.15&orderTif=DAY"
+    },
+    {
+      "name": "tif_DAY",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=DAY"
+    },
+    {
+      "name": "tif_EXT",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "EXT"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=EXT"
+    },
+    {
+      "name": "tif_EXTO",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "EXTO"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=EXTO"
+    },
+    {
+      "name": "tif_AM",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "AM"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=AM"
+    },
+    {
+      "name": "tif_PM",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "PM"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=PM"
+    },
+    {
+      "name": "tif_ETH",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "ETH"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=ETH"
+    },
+    {
+      "name": "tif_GTC",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "GTC"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=GTC"
+    },
+    {
+      "name": "tif_GTC_EXT",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "GTC_EXT"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=GTC_EXT"
+    },
+    {
+      "name": "tif_GTC_EXTO",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "GTC_EXTO"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=GTC_EXTO"
+    }
+  ],
+  "invalid_orders": [
+    {
+      "name": "no_legs",
+      "order": {
+        "legs": [],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "kinds": [
+        "no_legs"
+      ]
+    },
+    {
+      "name": "zero_quantity",
+      "order": {
+        "legs": [
+          {
+            "qty": 0,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "kinds": [
+        "zero_quantity"
+      ]
+    },
+    {
+      "name": "five_legs",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".SPY261113P430"
+          },
+          {
+            "qty": 1,
+            "instrument": ".SPY261113P431"
+          },
+          {
+            "qty": 1,
+            "instrument": ".SPY261113P432"
+          },
+          {
+            "qty": 1,
+            "instrument": ".SPY261113P433"
+          },
+          {
+            "qty": 1,
+            "instrument": ".SPY261113P434"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "kinds": [
+        "too_many_legs"
+      ]
+    },
+    {
+      "name": "two_stock_legs",
+      "order": {
+        "legs": [
+          {
+            "qty": 100,
+            "instrument": "NVDA"
+          },
+          {
+            "qty": 50,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "kinds": [
+        "multiple_non_option_legs"
+      ]
+    },
+    {
+      "name": "root_mismatch",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          },
+          {
+            "qty": 1,
+            "instrument": ".AAPL261113P165"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "kinds": [
+        "root_mismatch"
+      ]
+    },
+    {
+      "name": "market_with_limit",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "MARKET",
+        "limit": 1,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "unexpected_price"
+      ]
+    },
+    {
+      "name": "limit_missing_price",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "LIMIT",
+        "tif": "DAY"
+      },
+      "kinds": [
+        "missing_price"
+      ]
+    },
+    {
+      "name": "limit_with_stop",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 1,
+        "stop": 2,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "unexpected_price"
+      ]
+    },
+    {
+      "name": "negative_limit",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": -0.05,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "bad_price"
+      ]
+    },
+    {
+      "name": "zero_limit",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "bad_price"
+      ]
+    },
+    {
+      "name": "stoplimit_missing_stop",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "STOPLIMIT",
+        "limit": 1,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "missing_price"
+      ]
+    },
+    {
+      "name": "stop_without_type",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "stop": 1,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "missing_order_type"
+      ]
+    },
+    {
+      "name": "stop_type_with_limit",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "STOP",
+        "stop": 1,
+        "limit": 2,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "unexpected_price"
+      ]
+    },
+    {
+      "name": "symbol_with_dash_disables_legs",
+      "order": {
+        "symbol": "BRK-B",
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "BRKB"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "kinds": [
+        "symbol_disables_legs"
+      ]
+    },
+    {
+      "name": "option_symbol_with_two_legs",
+      "order": {
+        "symbol": ".NVDA261113P165",
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          },
+          {
+            "qty": -1,
+            "instrument": ".NVDA261113P160"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "kinds": [
+        "option_symbol_needs_single_matching_leg"
+      ]
+    },
+    {
+      "name": "symbol_root_override_mismatch",
+      "order": {
+        "symbol": "AAPL",
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "kinds": [
+        "root_mismatch"
+      ]
+    },
+    {
+      "name": "several_at_once",
+      "order": {
+        "legs": [
+          {
+            "qty": 0,
+            "instrument": "NVDA"
+          },
+          {
+            "qty": 1,
+            "instrument": "AAPL"
+          }
+        ],
+        "order_type": "MARKET",
+        "limit": 1,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "multiple_non_option_legs",
+        "root_mismatch",
+        "unexpected_price",
+        "zero_quantity"
+      ]
+    },
+    {
+      "name": "missing_order_type",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "limit": 0.05,
+        "tif": "GTC"
+      },
+      "kinds": [
+        "missing_order_type"
+      ]
+    },
+    {
+      "name": "missing_tif",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05
+      },
+      "kinds": [
+        "missing_tif"
+      ]
+    },
+    {
+      "name": "walk_limit_is_refused",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "WALK_LIMIT",
+        "limit": 100.25,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "unsupported_order_type"
+      ]
+    },
+    {
+      "name": "option_limit_not_a_penny",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.055,
+        "tif": "GTC"
+      },
+      "kinds": [
+        "non_tick_price"
+      ]
+    },
+    {
+      "name": "stock_price_over_a_dollar_not_a_penny",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 12.345,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "non_tick_price"
+      ]
+    },
+    {
+      "name": "stock_price_under_a_dollar_five_decimals",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "SIRI"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.41255,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "non_tick_price"
+      ]
+    },
+    {
+      "name": "explicit_tick_violated",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113C200"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 3.12,
+        "tick": 0.05,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "non_tick_price"
+      ]
+    },
+    {
+      "name": "non_tick_stop_price",
+      "order": {
+        "legs": [
+          {
+            "qty": -100,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "STOP",
+        "stop": 100.123,
+        "tif": "GTC"
+      },
+      "kinds": [
+        "non_tick_price"
+      ]
+    },
+    {
+      "name": "bad_explicit_tick",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 1,
+        "tick": 0,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "bad_price"
+      ]
+    }
+  ],
+  "invalid_json": [
+    {
+      "name": "fractional_quantity",
+      "order": {
+        "legs": [
+          {
+            "qty": 1.5,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      }
+    },
+    {
+      "name": "string_quantity",
+      "order": {
+        "legs": [
+          {
+            "qty": "1",
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      }
+    },
+    {
+      "name": "unknown_order_type",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "MKT",
+        "tif": "DAY"
+      }
+    },
+    {
+      "name": "trailstop_rejected_by_site_parser",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "TRAILSTOP",
+        "tif": "DAY"
+      }
+    },
+    {
+      "name": "unknown_tif",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "FOREVER"
+      }
+    },
+    {
+      "name": "bad_option_expiry",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261313P165"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      }
+    },
+    {
+      "name": "unknown_field",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY",
+        "lmit": 1
+      }
+    }
+  ]
+}
