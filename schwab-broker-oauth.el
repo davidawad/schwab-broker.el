@@ -376,10 +376,10 @@ Return nil when another holder has FILE locked."
                 :filter (lambda (_p chunk) (setq out (concat out chunk)))
                 :sentinel #'ignore)))
     (while (and (process-live-p proc)
-                (not (string-search "LOCKED" out)))
+                (not (string-match-p "LOCKED" out)))
       (accept-process-output proc 0.05))
     (cond
-     ((string-search "LOCKED" out)
+     ((string-match-p "LOCKED" out)
       proc)
      (t
       (ignore-errors (delete-process proc))

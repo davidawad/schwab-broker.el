@@ -206,7 +206,7 @@ MODE `probe' returns exit 0 if LOCK_EX|LOCK_NB succeeds, else 1."
              (proc (make-process :name "perl-flock" :command (list "perl" "-e" prog file)
                                  :buffer nil :connection-type 'pipe :noquery t
                                  :filter (lambda (_p c) (setq out (concat out c))))))
-        (while (and (process-live-p proc) (not (string-search "HELD" out)))
+        (while (and (process-live-p proc) (not (string-match-p "HELD" out)))
           (accept-process-output proc 0.05))
         proc))))
 
