@@ -325,6 +325,7 @@
         ],
         "order_type": "LIMIT",
         "limit": 0.4125,
+        "tick": 0.0001,
         "tif": "DAY"
       },
       "url": "https://trade.thinkorswim.com/trade?symbol=SIRI&leg1=1000,SIRI&orderType=LIMIT&limitPrice=0.4125&orderTif=DAY"
@@ -421,21 +422,6 @@
       "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=PM"
     },
     {
-      "name": "tif_ETH",
-      "order": {
-        "legs": [
-          {
-            "qty": 1,
-            "instrument": ".NVDA261113P165"
-          }
-        ],
-        "order_type": "LIMIT",
-        "limit": 0.05,
-        "tif": "ETH"
-      },
-      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=ETH"
-    },
-    {
       "name": "tif_GTC",
       "order": {
         "legs": [
@@ -479,6 +465,98 @@
         "tif": "GTC_EXTO"
       },
       "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261113P165&orderType=LIMIT&limitPrice=0.05&orderTif=GTC_EXTO"
+    },
+    {
+      "name": "spxw_weekly_symbol_is_spx",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".SPXW261113C7600"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 1,
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=SPX&leg1=1,.SPXW261113C7600&orderType=LIMIT&limitPrice=1&orderTif=DAY",
+      "summary": "BUY 1 SPXW 13 Nov 26 7600 CALL, LIMIT 1, DAY"
+    },
+    {
+      "name": "spx_spxw_calendar_mixed_roots",
+      "order": {
+        "legs": [
+          {
+            "qty": 5,
+            "instrument": ".SPX261120C7600"
+          },
+          {
+            "qty": -5,
+            "instrument": ".SPXW261113C7600"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 10,
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=SPX&leg1=5,.SPX261120C7600&leg2=-5,.SPXW261113C7600&orderType=LIMIT&limitPrice=10&orderTif=DAY"
+    },
+    {
+      "name": "future_contract_with_tick",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "/ESZ26"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 5000,
+        "tick": 0.25,
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=%2FESZ26&leg1=1,%2FESZ26&orderType=LIMIT&limitPrice=5000&orderTif=DAY",
+      "summary": "BUY 1 /ESZ26, LIMIT 5000, DAY"
+    },
+    {
+      "name": "future_option_with_exchange",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "./ESZ26C7600:XCME"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 10,
+        "tick": 0.25,
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=%2FESZ26&leg1=1,.%2FESZ26C7600%3AXCME&orderType=LIMIT&limitPrice=10&orderTif=DAY",
+      "summary": "BUY 1 ./ESZ26C7600:XCME, LIMIT 10, DAY"
+    },
+    {
+      "name": "butterfly_three_legs",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261120C190"
+          },
+          {
+            "qty": -2,
+            "instrument": ".NVDA261120C200"
+          },
+          {
+            "qty": 1,
+            "instrument": ".NVDA261120C210"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.5,
+        "tif": "DAY"
+      },
+      "url": "https://trade.thinkorswim.com/trade?symbol=NVDA&leg1=1,.NVDA261120C190&leg2=-2,.NVDA261120C200&leg3=1,.NVDA261120C210&orderType=LIMIT&limitPrice=0.5&orderTif=DAY"
     }
   ],
   "invalid_orders": [
@@ -948,6 +1026,139 @@
       "kinds": [
         "bad_price"
       ]
+    },
+    {
+      "name": "tif_eth_is_replaced_by_day",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": ".NVDA261113P165"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.05,
+        "tif": "ETH"
+      },
+      "kinds": [
+        "unsupported_tif"
+      ]
+    },
+    {
+      "name": "market_needs_day",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "NVDA"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "EXT"
+      },
+      "kinds": [
+        "market_requires_day"
+      ]
+    },
+    {
+      "name": "forex_pair",
+      "order": {
+        "legs": [
+          {
+            "qty": 10000,
+            "instrument": "EUR/USD"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 1.05,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "unsupported_instrument"
+      ]
+    },
+    {
+      "name": "cusip_leg",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "912797WE3"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 99,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "unsupported_instrument"
+      ]
+    },
+    {
+      "name": "mutual_fund_leg",
+      "order": {
+        "legs": [
+          {
+            "qty": 5,
+            "instrument": "VFIAX"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "kinds": [
+        "unsupported_instrument"
+      ]
+    },
+    {
+      "name": "futures_product_without_month",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "/ES"
+          }
+        ],
+        "order_type": "MARKET",
+        "tif": "DAY"
+      },
+      "kinds": [
+        "unsupported_instrument"
+      ]
+    },
+    {
+      "name": "future_price_without_tick",
+      "order": {
+        "legs": [
+          {
+            "qty": 1,
+            "instrument": "/ESZ26"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 5000,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "missing_tick"
+      ]
+    },
+    {
+      "name": "sub_penny_without_tick",
+      "order": {
+        "legs": [
+          {
+            "qty": 1000,
+            "instrument": "SIRI"
+          }
+        ],
+        "order_type": "LIMIT",
+        "limit": 0.4125,
+        "tif": "DAY"
+      },
+      "kinds": [
+        "non_tick_price"
+      ]
     }
   ],
   "invalid_json": [
@@ -1043,5 +1254,29 @@
         "lmit": 1
       }
     }
+  ],
+  "future_options": [
+    {
+      "input": "./ESZ26C7600:XCME",
+      "tos": "./ESZ26C7600:XCME",
+      "future": "/ESZ26"
+    },
+    {
+      "input": "./esz26p7512.5:xcme",
+      "tos": "./ESZ26P7512.5:XCME",
+      "future": "/ESZ26"
+    },
+    {
+      "input": "./OZCZ26C450:XCBT",
+      "tos": "./OZCZ26C450:XCBT",
+      "future": "/OZCZ26"
+    }
+  ],
+  "invalid_instruments": [
+    "./ESZ26C7600",
+    "./ESZ26X7600:XCME",
+    "./ESC7600:XCME",
+    "./ESZ26C:XCME",
+    "./ESZ26C7600:"
   ]
 }

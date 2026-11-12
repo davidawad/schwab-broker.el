@@ -173,9 +173,9 @@ the CreateDraftTrade price mapping."
          (limit (plist-get order :limit))
          (stop (plist-get order :stop)))
     (list :symbol (or (plist-get order :symbol)
-                      (let ((i (schwab-broker-ticket-parse-instrument
-                                (plist-get (car (plist-get order :legs)) :instrument))))
-                        (if (eq (car i) 'option) (plist-get (cdr i) :root) (cdr i))))
+                      (schwab-broker-ticket--instrument-underlying
+                       (schwab-broker-ticket-parse-instrument
+                        (plist-get (car (plist-get order :legs)) :instrument))))
           :legs (mapcar (lambda (l)
                           (let ((q (plist-get l :qty)))
                             (list (if (< q 0) 'sell 'buy) (float (abs q))
@@ -237,6 +237,50 @@ the CreateDraftTrade price mapping."
     (should-error (schwab-broker-ticket-parse-instrument bad)
                   :type 'schwab-broker-ticket-error)))
 
+(ert-deftest schwab-broker-ticket-golden-future-options ()
+  (dolist (c (schwab-broker-ticket-test--golden :future_options))
+    (let ((inst (schwab-broker-ticket-parse-instrument (plist-get c :input))))
+      (should (eq (car inst) 'future-option))
+      (should (equal (schwab-broker-ticket--instrument-text inst) (plist-get c :tos)))
+      (should (equal (schwab-broker-ticket--instrument-underlying inst)
+                     (plist-get c :future))))))
+
+(ert-deftest schwab-broker-ticket-golden-invalid-instruments ()
+  (dolist (s (schwab-broker-ticket-test--golden :invalid_instruments))
+    (should-error (schwab-broker-ticket-parse-instrument s)
+                  :type 'schwab-broker-ticket-error)))
+
+(ert-deftest schwab-broker-ticket-spxw-maps-to-spx ()
+  (should (equal (schwab-broker-ticket--instrument-underlying
+                  (schwab-broker-ticket-parse-instrument ".SPXW261113C7600"))
+                 "SPX")))
+
+(ert-deftest schwab-broker-ticket-live-tested-refusals ()
+  "Rules settled by the 2026-11-11 live run (same cases as the Rust tests)."
+  (cl-flet ((one (inst limit &rest more)
+              (append (list :legs (list (list :qty 1 :instrument inst))
+                            :order-type "LIMIT" :limit limit :tif "DAY")
+                      more)))
+    (should (equal (schwab-broker-ticket-violations (one "NVDA" 0.1234))
+                   '(non_tick_price)))
+    (should (null (schwab-broker-ticket-violations (one "AITX" 0.0012 :tick 0.0001))))
+    (should (equal (schwab-broker-ticket-violations (one "/ESZ26" 5000))
+                   '(missing_tick)))
+    (should (null (schwab-broker-ticket-violations (one "/ESZ26" 5000.25 :tick 0.25))))
+    (should (equal (schwab-broker-ticket-violations (one "/ESZ26" 5000.1 :tick 0.25))
+                   '(non_tick_price)))
+    (should (equal (schwab-broker-ticket-violations (one "67066G104" 100))
+                   '(unsupported_instrument)))
+    (should (null (schwab-broker-ticket-violations (one "67066G105" 100)))))
+  (dolist (tif schwab-broker-ticket-tifs)
+    (should (equal (schwab-broker-ticket-violations
+                    (list :legs '((:qty 1 :instrument "NVDA"))
+                          :order-type "MARKET" :tif tif))
+                   (pcase tif
+                     ("DAY" nil)
+                     ("ETH" '(unsupported_tif))
+                     (_ '(market_requires_day)))))))
+
 (ert-deftest schwab-broker-ticket-leap-day ()
   (should (schwab-broker-ticket-option-to-tos ".AAPL280229C200"))
   (should-error (schwab-broker-ticket-option-to-tos ".AAPL270229C200"))
@@ -269,7 +313,8 @@ the CreateDraftTrade price mapping."
 (ert-deftest schwab-broker-ticket-golden-covers-every-tif-and-shape ()
   (let ((urls (mapcar (lambda (c) (plist-get c :url))
                       (schwab-broker-ticket-test--golden :orders))))
-    (dolist (tif schwab-broker-ticket-tifs)
+    ;; ETH is refused (tested live: the ticket replaces it with Day).
+    (dolist (tif (remove "ETH" schwab-broker-ticket-tifs))
       (should (cl-some (lambda (u) (string-suffix-p (concat "orderTif=" tif) u)) urls)))
     (dolist (ty '("LIMIT" "MARKET" "MOC" "LOC" "STOP" "STOPLIMIT"))
       (should (cl-some (lambda (u) (string-match-p (concat "orderType=" ty "&") u)) urls)))
