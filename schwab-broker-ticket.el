@@ -35,14 +35,18 @@
 ;; account's default order type (possibly MARKET) and a default time in
 ;; force when they are missing or unknown, so this file never lets that
 ;; happen.  Optional keys: :symbol (explicit `symbol' parameter), :stop,
-;; :tick (price increment to enforce; default 0.01 for options or prices
-;; >= 1, else 0.0001).  WALK_LIMIT is refused as unverified.  Unknown
-;; keys are errors.
+;; :tick (price increment to enforce; default 0.01; required for futures
+;; and futures options, and for a sub-penny stock price).  WALK_LIMIT and
+;; the ETH time in force are refused, MARKET needs DAY, and forex pairs,
+;; CUSIPs, mutual funds and futures products without a month are refused
+;; (all tested live: the site changes or blocks them).  Unknown keys are
+;; errors.
 ;;
 ;; The URL only DRAFTS a ticket.  Review it on screen before placing: it
 ;; has no to-open/to-close parameter and no account parameter.
 ;; :qty is a signed integer (negative sells).  :instrument is a TOS
-;; option, an OCC option (21-character or compact), or a plain symbol.
+;; option, an OCC option (21-character or compact), a futures option
+;; (./ESZ26C7600:XCME, exchange required), or a plain symbol.
 ;; :order-type and :tif may be strings or symbols, any case.
 ;;
 ;; Entry points:
@@ -253,13 +257,40 @@ An integer, or a decimal with trailing zeros trimmed."
 
 ;; -- instruments ------------------------------------------------------------
 
+(defconst schwab-broker-ticket--root-aliases '(("SPXW" . "SPX"))
+  "Option roots whose ticket `symbol' is another underlying.
+Tested live: symbol=SPXW opens no ticket, symbol=SPX with .SPXW legs
+does, and SPX and SPXW legs mix in one ticket.")
+
+(defun schwab-broker-ticket--futures-contract-p (s)
+  "Non-nil when S is a futures contract such as /ESZ26 or /ESZ26:XCME."
+  (let ((case-fold-search nil))
+    (string-match-p "\\`/[A-Z0-9]+[FGHJKMNQUVXZ][0-9][0-9]\\(?::[A-Z]+\\)?\\'" s)))
+
+(defun schwab-broker-ticket--parse-future-option (string)
+  "Parse the futures option STRING, ./ESZ26C7600:XCME.
+Return a plist (:symbol UPCASED :future \"/ESZ26\").  The exchange
+suffix is required: tested live, without it no ticket opens."
+  (let ((s (upcase string)) (case-fold-search nil))
+    (if (and (string-match
+              "\\`\\./\\(.+\\)[CP]\\([0-9]+\\(?:\\.[0-9]+\\)?\\):[A-Z]+\\'" s)
+             (schwab-broker-ticket--futures-contract-p
+              (concat "/" (match-string 1 s))))
+        (list :symbol s :future (concat "/" (match-string 1 s)))
+      (schwab-broker-ticket--fail
+       "Invalid futures option %S: want ./<contract><C|P><strike>:<EXCHANGE>, e.g. ./ESZ26C7600:XCME"
+       string))))
+
 (defun schwab-broker-ticket-parse-instrument (string)
-  "Classify STRING as an option or a plain symbol.
-Return (option . PLIST) for any option form, else (symbol . UPCASED).
+  "Classify STRING as an option, a futures option or a plain symbol.
+Return (option . PLIST) for any equity or index option form,
+\(future-option . PLIST) for ./ESZ26C7600:XCME, else (symbol . UPCASED).
 Signal `schwab-broker-ticket-error' when it is neither."
   (let ((s (string-trim string)))
     (cond
      ((string-empty-p s) (schwab-broker-ticket--fail "Empty symbol"))
+     ((string-prefix-p "./" s)
+      (cons 'future-option (schwab-broker-ticket--parse-future-option s)))
      ((or (string-prefix-p "." s)
           (string-match-p "[[:space:]]" s)
           (and (>= (length s) 16)
@@ -275,13 +306,25 @@ Signal `schwab-broker-ticket-error' when it is neither."
 
 (defun schwab-broker-ticket--instrument-text (inst)
   "Text for a parsed instrument INST as placed in a `legN' parameter."
-  (if (eq (car inst) 'option)
-      (schwab-broker-ticket--option-tos (cdr inst))
-    (cdr inst)))
+  (pcase (car inst)
+    ('option (schwab-broker-ticket--option-tos (cdr inst)))
+    ('future-option (plist-get (cdr inst) :symbol))
+    (_ (cdr inst))))
 
 (defun schwab-broker-ticket--instrument-underlying (inst)
-  "The `symbol' parameter implied by parsed instrument INST."
-  (if (eq (car inst) 'option) (plist-get (cdr inst) :root) (cdr inst)))
+  "The `symbol' parameter implied by parsed instrument INST.
+An option's root (SPXW mapped to SPX), a futures option's future, else
+the symbol itself."
+  (pcase (car inst)
+    ('option (let ((root (plist-get (cdr inst) :root)))
+               (or (cdr (assoc root schwab-broker-ticket--root-aliases)) root)))
+    ('future-option (plist-get (cdr inst) :future))
+    (_ (cdr inst))))
+
+(defun schwab-broker-ticket--futures-p (inst)
+  "Non-nil when parsed INST is a futures contract or futures option."
+  (or (eq (car inst) 'future-option)
+      (and (eq (car inst) 'symbol) (string-prefix-p "/" (cdr inst)))))
 
 (defun schwab-broker-ticket--alnum (s)
   "Upper-case S with every character except letters and digits removed."
@@ -347,22 +390,52 @@ WHAT names PLIST in the error."
 
 (defun schwab-broker-ticket--tick-kinds (order legs)
   "Violation kinds for the tick rule of ORDER with parsed LEGS.
-The step is `:tick' when given, else 0.01 when any leg is an option or
-the price is at least 1, else 0.0001."
+The step is `:tick' when given, else 0.01.  Tested live, the tick is per
+instrument (NVDA refuses 0.1234), so a sub-penny price needs an explicit
+tick, and futures (/ES is 0.25) always need one: `missing_tick'."
   (let* ((tick (plist-get order :tick))
          (tick-ok (and tick (schwab-broker-ticket--price-ok-p tick)))
-         (has-option (cl-some (lambda (leg) (eq (cadr leg) 'option)) legs)))
-    (append
-     (and tick (not tick-ok) '(bad_price))
-     (and (cl-some
-           (lambda (p)
-             (and p (schwab-broker-ticket--price-ok-p p)
-                  (not (schwab-broker-ticket--on-grid-p
-                        p (cond (tick-ok tick)
-                                ((or has-option (>= p 1)) 0.01)
-                                (t 0.0001))))))
-           (list (plist-get order :limit) (plist-get order :stop)))
-          '(non_tick_price)))))
+         (step (if tick-ok tick 0.01))
+         (prices (list (plist-get order :limit) (plist-get order :stop))))
+    (if (and (null tick) (cl-some #'identity prices)
+             (cl-some (lambda (leg) (schwab-broker-ticket--futures-p (cdr leg)))
+                      legs))
+        '(missing_tick)
+      (append
+       (and tick (not tick-ok) '(bad_price))
+       (and (cl-some (lambda (p)
+                       (and p (schwab-broker-ticket--price-ok-p p)
+                            (not (schwab-broker-ticket--on-grid-p p step))))
+                     prices)
+            '(non_tick_price))))))
+
+(defun schwab-broker-ticket--cusip-p (s)
+  "Non-nil when S is a 9-character CUSIP with a valid check digit."
+  (and (= (length s) 9)
+       (string-match-p "\\`[0-9A-Z*@#]\\{8\\}[0-9]\\'" s)
+       (string-match-p "[0-9]" s)
+       (let ((sum 0))
+         (dotimes (i 8)
+           (let* ((c (aref s i))
+                  (v (cond ((<= ?0 c ?9) (- c ?0))
+                           ((<= ?A c ?Z) (+ 10 (- c ?A)))
+                           ((= c ?*) 36) ((= c ?@) 37) (t 38)))
+                  (v (if (= (% i 2) 1) (* v 2) v)))
+             (setq sum (+ sum (/ v 10) (% v 10)))))
+         (= (% (- 10 (% sum 10)) 10) (- (aref s 8) ?0)))))
+
+(defun schwab-broker-ticket--unsupported-p (inst)
+  "Non-nil when parsed INST is a class the site will not ticket.
+Tested live: forex pairs (an empty, unusable draft), CUSIPs and
+Treasury bills, mutual funds (5 letters ending in X) and futures
+products without a contract month open no usable ticket."
+  (when (eq (car inst) 'symbol)
+    (let ((s (cdr inst)) (case-fold-search nil))
+      (or (string-match-p "\\`[A-Z]\\{3\\}/[A-Z]\\{3\\}\\'" s)
+          (schwab-broker-ticket--cusip-p s)
+          (string-match-p "\\`[A-Z]\\{4\\}X\\'" s)
+          (and (string-prefix-p "/" s)
+               (not (schwab-broker-ticket--futures-contract-p s)))))))
 
 (defun schwab-broker-ticket--price-kinds (order legs)
   "Violation kinds for the type, TIF and price fields of ORDER with LEGS."
@@ -390,7 +463,13 @@ the price is at least 1, else 0.0001."
      (and (or (and no-limit limit) (and no-stop stop))
           '(unexpected_price))
      (schwab-broker-ticket--tick-kinds order legs)
-     (and (null (plist-get order :tif)) '(missing_tif)))))
+     (let ((tif (schwab-broker-ticket--enum (plist-get order :tif)
+                                            schwab-broker-ticket-tifs
+                                            "time in force")))
+       (cond ((null tif) '(missing_tif))
+             ((equal tif "ETH") '(unsupported_tif))
+             ((and (equal type "MARKET") (not (equal tif "DAY")))
+              '(market_requires_day)))))))
 
 (defun schwab-broker-ticket--symbol-kinds (order legs)
   "Violation kinds for the symbol rules of ORDER with parsed LEGS."
@@ -429,7 +508,10 @@ Empty means ORDER is expressible as a ticket URL.  The kinds are the
 same tags the Rust crate reports: `no_legs', `too_many_legs',
 `zero_quantity', `multiple_non_option_legs', `root_mismatch',
 `option_symbol_needs_single_matching_leg', `symbol_disables_legs',
-`bad_symbol', `bad_price', `missing_price', `unexpected_price'.
+`bad_symbol', `bad_price', `missing_price', `unexpected_price',
+`missing_order_type', `missing_tif', `unsupported_order_type',
+`non_tick_price', `unsupported_tif', `market_requires_day',
+`unsupported_instrument', `missing_tick'.
 Signal `schwab-broker-ticket-error' for input that cannot be parsed at
 all (an unknown order type, a bad symbol, a non-integer quantity)."
   (let* ((legs (schwab-broker-ticket--legs order))
@@ -442,6 +524,10 @@ all (an unknown order type, a bad symbol, a non-integer quantity)."
                 '(multiple_non_option_legs))
            (and (cl-some (lambda (leg) (zerop (car leg))) legs)
                 '(zero_quantity))
+           (and (cl-some (lambda (leg)
+                           (schwab-broker-ticket--unsupported-p (cdr leg)))
+                         legs)
+                '(unsupported_instrument))
            (schwab-broker-ticket--symbol-kinds order legs)
            (schwab-broker-ticket--price-kinds order legs))))
     (schwab-broker-ticket--enum (plist-get order :tif) schwab-broker-ticket-tifs
@@ -466,7 +552,15 @@ all (an unknown order type, a bad symbol, a non-integer quantity)."
      . "no order type: the site would use the account default, maybe MARKET")
     (missing_tif . "no time in force: the site would use its default")
     (unsupported_order_type . "WALK_LIMIT is unverified and refused")
-    (non_tick_price . "a price is not a multiple of the tick"))
+    (non_tick_price . "a price is not a multiple of the tick")
+    (unsupported_tif
+     . "ETH is refused: the ticket replaces it with Day (tested live)")
+    (market_requires_day
+     . "MARKET needs DAY: the ticket blocks any other time in force")
+    (unsupported_instrument
+     . "forex, CUSIPs/bonds, mutual funds and futures products without a month open no usable ticket")
+    (missing_tick
+     . "futures prices need an explicit :tick (/ES is 0.25)"))
   "Human text for each violation kind.")
 
 ;; -- URL --------------------------------------------------------------------
@@ -566,7 +660,7 @@ limitPrice, stopPrice, orderTif.  Performs no rule validation."
                              (% (plist-get o :year) 100)
                              (schwab-broker-ticket--strike-tos o)
                              (if (eq (plist-get o :right) ?C) "CALL" "PUT")))
-                 (cdr inst))))
+                 (schwab-broker-ticket--instrument-text inst))))
     (format "%s %d %s" (if (< qty 0) "SELL" "BUY") (abs qty) what)))
 
 ;;;###autoload
