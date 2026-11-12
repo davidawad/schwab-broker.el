@@ -222,8 +222,13 @@ site would silently reinterpret is a hard error: unknown order type or TIF,
 `WALK_LIMIT` (unverified), zero or non-integer quantity, more than 4 legs or more
 than one non-option leg, mismatched option roots, a symbol containing `* + -`,
 a missing limit (LIMIT/LOC/STOPLIMIT) or stop (STOP/STOPLIMIT), a stop on
-non-stop types, non-positive or non-tick-sized prices (0.01 for options or prices
->= 1, 0.0001 for sub-$1 stock-only orders, or `:tick`). The URL schema is
+non-stop types, non-positive or non-tick-sized prices (0.01 unless `:tick` is
+given; sub-penny stock prices need `:tick 0.0001` and futures always need a
+`:tick`), the `ETH` time in force, MARKET with any TIF but DAY, and forex
+pairs, CUSIPs, mutual funds and futures products without a month (all tested
+live on 2026-11-11: the site changes or blocks them). Futures contracts
+(`/ESZ26`) and futures options (`./ESZ26C7600:XCME`) are supported; SPXW
+options use `symbol=SPX`. The URL schema is
 undocumented by Schwab, read from the site's JavaScript, and specified with
 evidence and confidence tags in the sibling Rust crate
 [tos-ticket-rs](../tos-ticket-rs) (`docs/tos-ticket-url-schema.md`); this file
